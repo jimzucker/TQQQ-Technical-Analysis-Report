@@ -1,18 +1,10 @@
 {
- "as_of": "2026-10-13",
- "previous": "2026-10-12",
+ "as_of": "2026-10-14",
+ "previous": "2026-10-13",
  "items": [
   {
-   "type": "new",
-   "text": "Support at $57.48 (1 touch) moved into the top 5."
-  },
-  {
-   "type": "dropped",
-   "text": "Support at $47.52 dropped out of the top list."
-  },
-  {
-   "type": "macd",
-   "text": "MACD turned bearish."
+   "type": "trend",
+   "text": "Trend changed from Uptrend to Mixed."
   }
  ]
 }
