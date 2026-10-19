@@ -1,14 +1,14 @@
 {
- "as_of": "2026-10-16",
- "previous": "2026-10-15",
+ "as_of": "2026-10-19",
+ "previous": "2026-10-16",
  "items": [
   {
-   "type": "new",
-   "text": "Support at $68.57 (3 touches) moved into the top 5."
+   "type": "reclaimed",
+   "text": "Price climbed back above $70.63; that zone is acting as support again."
   },
   {
-   "type": "broken",
-   "text": "Support at $70.26 broke — price closed below the zone."
+   "type": "dropped",
+   "text": "Support at $57.48 dropped out of the top list."
   }
  ]
 }
