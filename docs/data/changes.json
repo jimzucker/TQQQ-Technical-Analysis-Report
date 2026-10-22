@@ -1,14 +1,14 @@
 {
- "as_of": "2026-10-21",
- "previous": "2026-10-20",
+ "as_of": "2026-10-22",
+ "previous": "2026-10-21",
  "items": [
   {
    "type": "new",
-   "text": "Support at $57.48 (1 touch) moved into the top 5."
+   "text": "Support at $37.16 (1 touch) moved into the top 5."
   },
   {
-   "type": "dropped",
-   "text": "Support at $68.57 dropped out of the top list."
+   "type": "broken",
+   "text": "Support at $70.26 broke — price closed below the zone."
   }
  ]
 }
