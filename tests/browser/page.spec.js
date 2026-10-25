@@ -42,7 +42,7 @@ test("window buttons change the analysis and the page address", async ({ page })
   for (const [key, sessions] of [["1m", 21], ["3m", 63], ["6m", 126], ["9m", 189], ["12m", 252]]) {
     await page.locator(`#windowSeg button[data-w="${key}"]`).click();
     await expect(page.locator(`#windowSeg button[data-w="${key}"]`)).toHaveAttribute("aria-checked", "true");
-    expect(new URL(page.url()).searchParams.get("window")).toBe(key);
+    await expect.poll(() => new URL(page.url()).searchParams.get("window")).toBe(key); // written within URL_GAP (250 ms)
     expect(await page.evaluate(() => window.__dashboard.res.opts.window)).toBe(sessions);
   }
   // a custom number of sessions, clamped to the allowed range
@@ -108,4 +108,25 @@ test("PNG download produces an image", async ({ page }) => {
   await openPage(page, "?window=12m");
   const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#dlPng").click()]);
   expect(download.suggestedFilename()).toMatch(/^tqqq-support-2026-10-23-252d\.png$/);
+});
+
+test("moving a method slider quickly keeps the page up to date (Safari limits address changes)", async ({ page }) => {
+  const errors = await openPage(page);
+  await page.evaluate(() => {
+    window.__writes = 0;
+    const real = history.replaceState.bind(history);
+    history.replaceState = (...a) => { window.__writes++; return real(...a); };
+  });
+  await page.locator("#settings summary").click();
+  await page.locator("#cluster").focus();
+  const started = Date.now();
+  for (let pass = 0; pass < 3; pass++) for (const key of ["ArrowRight", "ArrowLeft"]) for (let i = 0; i < 25; i++) await page.keyboard.press(key);
+  for (let i = 0; i < 10; i++) await page.keyboard.press("ArrowRight"); // the last pass stops at 0.25, the lowest; 10 steps up is 0.75
+  const seconds = (Date.now() - started) / 1000;
+  await expect(page.locator("#clusterOut")).toHaveText("0.75");
+  const g = await page.evaluate(() => ({ used: window.__dashboard.res.opts.clusterMult, writes: window.__writes }));
+  expect(g.used).toBe(0.75);                                   // the levels follow the slider to the end
+  expect(g.writes).toBeLessThanOrEqual(Math.ceil(seconds * 4) + 1); // at most one address change every 250 ms
+  await expect.poll(() => new URL(page.url()).searchParams.get("cluster")).toBe("0.75");
+  expect(errors).toEqual([]);                                  // Safari threw after 100 changes in 10 seconds
 });

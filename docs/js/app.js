@@ -72,7 +72,11 @@
     } catch (e) { /* storage unavailable */ }
   }
 
-  function writeUrl() {
+  // Safari stops a page that changes its address more than 100 times in 10 seconds (dragging
+  // a slider can), so the address is written at most once every URL_GAP ms, the last one kept
+  const URL_GAP = 250;
+  let urlTimer = null, lastUrlWrite = 0;
+  function writeUrl({ now = false } = {}) {
     const o = state.opts, d = SR.DEFAULTS;
     const q = new URLSearchParams();
     if (state.ticker && state.listing && state.ticker.symbol !== state.listing.default) q.set("ticker", state.ticker.symbol);
@@ -82,8 +86,16 @@
     if (o.minTouches !== d.minTouches) q.set("touches", o.minTouches);
     const shown = Object.keys(PANE_DEFAULTS).filter((k) => state.panes[k]);
     if (Object.keys(PANE_DEFAULTS).some((k) => !!state.panes[k] !== PANE_DEFAULTS[k])) q.set("show", shown.join(",") || "none");
-    history.replaceState(null, "", "?" + q.toString());
     try { localStorage.setItem("settings", q.toString()); } catch (e) { /* storage unavailable */ }
+    const write = () => {
+      urlTimer = null;
+      lastUrlWrite = Date.now();
+      try { history.replaceState(null, "", "?" + q.toString()); } catch (e) { /* refused: the next change writes it */ }
+    };
+    clearTimeout(urlTimer);
+    const wait = now ? 0 : URL_GAP - (Date.now() - lastUrlWrite);
+    if (wait <= 0) write();
+    else urlTimer = setTimeout(write, wait);
   }
 
   /* ------------------------------------------------------------ controls */
@@ -800,8 +812,10 @@
 
   /** Open the page for another ticker, keeping the other settings. */
   function goToTicker(symbol) {
+    if (state.leaving) return; // already opening one (Enter can arrive twice, see renderTickerField)
+    state.leaving = true;
     state.ticker = state.listing.tickers.find((t) => t.symbol === symbol) || { symbol };
-    writeUrl();
+    writeUrl({ now: true });
     location.reload();
   }
 
@@ -822,8 +836,16 @@
       const v = input.value.trim().toUpperCase();
       if (e.inputType === "insertReplacementText" && v !== current && state.listing.tickers.some((t) => t.symbol === v)) goToTicker(v);
     };
+    // Safari does not send Enter to the form when the field has a suggestion list, so Enter
+    // sends it here if the browser has not done so by the next tick
+    let submitted = false;
+    input.onkeydown = (e) => {
+      if (e.key === "Enter") setTimeout(() => { if (!submitted) $("#tickerForm").requestSubmit(); }, 0);
+    };
     $("#tickerForm").onsubmit = (e) => {
       e.preventDefault();
+      submitted = true;
+      setTimeout(() => { submitted = false; }, 0);
       const sym = (input.value.trim() || current).toUpperCase();
       if (sym === current) return;
       if (/^[A-Z][A-Z0-9.-]{0,9}$/.test(sym)) goToTicker(sym);

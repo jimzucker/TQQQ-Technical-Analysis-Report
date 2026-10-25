@@ -12,6 +12,9 @@ module.exports = defineConfig({
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     { name: "phone", use: { ...devices["Pixel 7"] }, testMatch: /(layout|rendering)\.spec\.js/ },
+    // Safari's engine (WebKit), on a Mac and on an iPhone
+    { name: "safari", use: { ...devices["Desktop Safari"] } },
+    { name: "iphone", use: { ...devices["iPhone 15"] }, testMatch: /(layout|rendering)\.spec\.js/ },
   ],
   webServer: {
     command: `node tests/browser/serve.js ${PORT}`,
