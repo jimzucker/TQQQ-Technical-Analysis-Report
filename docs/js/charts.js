@@ -485,6 +485,17 @@
       }
       if (lastI != null) { ctx.lineTo(S.x(lastI), S.y(base)); ctx.closePath(); ctx.fill(); }
     },
+    /** Fill between two series (e.g. the Bollinger Bands), skipping bars where either is missing. */
+    band(ctx, S, upper, lower, color) {
+      const idx = [];
+      for (let i = S.i0; i <= S.i1; i++) if (upper[i] != null && lower[i] != null) idx.push(i);
+      if (idx.length < 2) return;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      idx.forEach((i, k) => (k ? ctx.lineTo(S.x(i), S.y(upper[i])) : ctx.moveTo(S.x(i), S.y(upper[i]))));
+      for (let k = idx.length - 1; k >= 0; k--) ctx.lineTo(S.x(idx[k]), S.y(lower[idx[k]]));
+      ctx.closePath(); ctx.fill();
+    },
     candles(ctx, S, d, up, down) {
       const w = Math.max(1, Math.min(12, S.barW * 0.7));
       for (let i = S.i0; i <= S.i1; i++) {

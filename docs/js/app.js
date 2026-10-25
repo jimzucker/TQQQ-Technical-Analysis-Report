@@ -12,8 +12,8 @@
   const WIN_NAMES = { 21: "1 month", 63: "3 months", 126: "6 months", 189: "9 months", 252: "12 months" };
   const winName = (w) => WIN_NAMES[w] || `${w} sessions`;
   // which optional chart panels are visible; remembered per browser
-  const PANE_DEFAULTS = { vol: true, rsi: true, macd: false, dd: false, rolling: true, profile: false, above: true };
-  const OVERLAYS = new Set(["rolling", "profile", "above"]); // drawn inside the price pane, no rebuild needed
+  const PANE_DEFAULTS = { vol: true, rsi: true, macd: false, dd: false, rolling: true, profile: false, above: true, bb: true };
+  const OVERLAYS = new Set(["rolling", "profile", "above", "bb"]); // drawn inside the price pane, no rebuild needed
 
   // the window the page opens on. The nightly snapshot and "What changed" keep the
   // method's own 12-month default (SR.DEFAULTS), so their history stays comparable.
@@ -328,6 +328,7 @@
       ${zone ? row(zone.broken ? `${sw("--above")}In level above price` : `${sw("--support")}In support zone`, `${zone.id} ${money(zone.price)}`) : ""}
       ${row(`${sw("--rolling")}${state.opts.period}-day low`, money(v.rollingLow[i]))}
       ${row(`${sw("--sma20")}20 / ${sw("--sma50")}50 / ${sw("--sma200")}200-day`, `${money(d.sma20[i])} / ${money(d.sma50[i])} / ${money(d.sma200[i])}`)}
+      ${state.panes.bb ? row(`${sw("--sma20")}Bollinger Bands`, `${money(d.bb_lower[i])} – ${money(d.bb_upper[i])}`) : ""}
       ${row("Volume", `${compact(d.volume[i])} (${(d.volume[i] / d.vol_avg20[i]).toFixed(1)}× avg)`)}
       ${row("RSI", d.rsi14[i]?.toFixed(1) ?? "–")}
       ${row("MACD / signal", d.macd[i] != null ? `${d.macd[i].toFixed(2)} / ${d.macd_signal[i].toFixed(2)}` : "–")}
@@ -385,7 +386,7 @@
     const panes = [
       {
         id: "price", height: 460, mobileHeight: 320, padY: 0.09, format: (v) => "$" + (v >= 100 ? v.toFixed(0) : v.toFixed(v >= 10 ? 1 : 2)),
-        range: (a, b) => extent(["low", "high"])(a, b),
+        range: (a, b) => extent(state.panes.bb ? ["low", "high", "bb_upper", "bb_lower"] : ["low", "high"])(a, b),
         draw: drawPricePane,
       },
       ...Object.keys(optional).filter((k) => state.panes[k]).map((k) => optional[k]),
@@ -459,6 +460,14 @@
       draw.hline(ctx, S, f.price, sup, [2, 3], 1.25);
       labels.push({ y: S.y(f.price), text: money(f.price), col: sup });
     });
+    // Bollinger Bands: two standard deviations either side of the 20-day average. The
+    // middle band is the 20-day average itself, which is drawn below, so it is not repeated.
+    if (state.panes.bb) {
+      const bb = css("--sma20");
+      draw.band(ctx, S, d.bb_upper, d.bb_lower, withAlpha(bb, 0.07));
+      draw.line(ctx, S, d.bb_upper, withAlpha(bb, 0.6), 1, [4, 3]);
+      draw.line(ctx, S, d.bb_lower, withAlpha(bb, 0.6), 1, [4, 3]);
+    }
     // 3. moving averages & rolling low (the 20-day is thinner: it is context, not a level)
     draw.line(ctx, S, d.sma200, css("--sma200"), 2);
     draw.line(ctx, S, d.sma50, css("--sma50"), 2);
@@ -593,6 +602,7 @@
       ...(state.panes.rolling ? [["", `border-color:${css("--rolling")}`, `${state.opts.period}-day rolling low`]] : []),
       ["", `border-color:${css("--sma20")}`, "20-day avg"], ["", `border-color:${css("--sma50")}`, "50-day avg"],
       ["", `border-color:${css("--sma200")}`, "200-day avg"],
+      ...(state.panes.bb ? [["box", `background:${withAlpha(css("--sma20"), 0.10)};border:1px dashed ${css("--sma20")}`, "Bollinger Bands (normal range around the 20-day avg)"]] : []),
     ]);
     legend($("#cmpLegend"), [
       ["dot", `background:${css("--support")}`, "Support level (size = strength)"],

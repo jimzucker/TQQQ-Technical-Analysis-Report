@@ -2,7 +2,7 @@
 
 Written 2026-10-25. This file records what was asked for, what the review found, and the plan agreed. It is meant to be shared with the original owner of the app. The [README change log](../README.md#change-log) records each phase as it lands.
 
-**Status:** test automation, the security checks, phase 3 (chart scrolling) and phase 1 (levels above price) are done. Phases 4, 5 and 2 are not started.
+**Status:** test automation, the security checks, phase 3 (chart scrolling), phase 1 (levels above price), remembered settings with readable dates, and phase 4 (Bollinger Bands) are done. Phases 5 and 2 are not started.
 
 **Pull requests, each built on the one before:**
 
@@ -12,6 +12,7 @@ Written 2026-10-25. This file records what was asked for, what the review found,
 | 2 | `security-checks` | Vulnerability checks and one escaping fix (section 10) |
 | 3 | `chart-scroll-and-levels-above-price` | Phases 3 and 1 |
 | 4 | `usability-memory-and-dates` | Remembered settings and readable chart dates (section 11) |
+| 5 | `bollinger-bands` | Phase 4, Bollinger Bands (section 7) |
 
 ---
 
@@ -66,6 +67,26 @@ The requests, copied word for word:
 > lets create PR4 to address some usablity / does it remember locally my choices for light-dark, remeber the ptions I set like # months, which metrics to show (ie remmeber what I did in last use/session and not reset to defaults / look at main graph dates are hard to see/read what do you sugget ot improve the UX for the dates see screenshot
 
 > is there any changes on the owners main that requires us to rebase PRs?
+
+> send it
+
+> close the draft PRs in my fork
+
+> is update disabled on my fork main?
+
+> let's start phase 4 bollinger bands as PR5
+
+> have we covered all changes with tests ?
+
+> ij di recommenation
+
+> looking at sight when we added support levels above we seemed ot have lost all the support levels below!
+
+> we should have a test that we keep all known support levels above and below
+
+> for last 200 days
+
+> make bollinger on by default unless a user changes
 
 ## 2. Decisions made
 
@@ -183,6 +204,8 @@ Steps: remove `wheelZoom: true`; add a sideways-swipe handler that pans the char
 **What the review found.** The bands are already worked out (`indicators.py:77`) and saved in `tqqq.json`, but they only feed the written findings and the indicator table. Nothing draws them.
 
 **Plan.** Draw the upper and lower bands on the price chart as thin lines with a light fill between them. Draw the middle band only if it differs from the 20-day average line, which will be checked against the data first. Add the band values to the hover tooltip and a legend entry. Off by default, with a switch.
+
+**Done (fifth pull request).** The middle band was checked against the 20-day average: identical in all 482 sessions, so it is not drawn twice. The bands are drawn in the 20-day average's blue, dashed, with a light fill; the price scale stretches to fit them when they are on, so they are never cut off. On by default, as asked; switching them off is remembered, and readers whose saved switches predate the bands get them on. Four browser tests; they fail on the previous code.
 
 ---
 
