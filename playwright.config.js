@@ -11,7 +11,7 @@ module.exports = defineConfig({
   use: { baseURL: `http://127.0.0.1:${PORT}/`, trace: "retain-on-failure" },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
-    { name: "phone", use: { ...devices["Pixel 7"] }, testMatch: /layout\.spec\.js/ },
+    { name: "phone", use: { ...devices["Pixel 7"] }, testMatch: /(layout|rendering)\.spec\.js/ },
   ],
   webServer: {
     command: `node tests/browser/serve.js ${PORT}`,
