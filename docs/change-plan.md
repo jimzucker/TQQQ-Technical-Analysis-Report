@@ -11,6 +11,7 @@ Written 2026-10-25. This file records what was asked for, what the review found,
 | 1 | `test-automation` | Tests only. No change to what the app does |
 | 2 | `security-checks` | Vulnerability checks and one escaping fix (section 10) |
 | 3 | `chart-scroll-and-levels-above-price` | Phases 3 and 1 |
+| 4 | `usability-memory-and-dates` | Remembered settings and readable chart dates (section 11) |
 
 ---
 
@@ -55,6 +56,16 @@ The requests, copied word for word:
 > after pr created alwasy remind me to disable daily updates remmeber that!
 
 > change default on branch 3 to 1m from 12m
+
+> did we squash on all 3 branches so pr are clean?
+
+> remember to always do that for PRs
+
+> track pad works great lets send PR if all tests passed in order, make it clear in each pr them must be reviewed and merge din order as they build on each other
+
+> lets create PR4 to address some usablity / does it remember locally my choices for light-dark, remeber the ptions I set like # months, which metrics to show (ie remmeber what I did in last use/session and not reset to defaults / look at main graph dates are hard to see/read what do you sugget ot improve the UX for the dates see screenshot
+
+> is there any changes on the owners main that requires us to rebase PRs?
 
 ## 2. Decisions made
 
@@ -235,7 +246,30 @@ Found while doing this, not changed:
 1. **Require the tests to pass before merging:** Settings → Branches → Add rule for `main` → *Require status checks to pass*, and pick "Python and JavaScript unit tests", "Browser tests (the page itself)", "Python packages" and "npm packages (test tooling)".
 2. **Turn on vulnerability alerts:** Settings → Code security → *Dependabot alerts*. The config file only drives the weekly update pull requests, not the alerts.
 
-## 11. Order of work
+## 11. Remembered settings and readable dates (fourth pull request)
+
+**What was measured.** Every setting was changed, then the page was reopened from its plain address, as from a bookmark:
+
+| Setting | Remembered before | After |
+|---|---|---|
+| Light/dark theme | Yes | Yes |
+| Panels and overlays shown | Yes | Yes |
+| Daily / Mondays | Yes | Yes |
+| Window (number of months) | **No** — back to 1M | Yes |
+| Method settings (swing period, cluster distance, minimum touches) | **No** — back to the defaults | Yes |
+
+The window and method settings lived only in the page address. They are now also kept in the browser. A link that carries settings still wins, so shared links open as sent.
+
+**Why the dates were hard to read.** The date strip's position assumed a 14-pixel gap under the last panel, but the last panel has no gap, so the dates were drawn inside the volume panel, on top of its bars. They were also small, faint grey, and written "09-25".
+
+| Before | After |
+|---|---|
+| Drawn over the volume bars | Their own strip under the last panel, with a small tick at each date |
+| "09-25" | "Sep 25"; the first trading day of a month in bold ("Oct"); January with its year ("Jan 2026") |
+| Faint grey, 11px | Darker, 12px |
+| Hover tag "2026-10-16" | "Fri, Oct 16, 2026", kept on the chart near the edges |
+
+## 12. Order of work
 
 | Order | Phase | Size |
 |---|---|---|
