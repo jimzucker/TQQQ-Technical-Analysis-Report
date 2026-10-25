@@ -3,7 +3,7 @@ const { test, expect } = require("@playwright/test");
 const { openPage } = require("./helpers");
 
 test("page renders every section with no errors", async ({ page }) => {
-  const errors = await openPage(page);
+  const errors = await openPage(page, "?window=12m");
   await expect(page.locator("#blHeadline")).toContainText("TQQQ closed at $66.29");
   await expect(page.locator("#asOf")).toContainText(/Oct 23, 2026|2026-10-23/);
   await expect(page.locator("#kpis .kpi")).toHaveCount(6);
@@ -16,6 +16,16 @@ test("page renders every section with no errors", async ({ page }) => {
   expect(await page.locator("#findings li, #findings p").count()).toBeGreaterThanOrEqual(10);
   for (const id of ["#mainChart", "#cmpChart", "#benchChart"]) await expect(page.locator(`${id} canvas`)).toBeVisible();
   await expect(page.locator("#indTable tbody tr").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("the page opens on the 1-month window", async ({ page }) => {
+  const errors = await openPage(page);
+  await expect(page.locator('#windowSeg button[data-w="1m"]')).toHaveAttribute("aria-checked", "true");
+  expect(await page.evaluate(() => window.__dashboard.res.opts.window)).toBe(21);
+  expect(new URL(page.url()).searchParams.get("window")).toBe("1m");
+  // the 1-month window has no floor below the close in the frozen data, only levels above it
+  await expect(page.locator("#blHeadline")).toContainText("the nearest level is above the price");
   expect(errors).toEqual([]);
 });
 
@@ -82,7 +92,7 @@ test("theme button switches between light and dark", async ({ page }) => {
 });
 
 test("CSV download holds the levels and the daily rows", async ({ page }) => {
-  await openPage(page);
+  await openPage(page, "?window=12m");
   const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#dlCsv").click()]);
   expect(download.suggestedFilename()).toBe("tqqq-support-2026-10-23-252d.csv");
   const text = require("fs").readFileSync(await download.path(), "utf8");
@@ -93,7 +103,7 @@ test("CSV download holds the levels and the daily rows", async ({ page }) => {
 });
 
 test("PNG download produces an image", async ({ page }) => {
-  await openPage(page);
+  await openPage(page, "?window=12m");
   const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#dlPng").click()]);
   expect(download.suggestedFilename()).toMatch(/^tqqq-support-2026-10-23-252d\.png$/);
 });

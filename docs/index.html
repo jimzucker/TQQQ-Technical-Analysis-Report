@@ -86,10 +86,12 @@
           <button type="button" role="radio" data-cadence="daily" aria-checked="true">Daily</button>
           <button type="button" role="radio" data-cadence="weekly" aria-checked="false">Mondays</button>
         </div>
+        <button type="button" class="btn small" id="zoomIn" aria-label="Zoom in">+</button>
+        <button type="button" class="btn small" id="zoomOut" aria-label="Zoom out">−</button>
         <button type="button" class="btn small" id="resetZoom">Reset view</button>
       </div>
     </div>
-    <p class="help lede">Each green band is a price area where TQQQ has stopped falling and turned back up. The darker the band, the more reliable the level has been. <b>S1</b> is the closest support below today's price, <b>S2</b> the next one down, and so on.</p>
+    <p class="help lede">Each green band is a price area where TQQQ has stopped falling and turned back up. The darker the band, the more reliable the level has been. <b>S1</b> is the closest support below today's price, <b>S2</b> the next one down, and so on. Grey bands with a dashed line, <b>A1</b>, <b>A2</b> and so on, are <b>levels above the price</b>: old floors the price has since closed below. Rises often stall there.</p>
     <ul class="legend" id="legend"></ul>
     <div class="chips" role="group" aria-label="Chart panels">
       <span class="chips-label">Show:</span>
@@ -99,9 +101,10 @@
       <label class="chip"><input type="checkbox" data-pane="dd"> % below 12-month high</label>
       <label class="chip"><input type="checkbox" data-pane="rolling" checked> <span><span class="pv-label">3</span>-day low</span></label>
       <label class="chip"><input type="checkbox" data-pane="profile"> Volume by price</label>
+      <label class="chip"><input type="checkbox" data-pane="above" checked> Levels above price</label>
     </div>
     <div id="mainChart" class="main-chart" aria-describedby="chartHelp"></div>
-    <p id="chartHelp" class="help"><b>Scroll over the chart to zoom</b>; drag sideways to pan; pinch to zoom on a touchscreen; double-click or <b>Reset view</b> to go back. Hover or tap a bar for its numbers. <b>Mondays</b> draws one bar per week — each Monday's session only — which is far easier to read across a long stretch. Because it is a sample, moves on the other four days are not drawn: a level tested on a Wednesday will not show up here, though it still counts in the table below, which always uses every day. The greyed-out area on the left is history <em>outside</em> the window you picked; it is shown for context but is not used to find levels.</p>
+    <p id="chartHelp" class="help"><b>To zoom</b>, pinch on a trackpad or touchscreen, hold Ctrl (⌘ on a Mac) and scroll, or use the <b>+</b> and <b>−</b> buttons. Scrolling up or down over the chart scrolls the page as normal. <b>To move through time</b>, swipe sideways with two fingers, hold Shift and scroll, or drag. Double-click or <b>Reset view</b> to go back to the window you picked. Hover or tap a bar for its numbers. <b>Mondays</b> draws one bar per week — each Monday's session only — which is far easier to read across a long stretch. Because it is a sample, moves on the other four days are not drawn: a level tested on a Wednesday will not show up here, though it still counts in the table below, which always uses every day. The greyed-out area on the left is history <em>outside</em> the window you picked; it is shown for context but is not used to find levels.</p>
   </section>
 
   <section class="card" aria-labelledby="h-table">
@@ -109,7 +112,7 @@
     <div class="table-scroll"><table class="levels" id="levels">
       <thead><tr>
         <th scope="col">Level</th><th scope="col" class="num">Zone price</th><th scope="col" class="num">Zone range</th>
-        <th scope="col" class="num">Below price</th><th scope="col" class="num">Times held</th><th scope="col">Last tested</th>
+        <th scope="col" class="num">From price</th><th scope="col" class="num">Times held</th><th scope="col">Last tested</th>
         <th scope="col">Strength</th><th scope="col">Status</th>
       </tr></thead>
       <tbody></tbody>
@@ -117,9 +120,10 @@
     <dl class="defs">
       <div><dt>Zone price</dt><dd>The middle of the band — the single number to watch, weighted towards the days with the most trading.</dd></div>
       <div><dt>Zone range</dt><dd>The lowest and highest price inside the band. Support is an area, not an exact number.</dd></div>
+      <div><dt>From price</dt><dd>How far the zone price is from the last close: negative below it, positive above it.</dd></div>
       <div><dt>Times held</dt><dd>How many separate swing lows formed in that band during the window.</dd></div>
       <div><dt>Strength</dt><dd>A 0–100 score: how often price turned there (40%), how recently (30%), how much volume traded at those turns (20%) and how far price bounced afterwards (10%). Scores only compare levels inside the window you picked. 70+ is <b>Strong</b>, 40–69 <b>Moderate</b>, below 40 <b>Weak</b>.</dd></div>
-      <div><dt>Status</dt><dd><b>In play</b> — price is inside the zone now. <b>Recently tested</b> — price visited it in the last 10 sessions. <b>Holding</b> — untouched recently.</dd></div>
+      <div><dt>Status</dt><dd><b>In play</b> — price is inside the zone now. <b>Recently tested</b> — price visited it in the last 10 sessions. <b>Holding</b> — untouched recently. <b>Above price</b> — the price has closed below the zone, with the date it did so.</dd></div>
     </dl>
   </section>
 
@@ -166,7 +170,7 @@
           <div><dt>Window</dt><dd>How much history the method looks at. A 12-month window finds long-standing levels; a 1-month window finds only what matters right now.</dd></div>
           <div><dt>Zone</dt><dd>Several swing lows at nearly the same price, merged into one band. Real support is a range, not a single number.</dd></div>
           <div><dt>Touch</dt><dd>One swing low inside a zone. More touches means more buyers have defended that area.</dd></div>
-          <div><dt>Broken level</dt><dd>Price closed clearly below a zone. The level stops counting as support and leaves the list.</dd></div>
+          <div><dt>Level above price</dt><dd>A zone the price has since closed clearly below, labelled A1, A2 and so on. It no longer counts as support, but it stays on the chart and in the table because rises often stall where an old floor gave way.</dd></div>
           <div><dt>ATR</dt><dd>Average True Range: the size of a typical day's move. Used here to decide how wide a support zone should be and how far away a stop would sit.</dd></div>
           <div><dt>RSI</dt><dd>A 0–100 momentum gauge. Above 70 the recent rise looks stretched; below 30 the recent fall looks stretched.</dd></div>
           <div><dt>MACD</dt><dd>Compares a fast and a slow average of price to show whether momentum is building or fading.</dd></div>
@@ -177,8 +181,8 @@
           <li><b>Swing lows.</b> A day is a swing low when its low is the lowest from <span class="pv">3</span> sessions before it to <span class="pv">3</span> sessions after it. The most recent <span class="pv">3</span> sessions can't be confirmed yet and are drawn as hollow “pending” markers.</li>
           <li><b>Rolling low.</b> The lowest low of the last <span class="pv">3</span> sessions is drawn as a step line — the nearest short-term floor.</li>
           <li><b>Zones.</b> Swing lows within a set distance of each other (default 0.5 × the 14-day ATR, about 2–3% for TQQQ) are merged into one zone. The zone price is the volume-weighted average of its lows; the range runs from its lowest to highest low.</li>
-          <li><b>Strength.</b> Touches 40%, recency 30%, volume at the touches 20%, bounce afterwards 10%. The five strongest zones are reported.</li>
-          <li><b>Broken zones.</b> Once price closes more than half the cluster distance below a zone, that zone is dropped from the list; the break is reported under “What changed”.</li>
+          <li><b>Strength.</b> Touches 40%, recency 30%, volume at the touches 20%, bounce afterwards 10%. The five strongest zones below the price are reported as S1–S5, and the five strongest above it as A1–A5.</li>
+          <li><b>Levels above price.</b> Once price closes more than half the cluster distance below a zone, that zone moves from the support list to the levels above the price (A1 is the nearest). The break is also reported under “What changed”.</li>
         </ol>
         <h3>Trend call</h3>
         <p>Three checks: price above/below both the 50 and 200-day averages; the 50-day average's slope over 20 sessions; and whether the last two swing lows are rising or falling. All three agree → <b>Uptrend</b> or <b>Downtrend</b>; otherwise <b>Mixed</b>.</p>

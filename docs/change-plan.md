@@ -2,7 +2,7 @@
 
 Written 2026-10-25. This file records what was asked for, what the review found, and the plan agreed. It is meant to be shared with the original owner of the app. The [README change log](../README.md#change-log) records each phase as it lands.
 
-**Status:** test automation and the security checks are done. Phases 1–5 are not started; phases 3 and 1 follow in the next pull request.
+**Status:** test automation, the security checks, phase 3 (chart scrolling) and phase 1 (levels above price) are done. Phases 4, 5 and 2 are not started.
 
 **Pull requests, each built on the one before:**
 
@@ -45,6 +45,16 @@ The requests, copied word for word:
 > include prompt and plan for vunerabilties on it and any test enh for vunerabilties
 
 > se we will have branch 1 for tests, branch 2 for vunerabilties , branch 3 for functional changes
+
+> prs shoudl be rebased on each other in order
+
+> how do we test branch 3 before we submit PR?
+
+> yes / i tried to test but link is not working
+
+> after pr created alwasy remind me to disable daily updates remmeber that!
+
+> change default on branch 3 to 1m from 12m
 
 ## 2. Decisions made
 
@@ -191,7 +201,7 @@ The review of the tests found that the page code had no tests at all, and both c
 | Coverage was never measured | Shown per file on each CI run's summary page |
 
 Found while doing this, not changed:
-- **Reset view does not return to the opening view.** The chart opens on the chosen window, but Reset view, double-click and the 0 key show all two years of history. A browser test records this as the current behaviour.
+- **Reset view does not return to the opening view.** The chart opens on the chosen window, but Reset view, double-click and the 0 key show all two years of history. A browser test records this as the current behaviour. *Fixed in the third pull request: they now return to the window the chart opened on.*
 - `fetch.py:95` uses `datetime.utcfromtimestamp()`, which Python has marked for removal.
 
 ## 10. Security checks (its own pull request, after the tests)

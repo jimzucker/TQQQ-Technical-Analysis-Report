@@ -18,12 +18,10 @@ test("keyboard + and - zoom, and 0 resets", async ({ page }) => {
   await page.keyboard.press("-");
   expect(span(await view(page))).toBeGreaterThan(span(zoomed));
   await page.keyboard.press("0");
-  expect(await view(page)).toEqual(await full(page));
+  expect(await view(page)).toEqual(start);
 });
 
-test("current behaviour: the chart opens on the window, but reset shows all the history", async ({ page }) => {
-  // The chart opens on the chosen window (12 months by default), while Reset view,
-  // double-click and the 0 key show every loaded session (about two years).
+test("the chart opens on the chosen window, with all the history still reachable", async ({ page }) => {
   await openPage(page);
   const start = await view(page);
   const all = await full(page);
@@ -38,14 +36,31 @@ test("current behaviour: the chart opens on the window, but reset shows all the 
 test("Reset view and double-click put the chart back", async ({ page }) => {
   await openPage(page);
   await page.locator("#mainChart canvas").focus();
+  const start = await view(page);
   await page.keyboard.press("+");
   await page.locator("#resetZoom").click();
-  expect(await view(page)).toEqual(await full(page));
+  expect(await view(page)).toEqual(start);
   await page.locator("#mainChart canvas").focus(); // the click moved focus to the button
-  await page.keyboard.press("+");
-  expect(span(await view(page))).toBeLessThan(span(await full(page)));
+  await page.keyboard.press("-"); await page.keyboard.press("-"); // zoom out past the window
+  expect(span(await view(page))).toBeGreaterThan(span(start));
   await page.locator("#mainChart canvas").dblclick({ position: { x: 300, y: 150 } });
-  expect(await view(page)).toEqual(await full(page));
+  expect(await view(page)).toEqual(start);
+});
+
+test("after a window change, reset goes back to the new window", async ({ page }) => {
+  await openPage(page);
+  await page.locator('#windowSeg button[data-w="3m"]').click();
+  const start3m = await view(page);
+  expect(span(start3m)).toBeLessThan(80); // about 63 sessions plus a little context
+  await page.locator("#zoomOut").click();
+  await page.locator("#resetZoom").click();
+  expect(await view(page)).toEqual(start3m);
+  // and after switching to Mondays, which rebuilds the chart
+  await page.locator('#cadenceSeg button[data-cadence="weekly"]').click();
+  const startWeekly = await view(page);
+  await page.locator("#zoomOut").click();
+  await page.locator("#resetZoom").click();
+  expect(await view(page)).toEqual(startWeekly);
 });
 
 test("dragging sideways moves the chart through time", async ({ page }) => {
@@ -72,13 +87,64 @@ test("Ctrl + scroll over the chart zooms it", async ({ page }) => {
   await expect.poll(async () => span(await view(page))).toBeLessThan(span(before));
 });
 
-test("current behaviour: a plain scroll over the main chart zooms it", async ({ page }) => {
-  // Records how main behaves today. The scrolling change replaces this test.
+test("a plain scroll over the chart scrolls the page and leaves the chart alone", async ({ page }) => {
+  await openPage(page);
+  await overChart(page);
+  const before = await view(page);
+  const y0 = await page.evaluate(() => window.scrollY);
+  await page.mouse.wheel(0, 300);
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(y0);
+  expect(await view(page)).toEqual(before);
+  // and a short note says how to zoom instead
+  await expect(page.locator("#mainChart .chart-hint")).toHaveClass(/show/);
+  await expect(page.locator("#mainChart .chart-hint")).toContainText("To zoom");
+});
+
+test("a sideways swipe moves the chart through time, not the page", async ({ page }) => {
+  await openPage(page);
+  await page.locator("#mainChart canvas").focus();
+  await page.keyboard.press("+"); await page.keyboard.press("+");
+  await page.keyboard.press("0"); await page.keyboard.press("+"); // zoomed in, away from both ends
+  const before = await view(page);
+  await overChart(page);
+  const x0 = await page.evaluate(() => window.scrollX);
+  await page.mouse.wheel(-200, 0); // fingers moving right = earlier dates
+  await expect.poll(async () => (await view(page)).from).toBeLessThan(before.from);
+  expect(span(await view(page))).toBeCloseTo(span(before), 5);
+  expect(await page.evaluate(() => window.scrollX)).toBe(x0);
+});
+
+test("Shift + scroll moves the chart through time", async ({ page }) => {
+  await openPage(page);
+  await page.locator("#mainChart canvas").focus();
+  await page.keyboard.press("0"); await page.keyboard.press("+");
+  const before = await view(page);
+  await overChart(page);
+  await page.keyboard.down("Shift");
+  await page.mouse.wheel(0, 200);
+  await page.keyboard.up("Shift");
+  await expect.poll(async () => (await view(page)).from).toBeGreaterThan(before.from);
+  expect(span(await view(page))).toBeCloseTo(span(before), 5);
+});
+
+test("⌘ + scroll zooms, like Ctrl + scroll", async ({ page }) => {
   await openPage(page);
   const before = await view(page);
   await overChart(page);
+  await page.keyboard.down("Meta");
   await page.mouse.wheel(0, -300);
+  await page.keyboard.up("Meta");
   await expect.poll(async () => span(await view(page))).toBeLessThan(span(before));
+});
+
+test("the + and − buttons zoom in and out", async ({ page }) => {
+  await openPage(page);
+  const before = await view(page);
+  await page.locator("#zoomIn").click();
+  const zoomed = await view(page);
+  expect(span(zoomed)).toBeLessThan(span(before));
+  await page.locator("#zoomOut").click();
+  expect(span(await view(page))).toBeGreaterThan(span(zoomed));
 });
 
 test("Mondays view draws one bar per week", async ({ page }) => {

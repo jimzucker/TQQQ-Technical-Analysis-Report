@@ -12,10 +12,13 @@
   const WIN_NAMES = { 21: "1 month", 63: "3 months", 126: "6 months", 189: "9 months", 252: "12 months" };
   const winName = (w) => WIN_NAMES[w] || `${w} sessions`;
   // which optional chart panels are visible; remembered per browser
-  const PANE_DEFAULTS = { vol: true, rsi: true, macd: false, dd: false, rolling: true, profile: false };
-  const OVERLAYS = new Set(["rolling", "profile"]); // drawn inside the price pane, no rebuild needed
+  const PANE_DEFAULTS = { vol: true, rsi: true, macd: false, dd: false, rolling: true, profile: false, above: true };
+  const OVERLAYS = new Set(["rolling", "profile", "above"]); // drawn inside the price pane, no rebuild needed
 
-  const state = { data: null, opts: SR.normalize({}), res: null, lab: null, charts: {}, windowKey: "12m",
+  // the window the page opens on. The nightly snapshot and "What changed" keep the
+  // method's own 12-month default (SR.DEFAULTS), so their history stays comparable.
+  const PAGE_WINDOW = "1m";
+  const state = { data: null, opts: SR.normalize({ window: SR.WINDOW_PRESETS[PAGE_WINDOW] }), res: null, lab: null, charts: {}, windowKey: PAGE_WINDOW,
     panes: { ...PANE_DEFAULTS }, cadence: "daily", view: null };
   // the browser tests read the page's state; only exposed when a test drives the browser
   if (navigator.webdriver) window.__dashboard = state;
@@ -23,7 +26,7 @@
   /* ------------------------------------------------------------ URL <-> settings */
   function readUrl() {
     const q = new URLSearchParams(location.search);
-    const o = {};
+    const o = { window: SR.WINDOW_PRESETS[PAGE_WINDOW] };
     const w = q.get("window");
     if (w) {
       const k = w.toLowerCase();
@@ -135,6 +138,8 @@
     });
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => renderCharts({ keepView: true }));
     $("#resetZoom").addEventListener("click", () => state.charts.main.resetView());
+    $("#zoomIn").addEventListener("click", () => state.charts.main.zoom(1 / 1.25));
+    $("#zoomOut").addEventListener("click", () => state.charts.main.zoom(1.25));
     $$("#cadenceSeg button").forEach((b) => b.addEventListener("click", () => {
       if (state.cadence === b.dataset.cadence) return;
       state.cadence = b.dataset.cadence;
@@ -229,26 +234,30 @@
 
   function renderTable() {
     const r = state.res, d = state.data;
-    const row = (z) => `<tr>
-        <td><span class="lvl support">${z.id}</span></td>
+    const row = (z) => `<tr${z.broken ? ' class="above-row"' : ""}>
+        <td><span class="lvl ${z.broken ? "above" : "support"}">${z.id}</span></td>
         <td class="num"><b>${money(z.price)}</b></td>
         <td class="num">${z.high - z.low < 0.005 ? '<span class="muted">single low</span>' : `${money(z.low)}–${money(z.high).slice(1)}`}</td>
         <td class="num">${z.inZone ? "in zone" : pct(z.distancePct)}</td>
         <td class="num">${z.touches}</td>
         <td>${fmtDate(z.date)}</td>
         <td class="strength"><span class="bar" aria-hidden="true"><i class="t${z.strength}" style="width:${z.score}%"></i></span><span class="tier">${z.strength}</span> <span class="muted">${z.score}</span></td>
-        <td><span class="status ${z.status.replace(/ /g, "-")}">${z.status}</span>${z.brokeBefore ? '<span class="sub-cell">broke once before</span>' : ""}</td>
+        <td><span class="status ${z.status.replace(/ /g, "-")}">${z.status}</span>${
+          z.broken ? (z.brokeDate ? `<span class="sub-cell">price closed below it ${fmtDate(z.brokeDate)}</span>` : "")
+          : z.brokeBefore ? '<span class="sub-cell">broke once before</span>' : ""}</td>
       </tr>`;
     const sup = r.supports; // already nearest-first
-    let html = `<tr class="price-row"><td>Last close</td><td class="num">${money(r.price)}</td><td class="num muted">ATR ${money(r.atr)}</td><td colspan="5" class="muted">${d.dates[r.end]} · zones are ${money(r.tol)} wide (${r.opts.clusterMult} × ATR)</td></tr>`;
+    // levels above price go above the last-close row, highest first, so the table reads in price order
+    let html = r.above.slice().reverse().map(row).join("");
+    html += `<tr class="price-row"><td>Last close</td><td class="num">${money(r.price)}</td><td class="num muted">ATR ${money(r.atr)}</td><td colspan="5" class="muted">${d.dates[r.end]} · zones are ${money(r.tol)} wide (${r.opts.clusterMult} × ATR)</td></tr>`;
     html += sup.length ? sup.map(row).join("")
       : `<tr><td colspan="8" class="muted">No confirmed support zone in a ${winName(r.opts.window)} window — price has not put in enough swing lows. Try a longer window.</td></tr>`;
     if (r.fallbacks.length) {
       html += r.fallbacks.map((f) => `<tr><td><span class="lvl fallback">Fallback</span></td><td class="num">${money(f.price)}</td><td colspan="6" class="muted">${f.label} — shown because this window has fewer than two confirmed support zones.</td></tr>`).join("");
     }
-    if (r.broken.length) {
-      const list = r.broken.slice(-3).reverse().map((z) => money(z.price)).join(", ");
-      html += `<tr class="foot-row"><td colspan="8" class="muted">${r.broken.length} zone${r.broken.length > 1 ? "s" : ""} in this window broke (price closed below ${list}) and ${r.broken.length > 1 ? "are" : "is"} no longer counted as support.</td></tr>`;
+    const unlisted = r.broken.length - r.above.length;
+    if (unlisted > 0) {
+      html += `<tr class="foot-row"><td colspan="8" class="muted">${unlisted} weaker level${unlisted > 1 ? "s" : ""} above the price ${unlisted > 1 ? "are" : "is"} not listed; only the strongest ${r.above.length} are shown.</td></tr>`;
     }
     $("#levels tbody").innerHTML = html;
   }
@@ -300,13 +309,14 @@
     const tags = [];
     if (v.lows.includes(i)) tags.push(v.weekly ? "Swing low this week" : "Swing low");
     if (v.pendingLows.includes(i)) tags.push("Pending swing low");
-    const zone = state.res.supports.find((z) => d.low[i] <= z.high + state.res.tol / 2 && d.high[i] >= z.low - state.res.tol / 2);
+    const zone = [...state.res.supports, ...(state.panes.above ? state.res.above : [])]
+      .find((z) => d.low[i] <= z.high + state.res.tol / 2 && d.high[i] >= z.low - state.res.tol / 2);
     const row = (k, v) => `<tr><td>${k}</td><td>${v}</td></tr>`;
     return `<div class="d">${fmtDate(d.dates[i])}${tags.length ? ` · ${tags.join(", ")}` : ""}</div><table>
       ${row("Open / Close", `${money(d.open[i])} / ${money(d.close[i])}`)}
       ${row("High / Low", `${money(d.high[i])} / ${money(d.low[i])}`)}
       ${row("Change", `<span class="${chg >= 0 ? "up" : "down"}">${pct(chg, 2)}</span>`)}
-      ${zone ? row(`${sw("--support")}In support zone`, `${zone.id} ${money(zone.price)}`) : ""}
+      ${zone ? row(zone.broken ? `${sw("--above")}In level above price` : `${sw("--support")}In support zone`, `${zone.id} ${money(zone.price)}`) : ""}
       ${row(`${sw("--rolling")}${state.opts.period}-day low`, money(v.rollingLow[i]))}
       ${row(`${sw("--sma20")}20 / ${sw("--sma50")}50 / ${sw("--sma200")}200-day`, `${money(d.sma20[i])} / ${money(d.sma50[i])} / ${money(d.sma200[i])}`)}
       ${row("Volume", `${compact(d.volume[i])} (${(d.volume[i] / d.vol_avg20[i]).toFixed(1)}× avg)`)}
@@ -374,7 +384,6 @@
     panes[panes.length - 1].gap = 0;
     const c = new StackChart($("#mainChart"), {
       panes, dates: v.dates, tooltip: mainTooltip, rightPad: 4,
-      wheelZoom: true,                       // plain scroll zooms while the pointer is over it
       dimBefore: () => state.view.start,
     });
     c.canvas.setAttribute("aria-label", `Candlestick chart of TQQQ, ${v.weekly ? "one bar per Monday" : "one bar per trading day"}, with shaded support zones and optional volume, RSI, MACD and drawdown panels. The levels table below lists the same zones.`);
@@ -388,6 +397,7 @@
     state.view = SR.chartModel(state.data, state.res, state.cadence);
     state.charts.main = buildMainChart();
     renderLegends();
+    state.charts.main.home = homeView();
     if (view) state.charts.main.setView(view.from, view.to, [0, state.view.dates.length - 1]);
     else renderCharts();
   }
@@ -423,6 +433,17 @@
       const ym = Math.round(S.y(z.price)) + 0.5;
       ctx.beginPath(); ctx.moveTo(S.left, ym); ctx.lineTo(S.right, ym); ctx.stroke();
       labels.push({ y: S.y(z.price), text: `${z.id} ${money(z.price)}`, col: sup });
+    }
+    // levels above price: a muted band with a dashed centre line, so they never read as support
+    if (state.panes.above) {
+      const ab = css("--above");
+      for (const z of r.above) {
+        const y1 = S.y(z.high + half), y2 = S.y(z.low - half);
+        ctx.fillStyle = withAlpha(ab, 0.10);
+        ctx.fillRect(S.left, y1, S.right - S.left, Math.max(4, y2 - y1));
+        draw.hline(ctx, S, z.price, withAlpha(ab, 0.9), [5, 4], 1.25);
+        labels.push({ y: S.y(z.price), text: `${z.id} ${money(z.price)}`, col: ab });
+      }
     }
     // fallback levels for thin windows
     r.fallbacks.forEach((f) => {
@@ -532,13 +553,19 @@
       : "No level appears in 3 or more windows right now — treat the levels below as specific to the window you picked.";
   }
 
-  function renderCharts({ keepView } = {}) {
-    const r = state.res, v = state.view;
-    const main = state.charts.main;
-    const end = v.dates.length - 1;
-    // the chart shows the window (plus a little context); users can pan back to the full 2 years
+  /** The view the chart opens on, and returns to on reset: the window plus a little context. */
+  function homeView() {
+    const v = state.view, end = v.dates.length - 1;
     const lead = Math.round((end - v.start) * 0.06);
-    const from = Math.max(0, v.start - lead);
+    return [Math.max(0, v.start - lead), end];
+  }
+
+  function renderCharts({ keepView } = {}) {
+    const r = state.res;
+    const main = state.charts.main;
+    // users can still pan or zoom out to the full 2 years
+    const [from, end] = homeView();
+    main.home = [from, end];
     if (keepView && main.view) main.render(); else main.setView(from, end, [0, end]);
     const b = state.charts.bench;
     b.recompute();
@@ -549,6 +576,7 @@
   function renderLegends() {
     legend($("#legend"), [
       ["box strong", `background:${withAlpha(css("--support"), 0.30)};border:1px solid ${css("--support")}`, "Support zone (darker = stronger)"],
+      ...(state.panes.above ? [["box", `background:${withAlpha(css("--above"), 0.18)};border:1px dashed ${css("--above")}`, "Level above price (was support)"]] : []),
       ["tri", `border-bottom-color:${css("--support")}`, "Swing low that built a level"],
       ["tri faint", `border-bottom-color:${css("--support")}`, "Other swing low"],
       ["tri hollow", `border-bottom-color:${css("--support")}`, "Pending (not yet confirmed)"],
@@ -571,7 +599,7 @@
     const lines = [
       `# TQQQ support levels, data as of ${d.meta.as_of}, window ${r.opts.window} sessions, swing period ${r.opts.period}, cluster ${r.opts.clusterMult}xATR, min touches ${r.opts.minTouches}`,
       "level,zone_price,zone_low,zone_high,distance_pct,touches,last_test,first_seen,strength_score,strength,status,volume_vs_avg",
-      ...r.supports.map((z) => [z.id, z.price.toFixed(2), z.low.toFixed(2), z.high.toFixed(2),
+      ...[...r.above.slice().reverse(), ...r.supports].map((z) => [z.id, z.price.toFixed(2), z.low.toFixed(2), z.high.toFixed(2),
         z.distancePct.toFixed(2), z.touches, z.date, z.firstDate, z.score, z.strength, z.status, z.volumeRatio.toFixed(2)].join(",")),
       "",
       "date,open,high,low,close,volume,rolling_low,sma20,sma50,sma200,rsi14,macd,macd_signal,bb_upper,bb_lower,atr14,drawdown_pct,swing_low",

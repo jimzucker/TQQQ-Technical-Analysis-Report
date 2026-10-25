@@ -8,9 +8,10 @@
  *   3. Cluster swing lows within clusterMult × ATR(14) into zones (volume-weighted price).
  *   4. Score zones: touches 40%, recency 30%, volume 20%, bounce 10%.
  *
- * The report covers support only. Swing highs / resistance are deliberately not
- * part of the output: the brief asks for support levels, and leaving overhead
- * levels off keeps the chart readable.
+ * The report covers support only, found from swing lows. Swing highs are not
+ * used. Support zones the price has since fallen below are still reported, as
+ * "levels above price" (A1, A2, …) next to S1–S5, because a floor that gave way
+ * is often where a later rise stalls.
  */
 (function (root, factory) {
   const api = factory();
@@ -19,7 +20,7 @@
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
 
-  const DEFAULTS = { window: 252, period: 3, clusterMult: 0.5, minTouches: 1, topN: 5, bounceLookahead: 10 };
+  const DEFAULTS = { window: 252, period: 3, clusterMult: 0.5, minTouches: 1, topN: 5, topAbove: 5, bounceLookahead: 10 };
   const LIMITS = {
     window: [21, 252], period: [2, 10], clusterMult: [0.25, 1.5], minTouches: [1, 5],
   };
@@ -127,10 +128,14 @@
       });
       // later tests: bars after the last swing low that entered the band (with tolerance)
       const bandLo = lo - half, bandHi = hi + half;
-      let lastTest = lastI, brokeBefore = false;
+      let lastTest = lastI, brokeBefore = false, brokeIdx = null;
       for (let i = lastI + 1; i <= endIdx; i++) {
         if (data.low[i] <= bandHi && data.high[i] >= bandLo) lastTest = i;
-        if (data.close[i] < lo - half) brokeBefore = true;
+        if (data.close[i] < lo - half) {
+          // the latest close that went from inside or above the zone to clearly below it
+          if (data.close[i - 1] >= lo - half) brokeIdx = i;
+          brokeBefore = true;
+        }
       }
       return {
         price: z.price, low: lo, high: hi,
@@ -139,7 +144,7 @@
         firstIdx: members[0].i, lastPivotIdx: lastI, lastTestIdx: lastTest,
         avgVolume: mean(members.map((m) => m.v)),
         bounce: mean(bounces),
-        brokeBefore,
+        brokeBefore, brokeIdx,
       };
     }).filter((z) => z.touches >= o.minTouches);
 
@@ -161,14 +166,16 @@
       z.volumeRatio = z.avgVolume / avgVol;
       z.volumeLabel = z.volumeRatio >= 1.3 ? "Heavy" : z.volumeRatio <= 0.8 ? "Light" : "Normal";
       z.distancePct = (z.price / price - 1) * 100;
-      // a zone is broken once price closes clearly below it; until then it is live support
+      // a zone is broken once price closes clearly below it; until then it is live support.
+      // A broken zone sits above the price, and is listed as a level above price.
       z.broken = price < z.low - half;
       z.inZone = !z.broken && price <= z.high + half;
-      z.status = z.broken ? "Broken"
+      z.status = z.broken ? "Above price"
         : z.inZone ? "In play"
         : endIdx - z.lastTestIdx <= 10 ? "Recently tested" : "Holding";
       z.date = data.dates[z.lastTestIdx];
       z.firstDate = data.dates[z.firstIdx];
+      z.brokeDate = z.broken && z.brokeIdx != null ? data.dates[z.brokeIdx] : null;
     }
 
     // live support: strongest `topN`, then listed nearest-to-price first
@@ -176,8 +183,12 @@
       .sort((a, b) => b.score - a.score).slice(0, o.topN)
       .sort((a, b) => b.price - a.price)
       .map((z, i) => Object.assign(z, { rank: i + 1, id: "S" + (i + 1) }));
-    // zones price has closed below — kept for the "what changed" feed, not drawn on the chart
+    // zones price has closed below, nearest first — every one is kept for the "what changed" feed
     const broken = zones.filter((z) => z.broken).sort((a, b) => a.price - b.price);
+    // levels above price: chosen the same way as S1–S5 (strongest `topAbove`), listed nearest first
+    const above = [...broken].sort((a, b) => b.score - a.score).slice(0, o.topAbove)
+      .sort((a, b) => a.price - b.price)
+      .map((z, i) => Object.assign(z, { rank: i + 1, id: "A" + (i + 1) }));
 
     // fallbacks for thin windows
     const rl = rollingLow(data.low, o.period);
@@ -190,7 +201,7 @@
 
     return {
       opts: o, start, end: endIdx, price, atr, tol, avgVolume: avgVol,
-      zones, supports, broken, fallbacks,
+      zones, supports, above, broken, fallbacks,
       pivots: { lows: lowP.confirmed, pendingLows: lowP.pending },
       rollingLow: rl,
     };
@@ -340,8 +351,19 @@
         `Buyers have turned it higher ${plural(s.touches, "time")} here, most recently on ${fd(s.date)}, ` +
         `which scores it a <b>${s.strength.toLowerCase()}</b> level (${s.score}/100).`);
     } else if (res.fallbacks.length) {
-      add(GROUPS[0], `<b>No confirmed support was found below the price</b> in this window — there simply have not been enough swing lows yet. ` +
+      add(GROUPS[0], `<b>No confirmed support was found below the price</b> in this window` +
+        (res.above.length
+          ? ` — every level found here is above the close, because the price has fallen through ${res.above.length === 1 ? "it" : "them"}. `
+          : ` — there simply have not been enough swing lows yet. `) +
         `Fall back to ${res.fallbacks.map((x) => `the ${x.label.toLowerCase()} at ${f(x.price)}`).join(" and ")}, or widen the window.`);
+    }
+
+    const up = res.above[0];
+    if (up) {
+      add(GROUPS[0], `<b>The nearest level above the price is ${up.id} at ${f(up.low)}–${f(up.high)}</b>, ${pct(up.distancePct)} above the last close. ` +
+        `It held ${plural(up.touches, "time")} before the price closed below it` +
+        `${up.brokeDate ? ` on ${fd(up.brokeDate)}` : ""}. A floor that gave way is often where a later rise stalls` +
+        `${res.above.length > 1 ? `; ${plural(res.above.length - 1, "more level")} sit${res.above.length === 2 ? "s" : ""} higher up` : ""}.`);
     }
 
     if (s && nxt) {
@@ -380,7 +402,7 @@
       add(GROUPS[0], `The immediate floor is the <b>${res.opts.period}-day rolling low at ${f(rl)}</b>, ${pct(rlPct)} under the close — ` +
         `the line in the sand for this week rather than this quarter.` +
         (res.broken.length
-          ? ` ${plural(res.broken.length, "zone")} in this window ${res.broken.length === 1 ? "has already broken and no longer counts" : "have already broken and no longer count"} as support.`
+          ? ` ${plural(res.broken.length, "zone")} in this window ${res.broken.length === 1 ? "has" : "have"} been broken — the price closed below ${res.broken.length === 1 ? "it" : "them"} — and ${res.broken.length === 1 ? "is" : "are"} listed as ${res.broken.length === 1 ? "a level" : "levels"} above the price.`
           : ` No zone in this window has broken.`));
     }
 
@@ -469,8 +491,12 @@
     const nxt = res.supports[1];
     const rows = [];
 
+    const up = res.above[0];
     const headline = !s
-      ? `TQQQ closed at <b>${f(res.price)}</b>. <b>No floor has formed below it</b> in this period — the price has not dipped and recovered often enough to mark one out.`
+      ? `TQQQ closed at <b>${f(res.price)}</b>. <b>No floor has formed below it</b> in this period` +
+        (up
+          ? ` — the nearest level is above the price, around ${f(up.price)}, ${whole(up.distancePct)} higher.`
+          : ` — the price has not dipped and recovered often enough to mark one out.`)
       : s.inZone
         ? `TQQQ closed at <b>${f(res.price)}</b> and is <b>sitting on its nearest floor</b>, ${f(s.low)}–${f(s.high)}. That is the level being tested right now.`
         : `TQQQ closed at <b>${f(res.price)}</b>, about <b>${whole(s.distancePct)} above its nearest floor</b>, around ${f(s.price)}.`;
@@ -488,6 +514,13 @@
     if (s && nxt) {
       rows.push({ label: "If that breaks", html:
         `The next floor down is <b>${f(nxt.price)}</b>, a further ${whole((s.price / nxt.price - 1) * 100)} lower. Nothing in between has held the price up before.` });
+    }
+
+    if (up) {
+      rows.push({ label: "Above the price", html:
+        `<b>${f(up.low)}–${f(up.high)}</b>, ${whole(up.distancePct)} higher. It used to be a floor` +
+        `${up.brokeDate ? `, until the price closed below it on ${fmtDate ? fmtDate(up.brokeDate) : up.brokeDate}` : ""}. ` +
+        `Rises often stall where an old floor gave way.` });
     }
 
     const t = lab.trend;
@@ -534,7 +567,7 @@
       macd: lab.macd.label, ma_cross: lab.maCross,
       atr_pct: +lab.atr.pct.toFixed(2), drawdown: +lab.drawdown.toFixed(2),
       supports: res.supports.map(z),
-      broken: res.broken.slice(0, 5).map((x) => ({ ...z(x), id: null })),
+      broken: res.broken.map((x) => ({ ...z(x), id: x.id || null })),
     };
   }
 
