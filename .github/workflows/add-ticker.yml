@@ -1,9 +1,9 @@
 name: Add a ticker
 
 # Started by the Cloudflare Worker (proxy/worker.mjs) when someone asks for a ticker on the
-# page, or by hand from the Actions tab. Adds the ticker to docs/data/tickers.json only if it
-# passes the same checks as the nightly refresh, builds its data and 70 sessions of history,
-# and commits. The reason is shown on the run's summary page when a ticker is turned away.
+# page, or by hand from the Actions tab. Adds the ticker to the list (data/tickers.json) only
+# if it passes the same checks as the nightly refresh, builds its data and 70 sessions of
+# history, and commits them to the market-data branch (pipeline/data_branch.sh). The reason is shown on the run's summary page when a ticker is turned away.
 
 on:
   workflow_dispatch:
@@ -27,6 +27,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # in case this run starts the data branch from main's history
 
       - uses: actions/setup-python@v5
         with:
@@ -39,6 +41,9 @@ jobs:
           node-version: "24"
 
       - run: pip install -r pipeline/requirements.txt
+
+      - name: Check out the data branch
+        run: pipeline/data_branch.sh get
 
       - name: Check the ticker and build its data
         id: add
@@ -63,14 +68,12 @@ jobs:
           SYMBOL: ${{ inputs.symbol }}
         run: node pipeline/snapshot.js --symbol "$SYMBOL" --backfill 70
 
-      - name: Commit and push
+      - name: Commit to the data branch
         if: steps.add.outputs.added == 'true'
         env:
           SYMBOL: ${{ inputs.symbol }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           SYM=$(printf '%s' "$SYMBOL" | tr '[:lower:]' '[:upper:]' | tr -cd 'A-Z0-9.-')
-          git commit -m "Add ticker: $SYM"
-          git push
+          pipeline/data_branch.sh put "Add ticker: $SYM"

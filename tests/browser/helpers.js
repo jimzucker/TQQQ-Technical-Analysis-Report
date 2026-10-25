@@ -6,7 +6,9 @@ const fs = require("fs");
 const FIX = path.join(__dirname, "..", "fixtures");
 const DATA = fs.readFileSync(path.join(FIX, "tqqq-2026-10-23.json"), "utf8");
 const CHANGES = fs.readFileSync(path.join(FIX, "changes-2026-10-23.json"), "utf8");
-// the other tickers on docs/data/tickers.json, frozen the same day
+// the ticker list and its other tickers, frozen the same day (the live ones are on the
+// market-data branch, not main)
+const LIST = fs.readFileSync(path.join(FIX, "tickers.json"), "utf8");
 const OTHER = Object.fromEntries(["qqq", "spy"].map((s) => [s, {
   data: fs.readFileSync(path.join(FIX, `${s}-2026-10-23.json`), "utf8"),
   changes: fs.readFileSync(path.join(FIX, `changes-${s}-2026-10-23.json`), "utf8"),
@@ -17,6 +19,8 @@ async function openPage(page, query = "", { data = DATA, changes = CHANGES } = {
   page.on("pageerror", (e) => errors.push(String(e)));
   page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
   await page.clock.setFixedTime(new Date("2026-10-23T20:00:00-04:00"));
+  // on the context, so a test's own page.route for the list takes precedence
+  await page.context().route("**/data/tickers.json*", (r) => r.fulfill({ contentType: "application/json", body: LIST }));
   await page.route("**/data/tqqq.json*", (r) => (data === null
     ? r.fulfill({ status: 404, body: "" })
     : r.fulfill({ contentType: "application/json", body: data })));

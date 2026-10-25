@@ -22,7 +22,7 @@ function yahooReply(p, { instrumentType = "ETF", rows } = {}) {
   };
 }
 
-/** A fake fetch: Yahoo for QQQ/SPY/TQQQ, the site's ticker list, and GitHub's dispatch endpoint. */
+/** A fake fetch: Yahoo for QQQ/SPY/TQQQ, the ticker list on the data branch, and GitHub's dispatch endpoint. */
 function fakeNet({ yahoo = {}, listing, github = 204 } = {}) {
   const calls = [];
   const reply = (status, body) => new Response(body == null ? null : JSON.stringify(body), { status });
@@ -35,14 +35,15 @@ function fakeNet({ yahoo = {}, listing, github = 204 } = {}) {
       const base = { QQQ: "qqq", SPY: "spy", TQQQ: "tqqq" }[sym] || "qqq";
       return reply(200, yahooReply(fixture(base), yahoo[sym] || {}));
     }
-    if (u.pathname.endsWith("/data/tickers.json")) return reply(200, listing || JSON.parse(fs.readFileSync(path.join(__dirname, "..", "docs", "data", "tickers.json"), "utf8")));
+    if (String(url) === LIST_URL) return reply(200, listing || JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", "tickers.json"), "utf8")));
     if (u.hostname === "api.github.com") return reply(github, null);
     return reply(404, null);
   };
   return { impl, calls };
 }
 
-const ENV = { GITHUB_TOKEN: "t", GITHUB_REPO: "owner/repo", SITE: "https://example.test/report", LIMITS: memoryKV() };
+const ENV = { GITHUB_TOKEN: "t", GITHUB_REPO: "owner/repo", LIMITS: memoryKV() };
+const LIST_URL = "https://raw.githubusercontent.com/owner/repo/market-data/data/tickers.json"; // the list is on the data branch
 function memoryKV() { const m = new Map(); return { get: async (k) => m.get(k) ?? null, put: async (k, v) => void m.set(k, v), m }; }
 const req = (method, q, ip = "1.2.3.4") => new Request(`https://proxy.test${q}`, { method, headers: { "CF-Connecting-IP": ip } });
 
@@ -91,7 +92,7 @@ test("prices: each reason for turning a symbol away is given in plain words", as
   }
 });
 
-test("add: not switched on until the token, repository, site and limit store are set", async () => {
+test("add: not switched on until the token, repository and limit store are set", async () => {
   const { handle } = await load();
   const r = await handle(req("POST", "/add?symbol=DIA"), {}, fakeNet().impl, AFTER_CLOSE);
   assert.equal(r.status, 503);

@@ -1,4 +1,4 @@
-"""The ticker list (docs/data/tickers.json) and building one ticker from it."""
+"""The ticker list (data/tickers.json on the market-data branch) and building one ticker from it."""
 import json
 import shutil
 import sys
@@ -10,18 +10,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import build  # noqa: E402
 
 FIXTURE = Path(__file__).parent / "fixtures" / "TQQQ.csv"
+# the list as it was on 2026-10-23; the live one is on the market-data branch, not main
+LIST = Path(__file__).resolve().parents[2] / "tests" / "fixtures" / "tickers.json"
 
 
-def test_the_real_list_is_valid_and_every_ticker_has_its_data_file():
-    listing = build.load_tickers()
+def test_the_list_is_valid_and_each_ticker_has_its_own_data_file():
+    listing = build.load_tickers(LIST)
     assert listing["default"] == "TQQQ"
     assert [t["symbol"] for t in listing["tickers"]] == ["TQQQ", "QQQ", "SPY"]
-    for t in listing["tickers"]:
-        f = build.ticker_file(t)
-        assert f.exists(), f"{t['symbol']}: {f} is missing"
-        assert json.loads(f.read_text())["meta"]["symbol"] == t["symbol"]
-    # TQQQ's file stays where it has always been
-    assert build.ticker_file(listing["tickers"][0]) == build.ROOT / "docs" / "data" / "tqqq.json"
+    files = [build.ticker_file(t) for t in listing["tickers"]]
+    assert files == [build.ROOT / "docs" / "data" / "tqqq.json",  # TQQQ's file stays where it has always been
+                     build.ROOT / "docs" / "data" / "qqq" / "qqq.json",
+                     build.ROOT / "docs" / "data" / "spy" / "spy.json"]
 
 
 @pytest.mark.parametrize("change, message", [
@@ -32,7 +32,7 @@ def test_the_real_list_is_valid_and_every_ticker_has_its_data_file():
     (lambda d: d.update(default="DIA"), "default"),
 ])
 def test_a_broken_list_is_stopped_with_the_reason(tmp_path, change, message):
-    data = json.loads(build.TICKERS.read_text())
+    data = json.loads(LIST.read_text())
     change(data)
     p = tmp_path / "tickers.json"
     p.write_text(json.dumps(data))

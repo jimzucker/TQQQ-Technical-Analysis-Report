@@ -1,4 +1,5 @@
-"""Build the dashboard's data file for one ticker on docs/data/tickers.json.
+"""Build the dashboard's data file for one ticker on the list (docs/data/tickers.json, which
+the workflows link to the market-data branch's data/ folder: pipeline/data_branch.sh).
 
 Usage:
   python pipeline/build.py                     # TQQQ (the list's default), live download
@@ -35,9 +36,10 @@ def _clean(values, nd):
             for v in values]
 
 
-def load_tickers(path: Path = TICKERS) -> dict:
+def load_tickers(path: Path | None = None) -> dict:
     """The ticker list, checked: unique symbols and folders, and every benchmark on the list."""
-    data = json.loads(Path(path).read_text())
+    path = Path(path or TICKERS)  # read at call time, so the tests can point it at a frozen list
+    data = json.loads(path.read_text())
     tickers = data["tickers"]
     symbols = [t["symbol"] for t in tickers]
     if len(set(symbols)) != len(symbols):
@@ -141,13 +143,14 @@ def revised_fields(prev: dict, tq: pd.DataFrame, qq: pd.DataFrame,
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--symbol", help="ticker on docs/data/tickers.json (default: the list's default, TQQQ)")
-    ap.add_argument("--tickers", default=str(TICKERS), help=argparse.SUPPRESS)
+    ap.add_argument("--tickers", default=None, help=argparse.SUPPRESS)
     ap.add_argument("--csv-dir", help="read <SYMBOL>.csv and <BENCHMARK>.csv from this folder instead of downloading")
     ap.add_argument("--period", default="2y")
     ap.add_argument("--out", help="output file (default: docs/<dir>/<symbol>.json from the list)")
     ap.add_argument("--force", action="store_true", help="write even if no new session")
     a = ap.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+    a.tickers = a.tickers or str(TICKERS)
     listing = load_tickers(Path(a.tickers))
     sym = (a.symbol or listing["default"]).upper()
     ticker = next((t for t in listing["tickers"] if t["symbol"] == sym), None)

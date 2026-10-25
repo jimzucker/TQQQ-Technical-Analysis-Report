@@ -10,13 +10,14 @@ const SR = require("../docs/js/support.js");
 
 const FIXTURE = path.join(__dirname, "fixtures", "tqqq-2026-10-23.json");
 const JOB = path.join(__dirname, "..", "pipeline", "snapshot.js");
+const LIST = ["--tickers", path.join(__dirname, "fixtures", "tickers.json")]; // the live list is on the market-data branch
 
 function workdir() {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "snapshot-test-"));
   fs.copyFileSync(FIXTURE, path.join(dir, "tqqq.json"));
   return dir;
 }
-const run = (dir, ...extra) => execFileSync(process.execPath, [JOB, "--data", dir, ...extra], { encoding: "utf8" });
+const run = (dir, ...extra) => execFileSync(process.execPath, [JOB, "--data", dir, ...LIST, ...extra], { encoding: "utf8" });
 const read = (...p) => JSON.parse(fs.readFileSync(path.join(...p), "utf8"));
 
 test("snapshot job writes the day's snapshot, the index and the what-changed file", () => {
@@ -82,8 +83,8 @@ test("a previous snapshot saved with older settings is rebuilt, so no change is 
 test("snapshot job runs for another ticker on the list, and stops for one that is not", () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "snapshot-test-"));
   fs.copyFileSync(path.join(__dirname, "fixtures", "qqq-2026-10-23.json"), path.join(dir, "qqq.json"));
-  const out = execFileSync(process.execPath, [JOB, "--symbol", "QQQ", "--data", dir], { encoding: "utf8" });
+  const out = execFileSync(process.execPath, [JOB, "--symbol", "QQQ", "--data", dir, ...LIST], { encoding: "utf8" });
   assert.match(out, /^snapshot QQQ 2026-10-23: /);
   assert.equal(read(dir, "history", "2026-10-23.json").as_of, "2026-10-23");
-  assert.throws(() => execFileSync(process.execPath, [JOB, "--symbol", "ZZZZ", "--data", dir], { encoding: "utf8", stdio: "pipe" }), /ZZZZ is not on/);
+  assert.throws(() => execFileSync(process.execPath, [JOB, "--symbol", "ZZZZ", "--data", dir, ...LIST], { encoding: "utf8", stdio: "pipe" }), /ZZZZ is not on/);
 });

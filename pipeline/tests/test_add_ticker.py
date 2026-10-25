@@ -18,7 +18,7 @@ PASSES = lambda s, p: None  # noqa: E731
 @pytest.fixture
 def listing(tmp_path):
     p = tmp_path / "tickers.json"
-    shutil.copy(build.TICKERS, p)
+    shutil.copy(Path(__file__).resolve().parents[2] / "tests" / "fixtures" / "tickers.json", p)  # the list on 2026-10-23
     return p
 
 

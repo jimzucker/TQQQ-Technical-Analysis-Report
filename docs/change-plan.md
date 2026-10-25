@@ -199,6 +199,20 @@ The requests, copied word for word:
 
 > finish the safari work first so we can do the PR
 
+> did we submit 12?
+
+> yes renumber them to /12
+
+> I see the data refreshes are on the main branch what approach can we take to not commit them there?
+
+> what approach do we use for Ihaveannuities that we run on github
+
+> yes start PR 13 that way
+
+> thinking about it is it the same repo or a new repo so it doesnt bloat this one
+
+> ok
+
 ## 2. Decisions made
 
 | Question | Decision |
@@ -536,7 +550,28 @@ Also fixed: the stylesheet asked for a 16-pixel gap between the top bar and the 
 
 **Not covered.** Playwright's WebKit is Safari's engine, not Safari itself, and it cannot make real trackpad gestures. Whether pinching on a Mac trackpad zooms the chart in Safari still needs a person to try it.
 
-## 16. Order of work
+## 16. The daily data moves to its own branch (thirteenth pull request)
+
+**What was asked.** Stop the daily data refreshes committing to `main`, the same way as another project of the requester's (iHaveAnnuities): an orphan `market-data` branch that holds only the data, which the page reads from GitHub's raw-file address.
+
+**Measured on the owner's repository before the change:** 46 of `main`'s 64 commits were data refreshes, since 2026-09-16. All 205 versions of the data files take 0.2 MB as git stores them (3.8 MB uncompressed); the whole repository is 0.4 MB. So the data branch stays in the same repository: what made `main` hard to read was the history, not the size, and a second repository would need a personal access token for the nightly job to write to it. GitHub's raw-file address allows any site to read it and is cached for 5 minutes (checked on the iHaveAnnuities branch).
+
+| Part | Before | After |
+|---|---|---|
+| Where the data is | `docs/data` on `main` | `data/` on the `market-data` branch: no shared history with `main`, the same folder layout, so every ticker's `dir` is unchanged |
+| Nightly refresh and add-ticker job | Commit to `main` | `pipeline/data_branch.sh get` checks the branch out at `.market-data/` and links `docs/data` to it, so the pipeline is unchanged; `put` commits there |
+| The page | Reads `data/...` from the site | On `<owner>.github.io/<repo>/` it reads `https://raw.githubusercontent.com/<owner>/<repo>/market-data/data/...`; anywhere else (a local preview, the tests) its own `data/` folder |
+| Lookup service | Read the list from the site (`SITE`) | Reads it from the data branch (`DATA_BRANCH`, default `market-data`); `SITE` is no longer needed |
+| Tests | Read the live list | Read a frozen copy (`tests/fixtures/tickers.json`); they need neither the branch nor a network |
+| Local preview | Worked straight away | `npm run data` first |
+
+**Starting the branch.** The first run of either job in a repository without the branch creates it from `main`'s last copy of `docs/data` (the commit before this change removed it), so the history files carry over. The nightly refresh also runs when `refresh.yml` changes on `main`, so merging this starts the branch within minutes, without waiting for the evening. Until that run finishes, the page has no data to show.
+
+**Checked.** In a scratch copy with its own remote: the first run created the branch from the last copy (no shared history with `main`), and a second run checked it out, ran the real snapshot job through the link and pushed only to the branch, leaving `main` untouched. The commit message step gives "Data revision: QQQ as of 2026-10-23", "Data revision: TQQQ, QQQ as of 2026-10-23", and "Start the market-data branch from main's docs/data" on the first run. The workflows themselves have not run on GitHub: the fork's scheduled workflows are switched off on purpose.
+
+**Tests.** A browser test opens the page at a GitHub Pages address, with every request answered locally, and checks that the list, prices and what changed are asked of the branch's address and nothing of the site's `data/` folder, for TQQQ and for QQQ's folder; another checks the address for both GitHub Pages sites, a local preview and another host. The lookup service's tests answer the list only at the branch's address. All tests pass with no `docs/data` present, as on `main` after the merge.
+
+## 17. Order of work
 
 | Order | Phase | Size |
 |---|---|---|

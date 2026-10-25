@@ -1,7 +1,7 @@
 # Lookup service for any ticker
 
 The report's page can show any stock or fund, not only the tickers on
-[`docs/data/tickers.json`](../docs/data/tickers.json), and can ask for one to be added to the
+the list (`data/tickers.json` on the `market-data` branch), and can ask for one to be added to the
 daily list. The page cannot fetch prices from Yahoo itself — Yahoo does not allow requests
 from other websites — so this small Cloudflare Worker ([`worker.mjs`](worker.mjs)) does it.
 
@@ -33,7 +33,7 @@ repository.
    npx wrangler kv namespace create LIMITS
    ```
 3. **Check the settings** under `[vars]` in `wrangler.toml`: the repository (`GITHUB_REPO`),
-   its branch, the report's address (`SITE`) and the site allowed to call the Worker
+   its branch, the branch holding the data (`DATA_BRANCH`) and the site allowed to call the Worker
    (`ALLOW_ORIGIN`).
 4. **Create a GitHub token** that can only start workflows in this one repository:
    GitHub → Settings → Developer settings → Fine-grained tokens → Generate new token.
@@ -48,7 +48,7 @@ repository.
    ```bash
    npx wrangler deploy
    ```
-6. **Point the page at it:** put that address in `docs/data/tickers.json` as `"proxy"`, and
+6. **Point the page at it:** put that address in `data/tickers.json` on the `market-data` branch as `"proxy"`, and
    commit.
 7. **Try it:** open the report with `?ticker=DIA`. It should say DIA is shown live, with an
    **Add DIA to the daily list** button. After pressing it, the **Add a ticker** run appears
