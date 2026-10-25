@@ -6,6 +6,9 @@ on:
     paths-ignore: ["docs/data/**"]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Python and JavaScript unit tests
@@ -19,7 +22,7 @@ jobs:
           cache-dependency-path: pipeline/requirements.txt
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
       - run: pip install -r pipeline/requirements.txt pytest-cov
       - name: Python tests, with coverage
         run: |
@@ -41,7 +44,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium

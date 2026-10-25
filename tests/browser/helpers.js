@@ -7,7 +7,7 @@ const FIX = path.join(__dirname, "..", "fixtures");
 const DATA = fs.readFileSync(path.join(FIX, "tqqq-2026-10-23.json"), "utf8");
 const CHANGES = fs.readFileSync(path.join(FIX, "changes-2026-10-23.json"), "utf8");
 
-async function openPage(page, query = "", { data = DATA } = {}) {
+async function openPage(page, query = "", { data = DATA, changes = CHANGES } = {}) {
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
@@ -15,7 +15,7 @@ async function openPage(page, query = "", { data = DATA } = {}) {
   await page.route("**/data/tqqq.json*", (r) => (data === null
     ? r.fulfill({ status: 404, body: "" })
     : r.fulfill({ contentType: "application/json", body: data })));
-  await page.route("**/data/changes.json*", (r) => r.fulfill({ contentType: "application/json", body: CHANGES }));
+  await page.route("**/data/changes.json*", (r) => r.fulfill({ contentType: "application/json", body: changes }));
   await page.goto("index.html" + query);
   if (data !== null) {
     try {
@@ -44,4 +44,4 @@ async function overChart(page) {
   return box;
 }
 
-module.exports = { openPage, view, overChart };
+module.exports = { openPage, view, overChart, DATA };

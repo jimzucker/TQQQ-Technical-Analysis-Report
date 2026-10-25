@@ -2,7 +2,15 @@
 
 Written 2026-10-25. This file records what was asked for, what the review found, and the plan agreed. It is meant to be shared with the original owner of the app. The [README change log](../README.md#change-log) records each phase as it lands.
 
-**Status:** test automation is done (this pull request). Phases 1–5 are not started; phases 3 and 1 follow in the next pull request.
+**Status:** test automation and the security checks are done. Phases 1–5 are not started; phases 3 and 1 follow in the next pull request.
+
+**Pull requests, each built on the one before:**
+
+| Order | Branch | What it holds |
+|---|---|---|
+| 1 | `test-automation` | Tests only. No change to what the app does |
+| 2 | `security-checks` | Vulnerability checks and one escaping fix (section 10) |
+| 3 | `chart-scroll-and-levels-above-price` | Phases 3 and 1 |
 
 ---
 
@@ -25,6 +33,18 @@ The requests, copied word for word:
 > i want to make a branch with any required test automation improvmements that will be PR#1 to the app owner, then make all our functional changes a second PR ontop of PR#1 leveraing all the ststs
 
 > does each branch contain a file with the prompt and plan adn update hte change log inreadme?
+
+> is branch 2 ontop of branch 1
+
+> fix reset view on branch 2 / on branch one do we have any vunerabilties are check vunerabilties part of test automation?
+
+> on merge do we have github configured to run tests
+
+> lets make vunerabilty fixes a PR on top of branch 1 keep it seperate so review is not overwhelmeed
+
+> include prompt and plan for vunerabilties on it and any test enh for vunerabilties
+
+> se we will have branch 1 for tests, branch 2 for vunerabilties , branch 3 for functional changes
 
 ## 2. Decisions made
 
@@ -174,7 +194,38 @@ Found while doing this, not changed:
 - **Reset view does not return to the opening view.** The chart opens on the chosen window, but Reset view, double-click and the 0 key show all two years of history. A browser test records this as the current behaviour.
 - `fetch.py:95` uses `datetime.utcfromtimestamp()`, which Python has marked for removal.
 
-## 10. Order of work
+## 10. Security checks (its own pull request, after the tests)
+
+**What was checked on 2026-10-25, and what was found.**
+
+| Check | Result |
+|---|---|
+| Python packages (`pip-audit`, the versions the daily refresh installs today: pandas 3.1.0, numpy 2.5.4, yfinance 1.7.0, requests 2.34.2 and their dependencies) | No known vulnerabilities |
+| npm packages (`npm audit`; only the Playwright test tool, 3 packages) | No known vulnerabilities. All 3 have verified registry signatures |
+| Text from the data files reaching the page | **One gap.** In "What changed", an item's type was put on the page as HTML, not text. A browser test showed it could add an element to the page. Fixed: it is now escaped like the item's text. The data comes from this repository's own nightly job, so this was not reachable from outside today; it matters for the planned any-ticker feature |
+| Node.js version in CI | **Out of date.** The workflows used Node 20, which stopped receiving security fixes on 2026-04-30. Moved to Node 24; all tests pass on it |
+| Was anything checking for vulnerabilities? | **No.** No audit step and no Dependabot |
+| Do tests run on a pull request and after a merge? | Yes (`tests.yml`). **But nothing stops a merge when they fail**: `main` has no branch protection in the owner's repository |
+| GitHub Actions versions | `checkout@v4`, `setup-python@v5`, `setup-node@v4`, `upload-artifact@v4` are each three major versions behind. No known vulnerability; left for Dependabot to propose one at a time |
+| Python package versions | `requirements.txt` sets minimum versions only, so each run installs whatever is newest. Not changed here; the weekly audit checks those versions |
+
+**What this pull request adds.**
+
+| Change | Why |
+|---|---|
+| `.github/workflows/security.yml`: `pip-audit` and `npm audit` on every pull request, after each merge, and every Monday | A new advisory can appear for a package that has not changed, so a weekly run catches it |
+| A step that runs the audit on `requests` 2.19.0, which has known vulnerabilities, and stops the run if the audit reports nothing | So a broken audit step cannot pass without anyone noticing |
+| `npm audit signatures` | Checks the test tool's packages were signed by the npm registry |
+| `.github/dependabot.yml`: weekly update pull requests for the Python packages, the npm test tool and the GitHub Actions | Keeps versions current without anyone having to remember |
+| `tests/browser/security.spec.js`: puts HTML and script in every text field of the data files and checks none of it reaches the page as HTML | Covers the gap above, and every other place data text is shown |
+| The escaping fix in `docs/js/app.js` (`renderChanges`) | The gap above |
+| Node 24 in all three workflows; the test workflow's token limited to reading the repository | Node 20 gets no more security fixes; the tests need no write access |
+
+**Settings the owner has to change** (a pull request cannot change these):
+1. **Require the tests to pass before merging:** Settings → Branches → Add rule for `main` → *Require status checks to pass*, and pick "Python and JavaScript unit tests", "Browser tests (the page itself)", "Python packages" and "npm packages (test tooling)".
+2. **Turn on vulnerability alerts:** Settings → Code security → *Dependabot alerts*. The config file only drives the weekly update pull requests, not the alerts.
+
+## 11. Order of work
 
 | Order | Phase | Size |
 |---|---|---|
