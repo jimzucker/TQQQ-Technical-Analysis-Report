@@ -473,3 +473,40 @@ test("minLookback: levels come from at least that many sessions, the window stay
   // without it, nothing changes: levels and window are the same length
   assert.equal(SR.analyze(d, { window: 21 }).levelStart, n - 21);
 });
+
+test("tickerInfo: a file's own name, benchmark and leverage; an older file is TQQQ's", () => {
+  const old = SR.fromPayload(JSON.parse(fs.readFileSync(FIXTURE, "utf8"))); // written before the multi-ticker change
+  expect3(SR.tickerInfo(old), { symbol: "TQQQ", benchmark: "QQQ", leverage: 3, index: "Nasdaq-100" });
+  assert.ok(old.bench_close && old.bench_close === old.qqq_close, "the old benchmark series is read as bench_close");
+  const qqq = SR.fromPayload(JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", "qqq-2026-10-23.json"), "utf8")));
+  expect3(SR.tickerInfo(qqq), { symbol: "QQQ", benchmark: "SPY", leverage: 1, index: "Nasdaq-100" });
+});
+
+function expect3(got, want) { for (const [k, v] of Object.entries(want)) assert.equal(got[k], v, k); }
+
+test("findings and the bottom line use the ticker's name, and leverage wording only for leveraged funds", () => {
+  for (const [file, sym, bench, leveraged] of [["tqqq-2026-10-23.json", "TQQQ", "QQQ", true], ["qqq-2026-10-23.json", "QQQ", "SPY", false], ["spy-2026-10-23.json", "SPY", "QQQ", false]]) {
+    const d = SR.fromPayload(JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", file), "utf8")));
+    const res = SR.analyze(d, { window: 252 });
+    const lab = SR.labels(d, res);
+    const bl = SR.bottomLine(d, res, lab);
+    const text = [bl.headline, ...bl.rows.map((r) => r.html), ...SR.findings(d, res, lab).map((x) => x.html)].join(" ");
+    assert.ok(text.includes(`${sym} closed at`), `${sym}: headline names the ticker`);
+    assert.ok(text.includes(`for ${bench}.`) && text.includes(`Daily beta to ${bench}`), `${sym}: benchmark named`);
+    if (sym !== "TQQQ") assert.ok(!/\bTQQQ\b/.test(text), `${sym}: no mention of TQQQ`);
+    assert.equal(/three times as much|daily resetting/.test(text), leveraged, `${sym}: leverage wording ${leveraged ? "present" : "absent"}`);
+    const b = SR.benchmark(d, res);
+    assert.equal(b.leverage, leveraged ? 3 : 1);
+    assert.ok(Math.abs(b.naiveLev - b.benchReturn * b.leverage) < 1e-9);
+  }
+});
+
+test("a zone made of one swing low is written as one price, not a range", () => {
+  const d = SR.fromPayload(JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", "qqq-2026-10-23.json"), "utf8")));
+  const res = SR.analyze(d, { window: 21, minLookback: 200 });
+  assert.ok(res.supports[0].high - res.supports[0].low < 0.005, "QQQ's S1 on 2026-10-23 is a single low");
+  const lab = SR.labels(d, res);
+  const text = [SR.bottomLine(d, res, lab).headline, ...SR.bottomLine(d, res, lab).rows.map((r) => r.html), ...SR.findings(d, res, lab).map((x) => x.html)].join(" ");
+  assert.ok(!/\$(\d+\.\d\d)–\$\1\b/.test(text), "no range from a price to the same price");
+  assert.ok(text.includes("$707.23"));
+});

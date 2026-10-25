@@ -22,7 +22,7 @@ const read = (...p) => JSON.parse(fs.readFileSync(path.join(...p), "utf8"));
 test("snapshot job writes the day's snapshot, the index and the what-changed file", () => {
   const dir = workdir();
   const out = run(dir);
-  assert.match(out, /^snapshot 2026-10-23: /);
+  assert.match(out, /^snapshot TQQQ 2026-10-23: /);
   const snap = read(dir, "history", "2026-10-23.json");
   // the file holds exactly what the page's own method produces for that day
   const data = SR.fromPayload(read(FIXTURE));
@@ -62,4 +62,13 @@ test("snapshot job keeps at most 400 snapshots, dropping the oldest", () => {
   assert.equal(files.length, 400);
   assert.ok(!files.includes("2020-01-01.json"), "the oldest snapshot is removed first");
   assert.ok(files.includes("2026-10-23.json"));
+});
+
+test("snapshot job runs for another ticker on the list, and stops for one that is not", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "snapshot-test-"));
+  fs.copyFileSync(path.join(__dirname, "fixtures", "qqq-2026-10-23.json"), path.join(dir, "qqq.json"));
+  const out = execFileSync(process.execPath, [JOB, "--symbol", "QQQ", "--data", dir], { encoding: "utf8" });
+  assert.match(out, /^snapshot QQQ 2026-10-23: /);
+  assert.equal(read(dir, "history", "2026-10-23.json").as_of, "2026-10-23");
+  assert.throws(() => execFileSync(process.execPath, [JOB, "--symbol", "ZZZZ", "--data", dir], { encoding: "utf8", stdio: "pipe" }), /ZZZZ is not on/);
 });

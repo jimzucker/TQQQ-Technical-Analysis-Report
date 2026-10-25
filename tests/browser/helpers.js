@@ -6,6 +6,11 @@ const fs = require("fs");
 const FIX = path.join(__dirname, "..", "fixtures");
 const DATA = fs.readFileSync(path.join(FIX, "tqqq-2026-10-23.json"), "utf8");
 const CHANGES = fs.readFileSync(path.join(FIX, "changes-2026-10-23.json"), "utf8");
+// the other tickers on docs/data/tickers.json, frozen the same day
+const OTHER = Object.fromEntries(["qqq", "spy"].map((s) => [s, {
+  data: fs.readFileSync(path.join(FIX, `${s}-2026-10-23.json`), "utf8"),
+  changes: fs.readFileSync(path.join(FIX, `changes-${s}-2026-10-23.json`), "utf8"),
+}]));
 
 async function openPage(page, query = "", { data = DATA, changes = CHANGES } = {}) {
   const errors = [];
@@ -16,6 +21,10 @@ async function openPage(page, query = "", { data = DATA, changes = CHANGES } = {
     ? r.fulfill({ status: 404, body: "" })
     : r.fulfill({ contentType: "application/json", body: data })));
   await page.route("**/data/changes.json*", (r) => r.fulfill({ contentType: "application/json", body: changes }));
+  for (const [s, f] of Object.entries(OTHER)) {
+    await page.route(`**/data/${s}/${s}.json*`, (r) => r.fulfill({ contentType: "application/json", body: f.data }));
+    await page.route(`**/data/${s}/changes.json*`, (r) => r.fulfill({ contentType: "application/json", body: f.changes }));
+  }
   await page.goto("index.html" + query);
   if (data !== null) {
     try {

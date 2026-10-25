@@ -128,11 +128,11 @@ Two design choices worth naming. Findings are **grouped rather than ranked**, be
 | <img src="assets/readme/out-of-window.svg" alt="" width="52"> | **Greyed-out area on the left** | History older than the level search (at least 200 sessions). Shown for context; not used to find levels. |
 | | **"▼ S3 $50.18 · 3 more below" tag** | Levels outside the part of the chart in view; the nearest one is named. The chart always reaches down to the next floor below the current one (S2), unless that would stretch the price scale by more than half — then that floor is the one named here. |
 | <img src="assets/readme/panels.svg" alt="" width="52"> | **Panels below the price** | Volume, RSI, MACD and drawdown, all sharing the same date axis. |
-| <img src="assets/readme/candles.svg" alt="" width="34"> | **One bar = one day, or one Monday** | The Daily / Mondays toggle in the chart header. Mondays draws each Monday's session only and skips the other four days. |
+| <img src="assets/readme/candles.svg" alt="" width="34"> | **One bar = one day, or one Monday** | The Daily / Mondays toggle in the toolbar above the chart. Mondays draws each Monday's session only and skips the other four days. |
 
 **Interaction:** the chart follows the same rules as most chart sites. Scrolling up or down over it scrolls the page. **To zoom**, pinch on a trackpad or touchscreen, hold Ctrl (⌘ on a Mac) and scroll, or use the **+** and **−** buttons. **To move through time**, swipe sideways with two fingers, hold Shift and scroll, or drag. Double-click, the **0** key or **Reset view** go back to the window you picked. Hover or tap a bar for its numbers.
 
-**Daily / Mondays.** The toggle in the chart header switches between one bar per trading session and one bar per week — each week's Monday, and nothing else. Mondays is far easier to read across a long stretch: about 105 bars instead of 500 over two years. Because it is a *sample* rather than a summary, the other four days are simply not drawn — a level tested hard on a Wednesday will not appear in this view, though it still counts in the levels table, which always uses every session. When a Monday was a market holiday the chart falls back to that week's first trading day so no week goes missing. It is a display choice only: levels, scores and statuses are always computed on daily data. Your choice is remembered in your browser.
+**Daily / Mondays.** The toggle in the toolbar above the chart switches between one bar per trading session and one bar per week — each week's Monday, and nothing else. Mondays is far easier to read across a long stretch: about 105 bars instead of 500 over two years. Because it is a *sample* rather than a summary, the other four days are simply not drawn — a level tested hard on a Wednesday will not appear in this view, though it still counts in the levels table, which always uses every session. When a Monday was a market holiday the chart falls back to that week's first trading day so no week goes missing. It is a display choice only: levels, scores and statuses are always computed on daily data. Your choice is remembered in your browser.
 
 Only Volume and RSI are on by default — the chart is deliberately quiet until you ask for more.
 
@@ -142,7 +142,7 @@ Only Volume and RSI are on by default — the chart is deliberately quiet until 
 
 ### The window (the headline setting)
 
-Buttons for **1M, 3M, 6M, 9M, 12M**, plus a free-text box for any value from **21 to 252 trading sessions**. A shorter window reacts faster and finds fewer, more recent levels; a longer window finds levels that have survived more market conditions. The page opens on **1M** the first time; after that it reopens with the window and settings you last used in that browser (a link that includes settings wins). The daily snapshot and "What changed" always use 12 months, so each day is compared on the same basis.
+In the toolbar directly above the chart: buttons for **1M, 3M, 6M, 9M, 12M**, plus a free-text box for any value from **21 to 252 trading sessions**. A shorter window reacts faster and finds fewer, more recent levels; a longer window finds levels that have survived more market conditions. The page opens on **1M** the first time; after that it reopens with the window and settings you last used in that browser (a link that includes settings wins). The daily snapshot and "What changed" always use 12 months, so each day is compared on the same basis.
 
 ### Method settings (under the "Method settings" dropdown)
 
@@ -345,9 +345,24 @@ Forking this into your own repository takes about two minutes:
 
 GitHub Pages is free for public repositories; private repositories need a paid plan.
 
-### Pointing it at a different ticker
+### Tickers
 
-The method makes no assumptions specific to leveraged funds, so it transfers to other symbols. Two places need editing: the symbol and benchmark strings in `pipeline/build.py` (the `fetch(...)` calls and the `meta` block), and the fund-specific wording in `docs/index.html` — the title, the subtitle and the leverage disclaimer.
+The report covers every ticker on [`docs/data/tickers.json`](docs/data/tickers.json) — today TQQQ, QQQ and SPY. Pick one from the menu next to the title, or link to it with `?ticker=QQQ`; the choice is remembered. Each entry gives the name, the index it follows, its leverage, the benchmark it is compared with, and its folder:
+
+```json
+{ "symbol": "QQQ", "name": "Invesco QQQ Trust", "index": "Nasdaq-100", "leverage": 1, "benchmark": "SPY", "dir": "data/qqq" }
+```
+
+Each ticker's data is `docs/<dir>/<symbol>.json`, with its own `history/` and `changes.json`. TQQQ's files stay at `docs/data/` where they have always been. The nightly refresh builds every ticker on the list; if one fails to download, the others are still published and the run is marked failed.
+
+**To add a ticker:** add its entry (its benchmark must be on the list too), then build its first data and history:
+
+```bash
+python pipeline/build.py --symbol DIA
+node pipeline/snapshot.js --symbol DIA --backfill 70
+```
+
+All wording — the headline, findings, benchmark panel and disclaimer — comes from the entry. Leverage wording ("three times as much…", "daily resetting cost") appears only for leveraged funds.
 
 ---
 
@@ -394,6 +409,8 @@ All tests run on every pull request (`.github/workflows/tests.yml`), and the cov
 | `.github/workflows/security.yml` | Looks up every Python and npm package in the public vulnerability databases, on every pull request and every Monday, and checks the audit still catches a known vulnerable version |
 | `tests/browser/rendering.spec.js` | Draws the main chart at every time frame (1–12 months and custom lengths), Daily and Mondays, light and dark, with the 13 chart switches in 28 settings (all off, all on, each alone, each off alone), the method settings at their limits, and clicking each switch — on desktop and phone. Each drawing is checked: no tag over another tag or a candle, the last-price tag exactly on its price, any moved tag joined to its level, every level tagged or counted in an edge tag, no date labels colliding or cut off, no candle cut off, panels and legend matching the switches. A self-check proves the checker catches a hidden candle |
 | `.github/workflows/rendering-matrix.yml` | Every Monday and on demand: the same checks for every combination of the 7 switches that change where things are drawn (the four panels, Bollinger Bands and the two kinds of level), each with the other 6 all on and all off — 256 settings, 10,240 drawings |
+| `tests/browser/tickers.spec.js` | The ticker menu, `?ticker=` links and remembering the choice, ticker-specific wording (no "TQQQ" or "3×" on QQQ's page), and a ticker not on the list |
+| `pipeline/tests/test_tickers.py` | The ticker list is valid and every ticker has its data file; a broken list is stopped with the reason; building another ticker; older data files still work |
 | `tests/browser/show-hide.spec.js` | Each switch hides its layer and legend entry; Simple view and Show all; the page address carries the layers and a shared link wins |
 | `tests/browser/security.spec.js` | Puts HTML and script into every text field of the data files and checks none of it reaches the page as HTML |
 | `tests/browser/` | Opens the real page in Chrome, on a desktop and a phone screen size: every section appears, every control works, the chart responds to keyboard, mouse and trackpad (page scroll, sideways swipe, zoom), levels above price appear and can be hidden, the downloads work, and nothing makes the page scroll sideways |
@@ -422,6 +439,7 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-10-25 | **More than one ticker.** The report covers every ticker on `docs/data/tickers.json` — TQQQ, QQQ and SPY to start — with a menu next to the title and `?ticker=` links; the choice is remembered. All wording comes from each ticker's entry, and leverage wording appears only for leveraged funds. The nightly refresh builds every ticker, and one failed download no longer stops the rest. TQQQ's files stay where they were. Also fixed: a link carrying only `?show=` now sets the chart layers, and a zone made of one swing low is written as one price ("$707.23", not "$707.23–$707.23"). The time buttons (1M–12M) moved from the bar at the top of the page into a toolbar directly above the chart, with Daily/Mondays and the zoom buttons. |
 | 2026-10-25 | **Show or hide every chart layer.** The nearest level below (S1) and above (A1) always stay on the chart; "More support below" and "More levels above" add the rest. New switches for the support below the price, the 20, 50 and 200-day averages and the swing lows, in two labelled rows; Simple view and Show all buttons; the legend lists only what is shown; the page address carries the layers when they differ from the defaults. The every-combination tests cover all 13 switches. |
 | 2026-10-25 | **Tests for every chart combination.** Every pull request draws the chart at every time frame, Daily and Mondays, light and dark, with the switches in 18 settings, and checks each drawing for collisions, misplaced tags and cut-off candles or dates. A weekly run checks all 256 switch settings: 10,240 drawings. No change to the app. |
 | 2026-10-25 | **Chart fits every window.** The space kept right of the newest candle is now exactly the width of the price tags, so tags no longer hide the latest candles at 12 months or leave a wide gap at 1 month. When levels sit close together the last-price tag stays on its price, the other tags move aside with a short line back to their level, and tags that do not fit are folded into the edge tag (which moves to the left corner if the price tag is in its way). A date label that would be cut off at the chart's edge is left out. The page now uses up to 1600 pixels of a wide screen (it stopped at 1180), with a 48-pixel margin each side on a desktop (16 on a phone); text keeps its own line length. The help under the chart is six short labelled items in columns instead of one long paragraph. |

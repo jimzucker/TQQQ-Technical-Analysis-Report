@@ -3,11 +3,12 @@
  * Writes the daily support snapshot using the same method as the page.
  *   node pipeline/snapshot.js            -> snapshot for the latest session
  *   node pipeline/snapshot.js --backfill 30   -> also (re)build the last 30 sessions
- *   node pipeline/snapshot.js --data DIR      -> read and write DIR instead of docs/data (used by the tests)
- * Outputs:
- *   docs/data/history/YYYY-MM-DD.json   one per session (default 12-month settings)
- *   docs/data/history/index.json        list of snapshot dates
- *   docs/data/changes.json              what changed vs the previous snapshot
+ *   node pipeline/snapshot.js --symbol QQQ    -> another ticker on docs/data/tickers.json (default: TQQQ)
+ *   node pipeline/snapshot.js --data DIR      -> read and write DIR instead of the ticker's folder (used by the tests)
+ * Outputs, in the ticker's folder (docs/data for TQQQ, docs/data/qqq for QQQ, ...):
+ *   history/YYYY-MM-DD.json   one per session (default 12-month settings)
+ *   history/index.json        list of snapshot dates
+ *   changes.json              what changed vs the previous snapshot
  */
 "use strict";
 const fs = require("fs");
@@ -20,11 +21,16 @@ const KEEP = 400; // snapshots kept (~18 months)
 const args = process.argv.slice(2);
 const bi = args.indexOf("--backfill");
 const backfill = bi >= 0 ? parseInt(args[bi + 1], 10) || 20 : 0;
+const si = args.indexOf("--symbol");
+const listing = JSON.parse(fs.readFileSync(path.join(ROOT, "docs", "data", "tickers.json"), "utf8"));
+const SYMBOL = (si >= 0 ? args[si + 1] : listing.default).toUpperCase();
+const ticker = listing.tickers.find((t) => t.symbol === SYMBOL);
+if (!ticker) { console.error(`${SYMBOL} is not on docs/data/tickers.json`); process.exit(1); }
 const di = args.indexOf("--data");
-const DATA = di >= 0 ? path.resolve(args[di + 1]) : path.join(ROOT, "docs", "data");
+const DATA = di >= 0 ? path.resolve(args[di + 1]) : path.join(ROOT, "docs", ticker.dir);
 const HIST = path.join(DATA, "history");
 
-const payload = JSON.parse(fs.readFileSync(path.join(DATA, "tqqq.json"), "utf8"));
+const payload = JSON.parse(fs.readFileSync(path.join(DATA, `${SYMBOL.toLowerCase()}.json`), "utf8"));
 const data = SR.fromPayload(payload);
 fs.mkdirSync(HIST, { recursive: true });
 
@@ -46,4 +52,4 @@ const cur = load(dates[dates.length - 1]);
 const prev = dates.length > 1 ? load(dates[dates.length - 2]) : null;
 const changes = { as_of: cur.as_of, previous: prev ? prev.as_of : null, items: SR.diffSnapshots(prev, cur) };
 fs.writeFileSync(path.join(DATA, "changes.json"), JSON.stringify(changes, null, 1));
-console.log(`snapshot ${cur.as_of}: ${cur.supports.length} supports, ${cur.broken.length} broken, ${changes.items.length} changes; ${dates.length} snapshots kept`);
+console.log(`snapshot ${SYMBOL} ${cur.as_of}: ${cur.supports.length} supports, ${cur.broken.length} broken, ${changes.items.length} changes; ${dates.length} snapshots kept`);

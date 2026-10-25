@@ -1,5 +1,8 @@
 name: Refresh TQQQ data
 
+# Builds every ticker on docs/data/tickers.json. The workflow keeps its original name so
+# the schedule and any links to it stay the same.
+
 on:
   schedule:
     # Six attempts every half hour from 16:15 New York, the earliest point the
@@ -66,23 +69,29 @@ jobs:
         env:
           TIINGO_API_KEY: ${{ secrets.TIINGO_API_KEY }}
           ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+        # Each ticker is built on its own, so one failed download does not stop the others.
+        # build.py exits 0 = new data written, 3 = no new session, anything else = failed.
         run: |
-          set +e
-          python pipeline/build.py ${{ inputs.force && '--force' || '' }}
-          code=$?
-          set -e
-          if [ "$code" = "3" ]; then
-            echo "No new session (weekend or market holiday) - nothing to publish."
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          elif [ "$code" = "0" ]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          else
-            exit "$code"
-          fi
+          written=""; failed=""
+          for sym in $(python -c "import json;print(' '.join(t['symbol'] for t in json.load(open('docs/data/tickers.json'))['tickers']))"); do
+            set +e
+            python pipeline/build.py --symbol "$sym" ${{ inputs.force && '--force' || '' }}
+            code=$?
+            set -e
+            case "$code" in
+              0) written="$written $sym" ;;
+              3) echo "$sym: no new session (weekend or market holiday)." ;;
+              *) echo "::error::$sym: the build stopped (exit $code); its previous data is kept."; failed="$failed $sym" ;;
+            esac
+          done
+          echo "written=${written# }" >> "$GITHUB_OUTPUT"
+          echo "failed=${failed# }" >> "$GITHUB_OUTPUT"
+          if [ -n "$written" ]; then echo "changed=true" >> "$GITHUB_OUTPUT"; else echo "changed=false" >> "$GITHUB_OUTPUT"; fi
 
       - name: Snapshot support levels
         if: steps.build.outputs.changed == 'true'
-        run: node pipeline/snapshot.js
+        run: |
+          for sym in ${{ steps.build.outputs.written }}; do node pipeline/snapshot.js --symbol "$sym"; done
 
       - name: Commit and push
         if: steps.build.outputs.changed == 'true'
@@ -94,15 +103,30 @@ jobs:
             echo "Nothing changed."
             exit 0
           fi
-          AS_OF=$(python -c "import json;print(json.load(open('docs/data/tqqq.json'))['meta']['as_of'])")
-          PREV=$(git show HEAD:docs/data/tqqq.json | python -c "import json,sys;print(json.load(sys.stdin)['meta']['as_of'])")
-          # same session republished = the source corrected a bar we had already shipped
-          if [ "$AS_OF" = "$PREV" ]; then
-            git commit -m "Data revision: TQQQ as of ${AS_OF}"
-          else
-            git commit -m "Data refresh: TQQQ as of ${AS_OF}"
-          fi
+          # "Data refresh: TQQQ, QQQ as of 2026-10-23"; a revision when every ticker written
+          # republished a session it had already shipped (the source corrected a bar)
+          MSG=$(python - ${{ steps.build.outputs.written }} <<'PY'
+          import json, subprocess, sys
+          listing = {t["symbol"]: t for t in json.load(open("docs/data/tickers.json"))["tickers"]}
+          as_of, revision = [], True
+          for sym in sys.argv[1:]:
+              path = f"docs/{listing[sym]['dir']}/{sym.lower()}.json"
+              now = json.load(open(path))["meta"]["as_of"]
+              old = subprocess.run(["git", "show", f"HEAD:{path}"], capture_output=True, text=True)
+              prev = json.loads(old.stdout)["meta"]["as_of"] if old.returncode == 0 else None
+              revision = revision and now == prev
+              as_of.append(now)
+          print(f"Data {'revision' if revision else 'refresh'}: {', '.join(sys.argv[1:])} as of {max(as_of)}")
+          PY
+          )
+          git commit -m "$MSG"
           git push
+
+      - name: Stop the run if any ticker's build stopped
+        if: steps.build.outputs.failed != ''
+        run: |
+          echo "::error::These tickers were not refreshed: ${{ steps.build.outputs.failed }}. The others were published."
+          exit 1
 
       - name: Open an issue if the refresh failed
         if: failure()

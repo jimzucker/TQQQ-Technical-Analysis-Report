@@ -77,3 +77,12 @@ test("the page address carries the switches when they differ from the defaults, 
   await page.goto("index.html?window=1m&show=none"); await ready(page);
   expect(Object.values(await panes(page)).some(Boolean)).toBe(false);
 });
+
+test("a link carrying only ?show= still sets the layers", async ({ page }) => {
+  // the address carries nothing else, so the reader's remembered window is kept
+  await openPage(page, "?window=6m");
+  await page.goto("index.html?show=zones,sma50,sma200");
+  await page.waitForFunction(() => window.__dashboard && window.__dashboard.res);
+  expect(Object.entries(await panes(page)).filter(([, v]) => v).map(([k]) => k).sort()).toEqual(["sma200", "sma50", "zones"]);
+  expect(await page.evaluate(() => window.__dashboard.res.opts.window)).toBe(126);
+});

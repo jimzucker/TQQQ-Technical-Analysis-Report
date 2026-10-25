@@ -1,5 +1,5 @@
 /*
- * TQQQ support method — the single implementation used by the page,
+ * Support method — the single implementation used by the page,
  * the daily snapshot job (Node) and the unit tests.
  *
  * Steps (see the Method panel on the page):
@@ -276,12 +276,26 @@
     };
   }
 
+  /**
+   * The ticker's name, benchmark and leverage. Files written before the multi-ticker
+   * change carry no such fields and are TQQQ's, so TQQQ's values are the fallback.
+   */
+  function tickerInfo(data) {
+    const m = data.meta || {};
+    return { symbol: m.symbol || "TQQQ", benchmark: m.benchmark || "QQQ", leverage: m.leverage ?? 3,
+      index: m.index || "Nasdaq-100", name: m.name || "ProShares UltraPro QQQ" };
+  }
+  // the benchmark's closes; older files call them qqq_close
+  const benchCloses = (data) => data.bench_close || data.qqq_close;
+  const TIMES = { 2: "Two", 3: "Three" };
+
   /** Daily-return comparison with the benchmark over the window. */
   function benchmark(data, res) {
+    const bc = benchCloses(data), lev = tickerInfo(data).leverage;
     const r = [], q = [];
     for (let i = res.start + 1; i <= res.end; i++) {
       r.push(data.close[i] / data.close[i - 1] - 1);
-      q.push(data.qqq_close[i] / data.qqq_close[i - 1] - 1);
+      q.push(bc[i] / bc[i - 1] - 1);
     }
     const mr = mean(r), mq = mean(q);
     let cov = 0, vq = 0, vr = 0;
@@ -290,12 +304,12 @@
     }
     const s = res.start, e = res.end;
     const tqRet = (data.close[e] / data.close[s] - 1) * 100;
-    const qqRet = (data.qqq_close[e] / data.qqq_close[s] - 1) * 100;
+    const qqRet = (bc[e] / bc[s] - 1) * 100;
     return {
-      beta: cov / vq, corr: cov / Math.sqrt(vq * vr), tqqqReturn: tqRet, qqqReturn: qqRet,
-      naive3x: qqRet * 3, // simple 3× of the period return, to show the daily-reset gap
-      volTqqq: Math.sqrt(vr / r.length) * Math.sqrt(252) * 100,
-      volQqq: Math.sqrt(vq / q.length) * Math.sqrt(252) * 100,
+      beta: cov / vq, corr: cov / Math.sqrt(vq * vr), symReturn: tqRet, benchReturn: qqRet, leverage: lev,
+      naiveLev: qqRet * lev, // leverage x the period return, to show the daily-reset gap (leveraged funds only)
+      volSym: Math.sqrt(vr / r.length) * Math.sqrt(252) * 100,
+      volBench: Math.sqrt(vq / q.length) * Math.sqrt(252) * 100,
     };
   }
 
@@ -340,11 +354,14 @@
   function findings(data, res, lab, fmt, fmtDate, ctx = {}) {
     const f = fmt || ((v) => (v == null || !isFinite(v) ? "–" : "$" + v.toFixed(2)));
     const fd = fmtDate || ((d) => d);
+    // a zone of one swing low is one price, not "$707.23–$707.23"
+    const band = (z) => (z.high - z.low < 0.005 ? f(z.price) : `${f(z.low)}–${f(z.high)}`);
     const pct = (v) => (v == null || !isFinite(v) ? "–" : Math.abs(v).toFixed(1) + "%");
     const plural = (n, w) => `${n} ${w}${n === 1 ? "" : /(ch|sh|s|x|z)$/.test(w) ? "es" : "s"}`;
     const i = res.end;
     const out = [];
     const add = (group, html) => out.push({ group, html });
+    const tk = tickerInfo(data);
     // levels may be found over a longer stretch than the window (the page looks back at least 200 sessions)
     const lb = res.levelStart != null && res.levelStart < res.start ? `in the last ${res.end - res.levelStart + 1} sessions` : "in this window";
 
@@ -357,7 +374,7 @@
       const where = s.inZone
         ? ", and price is sitting inside it right now"
         : ` — about ${pct(s.distancePct)} below the last close`;
-      add(GROUPS[0], `<b>${s.id} is the first floor under price, at ${f(s.low)}–${f(s.high)}</b>${where}. ` +
+      add(GROUPS[0], `<b>${s.id} is the first floor under price, at ${band(s)}</b>${where}. ` +
         `Buyers have turned it higher ${plural(s.touches, "time")} here, most recently on ${fd(s.date)}, ` +
         `which scores it a <b>${s.strength.toLowerCase()}</b> level (${s.score}/100).`);
     } else if (res.fallbacks.length) {
@@ -370,7 +387,7 @@
 
     const up = res.above[0];
     if (up) {
-      add(GROUPS[0], `<b>The nearest level above the price is ${up.id} at ${f(up.low)}–${f(up.high)}</b>, ${pct(up.distancePct)} above the last close. ` +
+      add(GROUPS[0], `<b>The nearest level above the price is ${up.id} at ${band(up)}</b>, ${pct(up.distancePct)} above the last close. ` +
         `It held ${plural(up.touches, "time")} before the price closed below it` +
         `${up.brokeDate ? ` on ${fd(up.brokeDate)}` : ""}. A floor that gave way is often where a later rise stalls` +
         `${res.above.length > 1 ? `; ${plural(res.above.length - 1, "more level")} sit${res.above.length === 2 ? "s" : ""} higher up` : ""}.`);
@@ -423,7 +440,7 @@
       Downtrend: "price is below both its 50 and 200-day averages, the 50-day is falling, and swing lows are stepping lower",
       Mixed: "the moving averages, the 50-day slope and the swing lows do not agree",
     }[t.label];
-    add(GROUPS[1], `TQQQ is in a${t.label === "Uptrend" ? "n" : ""} <b>${t.label.toLowerCase()}</b>${t.label === "Mixed" ? " trend" : ""}: ${why}. ` +
+    add(GROUPS[1], `${tk.symbol} is in a${t.label === "Uptrend" ? "n" : ""} <b>${t.label.toLowerCase()}</b>${t.label === "Mixed" ? " trend" : ""}: ${why}. ` +
       `${t.label === "Mixed" ? "A mixed read is the honest answer when the checks conflict — support matters more than trend in this state." : "All three trend checks point the same way."}`);
 
     const c = data.close[i];
@@ -471,14 +488,16 @@
     /* ------------------------------------------------------- risk & leverage */
     if (s) {
       const stop = s.low - res.atr;
-      add(GROUPS[3], `TQQQ moves about <b>${lab.atr.pct.toFixed(1)}% on a typical day</b>, so any level can be pierced and reclaimed inside one session. ` +
+      add(GROUPS[3], `${tk.symbol} moves about <b>${lab.atr.pct.toFixed(1)}% on a typical day</b>, so any level can be pierced and reclaimed inside one session. ` +
         `Placing a stop a full day's range under ${s.id} puts it near <b>${f(stop)}</b>, ${pct((stop / res.price - 1) * 100)} below the close.`);
     }
 
     const b = benchmark(data, res);
-    add(GROUPS[3], `Over this window TQQQ returned ${pct2(b.tqqqReturn)} against ${pct2(b.qqqReturn)} for QQQ. ` +
-      `Three times the index return would have been ${pct2(b.naive3x)}, so <b>daily resetting cost ${pct(b.naive3x - b.tqqqReturn)} of compounding</b>. ` +
-      `Daily beta is ${b.beta.toFixed(2)}× and annualised volatility ${b.volTqqq.toFixed(0)}% versus ${b.volQqq.toFixed(0)}%.`);
+    add(GROUPS[3], `Over this window ${tk.symbol} returned ${pct2(b.symReturn)} against ${pct2(b.benchReturn)} for ${tk.benchmark}. ` +
+      (tk.leverage > 1
+        ? `${TIMES[tk.leverage] || tk.leverage} times the index return would have been ${pct2(b.naiveLev)}, so <b>daily resetting cost ${pct(b.naiveLev - b.symReturn)} of compounding</b>. `
+        : "") +
+      `Daily beta to ${tk.benchmark} is ${b.beta.toFixed(2)}× and annualised volatility ${b.volSym.toFixed(0)}% versus ${b.volBench.toFixed(0)}%.`);
 
     const pending = res.pivots.pendingLows.length;
     add(GROUPS[3], `These levels are descriptions of past trading, not forecasts, and leverage lets them break hard. ` +
@@ -496,25 +515,27 @@
    */
   function bottomLine(data, res, lab, fmt, fmtDate) {
     const f = fmt || ((v) => (v == null || !isFinite(v) ? "–" : "$" + v.toFixed(2)));
+    const band = (z) => (z.high - z.low < 0.005 ? f(z.price) : `${f(z.low)}–${f(z.high)}`); // one low: one price
     const whole = (v) => (v == null || !isFinite(v) ? "–" : Math.abs(v).toFixed(0) + "%");
     const s = res.supports[0];
     const nxt = res.supports[1];
     const rows = [];
 
     const up = res.above[0];
+    const tk = tickerInfo(data);
     const headline = !s
-      ? `TQQQ closed at <b>${f(res.price)}</b>. <b>No floor has formed below it</b> in this period` +
+      ? `${tk.symbol} closed at <b>${f(res.price)}</b>. <b>No floor has formed below it</b> in this period` +
         (up
           ? ` — the nearest level is above the price, around ${f(up.price)}, ${whole(up.distancePct)} higher.`
           : ` — the price has not dipped and recovered often enough to mark one out.`)
       : s.inZone
-        ? `TQQQ closed at <b>${f(res.price)}</b> and is <b>sitting on its nearest floor</b>, ${f(s.low)}–${f(s.high)}. That is the level being tested right now.`
-        : `TQQQ closed at <b>${f(res.price)}</b>, about <b>${whole(s.distancePct)} above its nearest floor</b>, around ${f(s.price)}.`;
+        ? `${tk.symbol} closed at <b>${f(res.price)}</b> and is <b>sitting on its nearest floor</b>, ${band(s)}. That is the level being tested right now.`
+        : `${tk.symbol} closed at <b>${f(res.price)}</b>, about <b>${whole(s.distancePct)} above its nearest floor</b>, around ${f(s.price)}.`;
 
     if (s) {
       const days = Math.abs(res.price - s.price) / res.atr;
       rows.push({ label: "Nearest floor", html:
-        `<b>${f(s.low)}–${f(s.high)}</b> — ${s.inZone ? "the price is inside it now" : `${whole(s.distancePct)} below, or roughly ${days.toFixed(0)} ordinary day${days < 1.5 ? "" : "s"} of movement away`}. ` +
+        `<b>${band(s)}</b> — ${s.inZone ? "the price is inside it now" : `${whole(s.distancePct)} below, or roughly ${days.toFixed(0)} ordinary day${days < 1.5 ? "" : "s"} of movement away`}. ` +
         `Buyers have stepped in and pushed the price back up there ${s.touches} time${s.touches > 1 ? "s" : ""}, which is why it rates as a <b>${s.strength.toLowerCase()}</b> floor.` });
     } else if (res.fallbacks.length) {
       rows.push({ label: "Nearest floor", html:
@@ -528,7 +549,7 @@
 
     if (up) {
       rows.push({ label: "Above the price", html:
-        `<b>${f(up.low)}–${f(up.high)}</b>, ${whole(up.distancePct)} higher. It used to be a floor` +
+        `<b>${band(up)}</b>, ${whole(up.distancePct)} higher. It used to be a floor` +
         `${up.brokeDate ? `, until the price closed below it on ${fmtDate ? fmtDate(up.brokeDate) : up.brokeDate}` : ""}. ` +
         `Rises often stall where an old floor gave way.` });
     }
@@ -556,7 +577,9 @@
     rows.push({ label: "Buyers vs sellers", html: mo });
 
     rows.push({ label: "Risk", html:
-      `TQQQ aims to move <b>three times as much as the Nasdaq-100 does each day</b>, and swings about <b>${lab.atr.pct.toFixed(1)}% in an ordinary day</b>. ` +
+      (tk.leverage > 1
+        ? `${tk.symbol} aims to move <b>${(TIMES[tk.leverage] || String(tk.leverage)).toLowerCase()} times as much as the ${tk.index} does each day</b>, and swings about <b>${lab.atr.pct.toFixed(1)}% in an ordinary day</b>. `
+        : `${tk.symbol} swings about <b>${lab.atr.pct.toFixed(1)}% in an ordinary day</b>. `) +
       `A floor can be broken and won back inside a single day, so treat these as areas to watch rather than exact lines.` });
 
     return { headline, rows };
@@ -742,14 +765,16 @@
     return out;
   }
 
-  /** Flatten the tqqq.json payload into { dates, open, ..., sma50, ... }. */
+  /** Flatten a ticker's data file into { dates, open, ..., sma50, bench_close, ..., meta }. */
   function fromPayload(p) {
-    return { dates: p.dates, ...p.series, meta: p.meta };
+    const d = { dates: p.dates, ...p.series, meta: p.meta };
+    if (!d.bench_close && d.qqq_close) d.bench_close = d.qqq_close; // files written before the multi-ticker change
+    return d;
   }
 
   return {
     DEFAULTS, LIMITS, WINDOW_PRESETS, WEIGHTS, TIERS,
-    normalize, strengthTier, findPivots, rollingLow, cluster, analyze, labels, trendCall, benchmark,
+    normalize, strengthTier, tickerInfo, findPivots, rollingLow, cluster, analyze, labels, trendCall, benchmark,
     volumeProfile, compareWindows, findings, bottomLine, snapshot, diffSnapshots, truncate, fromPayload,
     lastCompletedSession, sessionsBetween, freshness,
     weekStart, resampleWeekly, chartModel,
