@@ -13,7 +13,8 @@ Written 2026-10-25. This file records what was asked for, what the review found,
 | 3 | `chart-scroll-and-levels-above-price` | Phases 3 and 1 |
 | 4 | `usability-memory-and-dates` | Remembered settings and readable chart dates (section 11) |
 | 5 | `bollinger-bands` | Phase 4, Bollinger Bands (section 7) |
-| 6 | `levels-min-200-sessions` | Every level from at least the last 200 sessions (section 12) |
+| 6 | `levels-min-200-sessions` | Every level from at least the last 200 sessions; the chart fits every time frame (section 12) |
+| 7 | `test-every-combination` | Tests only: the chart checked in every combination of options (section 13) |
 
 ---
 
@@ -354,7 +355,22 @@ Unchanged: the 1/3/6/12-month comparison panel (it compares those exact lengths)
 
 **Found while doing this.** When a level was above or below the visible part of the chart, its tag was pushed into view and sat beside the wrong price (for example "S2 $57.48" next to $85). This was also true of the owner's code when zoomed in. Fixed: such levels get one tag at that edge.
 
-## 13. Order of work
+## 13. Tests for every chart combination (seventh pull request, tests only)
+
+**What was asked.** Tests should check the chart's drawing at every time frame, and cover every option and combination. Kept as its own pull request, with no change to the app.
+
+**How many combinations.** 8 chart switches (256 settings) × 5 time frames × Daily/Mondays × light/dark × desktop/phone = 10,240 drawings. Measured: about 90 ms each including the checks, 7.2 minutes on an 8-core Mac. Too slow for every pull request, so:
+
+| When | What is drawn | Time measured |
+|---|---|---|
+| Every pull request | Every time frame × Daily/Mondays × light/dark × 18 switch settings (all off, all on, each alone, each off alone); custom lengths 21–252; method settings at their limits; clicking each switch at each time frame | about 40 s on an 8-core Mac |
+| Every Monday and on demand | The same, with all 256 switch settings | 7.2 min on an 8-core Mac |
+
+**What each drawing is checked for:** no tag over another tag or a candle; the last-price tag exactly on its price; a tag moved off its line joined back to it; every level tagged or counted in an edge tag; date labels not colliding or cut off; no candle cut off at the top or bottom; panels and legend matching the switches; no errors. A self-check removes the room kept for tags and confirms the checker reports the hidden candles.
+
+**What it found.** Run against the earlier code, it found the problems fixed in the sixth pull request: tags pushed off their lines (up to 48 px, the price tag included), the edge tag landing on the price tag, and a date label cut off on a phone. Against the sixth pull request: all 10,240 drawings pass.
+
+## 14. Order of work
 
 | Order | Phase | Size |
 |---|---|---|
