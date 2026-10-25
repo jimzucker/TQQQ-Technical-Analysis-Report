@@ -2,7 +2,7 @@
 
 Written 2026-10-25. This file records what was asked for, what the review found, and the plan agreed. It is meant to be shared with the original owner of the app. The [README change log](../README.md#change-log) records each phase as it lands.
 
-**Status:** test automation, the security checks, phase 3 (chart scrolling), phase 1 (levels above price), remembered settings with readable dates, phase 4 (Bollinger Bands), and levels from at least 200 sessions are done. Phases 5 and 2 are not started.
+**Status:** test automation, the security checks, phase 3 (chart scrolling), phase 1 (levels above price), remembered settings with readable dates, phase 4 (Bollinger Bands), levels from at least 200 sessions, the every-combination tests, and phase 5 (show or hide every layer) are done. Phase 2 is not started.
 
 **Pull requests, each built on the one before:**
 
@@ -15,6 +15,7 @@ Written 2026-10-25. This file records what was asked for, what the review found,
 | 5 | `bollinger-bands` | Phase 4, Bollinger Bands (section 7) |
 | 6 | `levels-min-200-sessions` | Every level from at least the last 200 sessions; the chart fits every time frame (section 12) |
 | 7 | `test-every-combination` | Tests only: the chart checked in every combination of options (section 13) |
+| 8 | `show-hide-indicators` | Phase 5: show or hide every chart layer, with its tests (section 8) |
 
 ---
 
@@ -127,6 +128,20 @@ The requests, copied word for word:
 > formatting is off on this text
 
 > make margins 50% wider
+
+> go push PRs 6 and 7
+
+> does all CI pass with the recent changes?
+
+> whats next
+
+> yes, include any changes to tests as part of this change
+
+> how long does a full combo run take
+
+> eta?
+
+> support below price removes the current support it should not either show the support level we are in or the one closestst above and below even when unchecked
 
 ## 2. Decisions made
 
@@ -258,6 +273,17 @@ Steps: remove `wheelZoom: true`; add a sideways-swipe handler that pans the char
 2. A **Simple view** button (candles, support zones, 50 and 200-day averages only) and a **Show all** button.
 3. Choices are kept between visits, as they already are, and saved in the page address so a shared link opens with the same view.
 4. The legend lists only the layers that are switched on.
+
+**Done (eighth pull request), with the test changes in the same pull request, as asked.**
+
+| Item | Done |
+|---|---|
+| New switches | More support below the price, 20-day, 50-day and 200-day averages, swing lows — 13 switches in all, on by default as before. The nearest level below or at the price (S1) and the nearest above (A1) always stay on the chart; "More support below" and "More levels above" add the rest, so unticking them never hides the level the price is in |
+| Two labelled rows | "On the price chart" (9) and "Panels below" (4) |
+| Simple view / Show all | Simple view: candles, support below the price, 50 and 200-day averages. Show all: everything |
+| Legend | Lists only what is shown |
+| Page address | `?show=…` when the layers differ from the defaults; a shared link wins over a reader's saved layers |
+| Every-combination tests | Per pull request: 28 settings (all off, all on, each alone, each off alone). Weekly: every combination of the 7 switches that change where things are drawn (four panels, Bollinger Bands, the two kinds of level), each with the other 6 all on and all off — 256 settings. All 8,192 combinations of 13 switches would take about 4 hours |
 
 ---
 

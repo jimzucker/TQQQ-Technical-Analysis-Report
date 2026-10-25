@@ -2,16 +2,21 @@
 // on a desktop and a phone screen (see playwright.config.js). Each render is checked
 // by renderingProblems() in helpers.js.
 //
-// Every window x Daily/Mondays x light/dark is always covered. For the 8 chart switches:
+// Every window x Daily/Mondays x light/dark is always covered. For the 13 chart switches:
 //   on every pull request: all off, all on, each one on alone and each one off alone
-//     (18 settings, about a minute in all)
-//   FULL_MATRIX=1 (weekly and on demand, .github/workflows/rendering-matrix.yml):
-//     all 256 settings (about 8 minutes on an 8-core machine)
+//     (28 settings)
+//   FULL_MATRIX=1 (weekly and on demand, .github/workflows/rendering-matrix.yml): every
+//     combination of the 7 switches that change where things are drawn (LAYOUT: the four
+//     panels, Bollinger Bands, which widen the price scale, and the two kinds of level, which
+//     add tags), each with the 6 that only add lines or markers all on and all off: 256 settings.
+//     All 8,192 combinations of 13 switches would take about 4 hours.
 const { test, expect } = require("@playwright/test");
 const { openPage, renderingProblems } = require("./helpers");
 
 const WINDOWS = ["1m", "3m", "6m", "9m", "12m"];
-const SWITCHES = ["vol", "rsi", "macd", "dd", "rolling", "profile", "above", "bb"];
+const LAYOUT = ["vol", "rsi", "macd", "dd", "bb", "zones", "above"];
+const DRAWING = ["rolling", "profile", "sma20", "sma50", "sma200", "swings"];
+const SWITCHES = [...LAYOUT, ...DRAWING];
 
 /** Load the page with these choices already saved, as a returning reader would. */
 async function render(page, { query, panes, theme = "light", cadence = "daily" }) {
@@ -25,11 +30,14 @@ async function render(page, { query, panes, theme = "light", cadence = "daily" }
   await page.waitForFunction(() => window.__dashboard && window.__dashboard.res);
 }
 
-/** The switch settings to draw: all 256 for the full run, otherwise the 18 described above. */
+/** The switch settings to draw: 256 for the full run, otherwise the 28 described above. */
 function switchSettings() {
   const set = (on) => Object.fromEntries(SWITCHES.map((k) => [k, on(k)]));
   if (process.env.FULL_MATRIX) {
-    return Array.from({ length: 1 << SWITCHES.length }, (_, bits) => set((k) => !!(bits & (1 << SWITCHES.indexOf(k)))));
+    const out = [];
+    for (let bits = 0; bits < 1 << LAYOUT.length; bits++) for (const drawing of [false, true])
+      out.push(set((k) => (LAYOUT.includes(k) ? !!(bits & (1 << LAYOUT.indexOf(k))) : drawing)));
+    return out;
   }
   return [set(() => false), set(() => true), ...SWITCHES.map((x) => set((k) => k === x)), ...SWITCHES.map((x) => set((k) => k !== x))];
 }
@@ -37,7 +45,7 @@ function switchSettings() {
 const report = (problems) => `${problems.length} problems, first ones:\n  ` + problems.slice(0, 10).join("\n  ");
 
 for (const w of WINDOWS) for (const cadence of ["daily", "weekly"]) {
-  test(`${process.env.FULL_MATRIX ? "all 256" : "18"} switch settings, light and dark, ${w} ${cadence === "weekly" ? "Mondays" : "Daily"}`, async ({ page }) => {
+  test(`${process.env.FULL_MATRIX ? "256" : "28"} switch settings, light and dark, ${w} ${cadence === "weekly" ? "Mondays" : "Daily"}`, async ({ page }) => {
     test.setTimeout(180000);
     const errors = await openPage(page);
     const problems = [];

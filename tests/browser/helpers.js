@@ -96,11 +96,23 @@ async function renderingProblems(page) {
     const want = ["price", ...["vol", "rsi", "macd", "dd"].filter((k) => st.panes[k])];
     const have = L.panes.map((p) => p.id);
     if (JSON.stringify(have) !== JSON.stringify(want)) out.push(`panels ${have.join(",")} but switches say ${want.join(",")}`);
-    const legend = document.querySelector("#legend").textContent;
-    for (const [k, text] of [["bb", "Bollinger"], ["above", "Level above price"], ["rolling", "rolling low"]])
-      if (!!st.panes[k] !== legend.includes(text)) out.push(`legend ${legend.includes(text) ? "shows" : "is missing"} "${text}" with the switch ${st.panes[k] ? "on" : "off"}`);
+    // each legend entry on its own, so "20-day avg" is not found inside the Bollinger entry
+    const entries = [...document.querySelectorAll("#legend li")].map((li) => li.textContent.trim());
+    const legendHas = (text) => entries.some((e) => e.startsWith(text) || e.endsWith(text)); // "3-day rolling low", "Bollinger Bands (…)"
+    for (const [k, text] of [["bb", "Bollinger"], ["rolling", "rolling low"],
+      ["sma20", "20-day avg"], ["sma50", "50-day avg"], ["sma200", "200-day avg"], ["swings", "Swing low"]])
+      if (!!st.panes[k] !== legendHas(text)) out.push(`legend ${legendHas(text) ? "shows" : "is missing"} "${text}" with the switch ${st.panes[k] ? "on" : "off"}`);
     // 8. every level has its own tag or is counted in the edge tag on its side, never both or neither
-    const levels = [...st.res.supports, ...(st.panes.above ? st.res.above : [])];
+    // S1 and A1 are always drawn; the two level switches add the rest
+    const expectLv = { below: st.panes.zones ? st.res.supports : st.res.supports.slice(0, 1), above: st.panes.above ? st.res.above : st.res.above.slice(0, 1) };
+    const shown = st.shownLevels || { below: [], above: [] };
+    for (const side of ["below", "above"]) {
+      const a = shown[side].map((z) => z.id).join(","), b = expectLv[side].map((z) => z.id).join(",");
+      if (a !== b) out.push(`levels ${side} the price drawn: ${a || "none"}; switches say ${b || "none"}`);
+    }
+    for (const [list, text] of [[expectLv.below, "Support zone"], [expectLv.above, "Level above price"]])
+      if ((list.length > 0) !== legendHas(text)) out.push(`legend ${legendHas(text) ? "shows" : "is missing"} "${text}" with ${list.length} drawn`);
+    const levels = [...expectLv.below, ...expectLv.above];
     const money = (v) => "$" + v.toFixed(2);
     const tagged = new Set(boxes.filter((b) => !b.edge).map((b) => b.text));
     const untagged = levels.filter((z) => !tagged.has(`${z.id} ${money(z.price)}`));

@@ -40,23 +40,20 @@ test("the window still sets how much of the chart opens, and the returns period"
   expect(await page.evaluate(() => window.__dashboard.res.start)).toBe(await page.evaluate(() => window.__dashboard.res.end - 20));
   await expect(page.locator("#benchStats")).toContainText("TQQQ return");
 });
-test("levels above price are on the chart by default, and the switch hides them", async ({ page }) => {
-  const errors = await openPage(page);
+test("levels above price are on the chart by default; the switch hides all but the nearest", async ({ page }) => {
+  const errors = await openPage(page, "?window=12m");
   const sw = page.locator('input[data-pane="above"]');
   await expect(sw).toBeChecked();
-  await expect(page.locator("#legend")).toContainText("Level above price");
+  const above = () => page.evaluate(() => window.__dashboard.shownLevels.above.map((z) => z.id));
+  expect(await above()).toEqual(["A1", "A2"]);
   await sw.uncheck();
-  expect(await page.evaluate(() => window.__dashboard.panes.above)).toBe(false);
-  await expect(page.locator("#legend")).not.toContainText("Level above price");
-  // the table keeps them: the switch is about the chart only
-  await expect(page.locator("#levels tbody .lvl.above")).toHaveCount(2);
-  // and the choice is remembered
+  expect(await above()).toEqual(["A1"]); // the nearest level above always stays
+  await expect(page.locator("#levels tbody .lvl.above")).toHaveCount(2); // the table keeps them all
   await page.reload();
   await page.waitForFunction(() => window.__dashboard && window.__dashboard.res);
-  await expect(sw).not.toBeChecked();
+  await expect(sw).not.toBeChecked(); // the choice is remembered
   expect(errors).toEqual([]);
 });
-
 test("the CSV download includes the levels above price", async ({ page }) => {
   await openPage(page, "?window=12m");
   const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#dlCsv").click()]);
