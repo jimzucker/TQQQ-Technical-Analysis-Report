@@ -456,3 +456,20 @@ test("real TQQQ fixture: sane output for every preset window", () => {
   const b = SR.benchmark(d, SR.analyze(d, {}));
   assert.ok(b.beta > 2.5 && b.beta < 3.5, `beta ~3, got ${b.beta}`);
 });
+
+test("minLookback: levels come from at least that many sessions, the window stays as chosen", () => {
+  const d = SR.fromPayload(JSON.parse(fs.readFileSync(FIXTURE, "utf8")));
+  const n = d.close.length;
+  const levels = (r) => r.zones.map((z) => [z.price.toFixed(4), z.touches, z.score, z.broken].join(":"));
+  const short = SR.analyze(d, { window: 21, minLookback: 200 });
+  const long = SR.analyze(d, { window: 200 });
+  assert.deepEqual(levels(short), levels(long)); // same levels as a 200-session window
+  assert.equal(short.start, n - 21);              // but the window itself is still 21 sessions
+  assert.equal(short.levelStart, n - 200);
+  // a window longer than the minimum is used as it is
+  const year = SR.analyze(d, { window: 252, minLookback: 200 });
+  assert.equal(year.levelStart, year.start);
+  assert.deepEqual(levels(year), levels(SR.analyze(d, { window: 252 })));
+  // without it, nothing changes: levels and window are the same length
+  assert.equal(SR.analyze(d, { window: 21 }).levelStart, n - 21);
+});

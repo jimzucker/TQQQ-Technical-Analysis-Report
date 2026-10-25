@@ -180,3 +180,58 @@ test("dates sit in their own strip under the last panel, written as month names"
     for (const t of ticks) expect(t).toMatch(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)( \d{1,2}| \d{4})?$/);
   }
 });
+
+test("at every window the newest candle sits just left of the price tags, neither hidden nor far away", async ({ page }) => {
+  // the space kept right of the newest bar is the width of the widest tag, in pixels, so
+  // tags never cover recent candles at 12 months and there is no wide gap at 1 month
+  const errors = await openPage(page);
+  for (const cadence of ["daily", "weekly"]) {
+    await page.locator(`#cadenceSeg button[data-cadence="${cadence}"]`).click();
+    for (const w of ["1m", "3m", "6m", "9m", "12m"]) {
+      await page.locator(`#windowSeg button[data-w="${w}"]`).click();
+      const g = await page.evaluate(() => {
+        const st = window.__dashboard, c = st.charts.main, S = c.L.panes[0].S;
+        const last = st.view.dates.length - 1, cw = Math.max(1, Math.min(12, S.barW * 0.7));
+        const tags = st.tagBoxes.filter((t) => !t.edge); // level and price tags (edge tags sit in a corner)
+        return { newestRight: S.x(last) + cw / 2, tagsLeft: Math.min(...tags.map((t) => t.left)), barW: S.barW };
+      });
+      const gap = g.tagsLeft - g.newestRight;
+      expect(gap, `${w} ${cadence}: newest candle hidden behind a tag`).toBeGreaterThanOrEqual(0);
+      expect(gap, `${w} ${cadence}: ${gap.toFixed(0)}px of empty space after the newest candle`).toBeLessThanOrEqual(g.barW + 12);
+    }
+  }
+  expect(errors).toEqual([]);
+});
+
+test("the page uses up to 1600 pixels of a wide screen", async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await openPage(page);
+  const w = await page.locator("#mainChart").evaluate((el) => el.getBoundingClientRect().width);
+  // 1600 less a 48 px margin each side and the card's padding: about 1470 (was about 1115
+  // with the old 1180-pixel limit)
+  expect(w).toBeGreaterThan(1450);
+  const { scroll, inner } = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, inner: window.innerWidth }));
+  expect(scroll).toBeLessThanOrEqual(inner);
+});
+
+test("the page keeps a 48-pixel margin on a desktop and 16 pixels on a phone", async ({ page }) => {
+  for (const [width, margin] of [[1920, 48], [1400, 48], [390, 16]]) {
+    await page.setViewportSize({ width, height: 900 });
+    await openPage(page);
+    const left = await page.locator("#mainChart").evaluate((el) => el.closest(".card").getBoundingClientRect().left);
+    const wrapLeft = await page.locator("main.wrap").evaluate((el) => el.getBoundingClientRect().left);
+    expect(Math.round(left - wrapLeft), `margin at ${width}px wide`).toBe(margin);
+  }
+});
+
+test("the chart help is six labelled items: 3 columns on a desktop, 2 mid-size, 1 on a phone", async ({ page }) => {
+  for (const [width, minCols, maxCols] of [[1920, 3, 3], [800, 2, 2], [390, 1, 1]]) {
+    await page.setViewportSize({ width, height: 900 });
+    await openPage(page);
+    const items = page.locator("#chartHelp > div");
+    await expect(items).toHaveCount(6);
+    const lefts = await items.evaluateAll((els) => [...new Set(els.map((e) => Math.round(e.getBoundingClientRect().left)))]);
+    expect(lefts.length, `${width}px: columns`).toBeGreaterThanOrEqual(minCols);
+    expect(lefts.length, `${width}px: columns`).toBeLessThanOrEqual(maxCols);
+  }
+});

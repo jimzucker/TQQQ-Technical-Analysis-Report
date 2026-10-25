@@ -72,6 +72,17 @@
       this.ro.observe(host);
     }
 
+    /** Pixels kept free right of the newest bar (for price tags), on top of `rightPad` bars. */
+    padPx() {
+      const p = this.o.rightPadPx;
+      return Math.max(0, (typeof p === "function" ? p() : p) || 0);
+    }
+
+    /** Width of one bar for a view, leaving rightPad bars and padPx() pixels free on the right. */
+    barWidth(from, to, L = this.L) {
+      return (L.right - L.left - this.padPx()) / (to - from + 1 + this.o.rightPad);
+    }
+
     setView(from, to, bounds) {
       this.bounds = bounds || this.bounds || [0, this.o.dates.length - 1];
       this.view = { from, to };
@@ -105,8 +116,7 @@
     pan(px) {
       if (!this.L) return;
       const { from, to } = this.view;
-      const perBar = (this.L.right - this.L.left) / (to - from + 1 + this.o.rightPad);
-      const shift = px / perBar;
+      const shift = px / this.barWidth(from, to);
       this.view = { from: from + shift, to: to + shift };
       this.clampView();
       this.hover = null;
@@ -152,10 +162,8 @@
       const L = (this.L = this.layout());
       const ctx = (this.ctx = setupCanvas(this.canvas, L.w, L.height));
       const { from, to } = this.view;
-      const pad = this.o.rightPad;
-      const plotW = L.right - L.left;
-      const xScale = (i) => L.left + ((i - from + 0.5) / (to - from + 1 + pad)) * plotW;
-      const barW = plotW / (to - from + 1 + pad);
+      const barW = this.barWidth(from, to, L);
+      const xScale = (i) => L.left + (i - from + 0.5) * barW;
       const i0 = Math.max(0, Math.floor(from)), i1 = Math.min(this.o.dates.length - 1, Math.ceil(to));
       this.xScale = xScale;
       this.barW = barW;
@@ -190,6 +198,7 @@
         const strong = newMonth;
         ctx.font = strong ? AXIS_FONT_BOLD : AXIS_FONT;
         const x = xScale(i), half = ctx.measureText(label).width / 2;
+        if (x - half < 0 || x + half > L.w) continue; // would be cut off at the chart's edge
         if (x - half < lastRight + 10) {
           // too close to the label before: a month start replaces a plain day label
           const prev = xTicks[xTicks.length - 1];
@@ -313,8 +322,7 @@
     indexAt(px) {
       const { from, to } = this.view;
       const L = this.L;
-      const f = (px - L.left) / (L.right - L.left);
-      const i = Math.round(from + f * (to - from + 1 + this.o.rightPad) - 0.5);
+      const i = Math.round(from + (px - L.left) / this.barWidth(from, to) - 0.5);
       return clamp(i, Math.max(0, Math.floor(from)), Math.min(this.o.dates.length - 1, Math.ceil(to)));
     }
 
@@ -355,7 +363,7 @@
           const dx = p.x - drag.x, dy = p.y - drag.y;
           if (!drag.moved && Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) { drag.moved = true; c.setPointerCapture(e.pointerId); }
           if (drag.moved) {
-            const perBar = (this.L.right - this.L.left) / (drag.view.to - drag.view.from + 1 + this.o.rightPad);
+            const perBar = this.barWidth(drag.view.from, drag.view.to);
             const shift = -dx / perBar;
             this.view = { from: drag.view.from + shift, to: drag.view.to + shift };
             this.clampView();
