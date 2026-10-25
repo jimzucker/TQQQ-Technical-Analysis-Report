@@ -6,7 +6,7 @@
  *   node pipeline/snapshot.js --symbol QQQ    -> another ticker on docs/data/tickers.json (default: TQQQ)
  *   node pipeline/snapshot.js --data DIR      -> read and write DIR instead of the ticker's folder (used by the tests)
  * Outputs, in the ticker's folder (docs/data for TQQQ, docs/data/qqq for QQQ, ...):
- *   history/YYYY-MM-DD.json   one per session (default 12-month settings)
+ *   history/YYYY-MM-DD.json   one per session, with the page's opening settings (SR.PAGE_SETTINGS)
  *   history/index.json        list of snapshot dates
  *   changes.json              what changed vs the previous snapshot
  */
@@ -38,7 +38,7 @@ const n = data.close.length;
 const ends = [];
 for (let k = backfill; k >= 0; k--) if (n - 1 - k >= 260) ends.push(n - 1 - k);
 for (const end of ends) {
-  const snap = SR.snapshot(SR.truncate(data, end), {});
+  const snap = SR.snapshot(SR.truncate(data, end), SR.PAGE_SETTINGS);
   fs.writeFileSync(path.join(HIST, `${snap.as_of}.json`), JSON.stringify(snap));
 }
 
@@ -49,7 +49,13 @@ fs.writeFileSync(path.join(HIST, "index.json"), JSON.stringify({ dates }));
 
 const load = (d) => JSON.parse(fs.readFileSync(path.join(HIST, `${d}.json`), "utf8"));
 const cur = load(dates[dates.length - 1]);
-const prev = dates.length > 1 ? load(dates[dates.length - 2]) : null;
+let prev = dates.length > 1 ? load(dates[dates.length - 2]) : null;
+// a snapshot saved with other settings (before a method change) is rebuilt with today's,
+// so the comparison never reports a difference in settings as a change in the market
+if (prev && JSON.stringify(prev.settings) !== JSON.stringify(cur.settings)) {
+  const at = data.dates.indexOf(prev.as_of);
+  prev = at >= 260 ? SR.snapshot(SR.truncate(data, at), SR.PAGE_SETTINGS) : null;
+}
 const changes = { as_of: cur.as_of, previous: prev ? prev.as_of : null, items: SR.diffSnapshots(prev, cur) };
 fs.writeFileSync(path.join(DATA, "changes.json"), JSON.stringify(changes, null, 1));
 console.log(`snapshot ${SYMBOL} ${cur.as_of}: ${cur.supports.length} supports, ${cur.broken.length} broken, ${changes.items.length} changes; ${dates.length} snapshots kept`);

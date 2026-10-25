@@ -419,6 +419,29 @@ test("diffSnapshots reports a level being reclaimed", () => {
   assert.equal(items[0].type, "reclaimed");
 });
 
+test("diffSnapshots: with every level kept, a level coming or going is not called a top-5 move", () => {
+  const base = { trend: "Mixed", rsi_label: "Neutral", macd: "Bearish", ma_cross: null, rsi: 50, broken: [] };
+  const prev = { ...base, supports: [{ price: 50, touches: 2 }] };
+  const cur = { ...base, as_of: "2026-10-23", settings: { top: "all" }, supports: [{ price: 40, touches: 3, last_test: "2026-09-01" }] };
+  assert.deepEqual(SR.diffSnapshots(prev, cur).map((x) => x.text), [
+    "Support at $40.00 (3 touches) is now on the list of levels.",
+    "Support at $50.00 is no longer on the list of levels.",
+  ]);
+  const top5 = { ...cur, settings: { top: 5 } }; // older snapshots kept the strongest five
+  assert.match(SR.diffSnapshots(prev, top5)[0].text, /moved into the top 1/);
+});
+
+test("the nightly snapshot keeps the levels the page opens on, for every ticker", () => {
+  for (const s of ["tqqq", "qqq", "spy"]) {
+    const d = SR.fromPayload(JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", `${s}-2026-10-23.json`), "utf8")));
+    const page = SR.analyze(d, { window: SR.WINDOW_PRESETS["1m"], minLookback: SR.LEVEL_SESSIONS, topN: Infinity, topAbove: Infinity });
+    const snap = SR.snapshot(d, SR.PAGE_SETTINGS);
+    assert.deepEqual(snap.supports.map((z) => z.price), page.supports.map((z) => +z.price.toFixed(2)), s);
+    assert.deepEqual(snap.broken.map((z) => z.price), page.broken.map((z) => +z.price.toFixed(2)), s);
+    assert.deepEqual({ levels_from: snap.settings.levels_from, top: snap.settings.top }, { levels_from: 200, top: "all" }, s);
+  }
+});
+
 test("real TQQQ fixture: sane output for every preset window", () => {
   const file = FIXTURE;
   const d = SR.fromPayload(JSON.parse(fs.readFileSync(file, "utf8")));
