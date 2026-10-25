@@ -3,6 +3,7 @@
  * Writes the daily support snapshot using the same method as the page.
  *   node pipeline/snapshot.js            -> snapshot for the latest session
  *   node pipeline/snapshot.js --backfill 30   -> also (re)build the last 30 sessions
+ *   node pipeline/snapshot.js --data DIR      -> read and write DIR instead of docs/data (used by the tests)
  * Outputs:
  *   docs/data/history/YYYY-MM-DD.json   one per session (default 12-month settings)
  *   docs/data/history/index.json        list of snapshot dates
@@ -14,13 +15,14 @@ const path = require("path");
 const SR = require("../docs/js/support.js");
 
 const ROOT = path.resolve(__dirname, "..");
-const DATA = path.join(ROOT, "docs", "data");
-const HIST = path.join(DATA, "history");
 const KEEP = 400; // snapshots kept (~18 months)
 
 const args = process.argv.slice(2);
 const bi = args.indexOf("--backfill");
 const backfill = bi >= 0 ? parseInt(args[bi + 1], 10) || 20 : 0;
+const di = args.indexOf("--data");
+const DATA = di >= 0 ? path.resolve(args[di + 1]) : path.join(ROOT, "docs", "data");
+const HIST = path.join(DATA, "history");
 
 const payload = JSON.parse(fs.readFileSync(path.join(DATA, "tqqq.json"), "utf8"));
 const data = SR.fromPayload(payload);

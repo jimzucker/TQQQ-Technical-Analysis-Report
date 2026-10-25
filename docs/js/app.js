@@ -17,6 +17,8 @@
 
   const state = { data: null, opts: SR.normalize({}), res: null, lab: null, charts: {}, windowKey: "12m",
     panes: { ...PANE_DEFAULTS }, cadence: "daily", view: null };
+  // the browser tests read the page's state; only exposed when a test drives the browser
+  if (navigator.webdriver) window.__dashboard = state;
 
   /* ------------------------------------------------------------ URL <-> settings */
   function readUrl() {

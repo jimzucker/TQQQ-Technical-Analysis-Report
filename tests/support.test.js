@@ -6,6 +6,10 @@ const path = require("path");
 const fs = require("fs");
 const SR = require("../docs/js/support.js");
 
+// A frozen copy of docs/data/tqqq.json (as of 2026-10-23). The live file is rewritten
+// every weekday, so tests that read it would check different numbers each day.
+const FIXTURE = path.join(__dirname, "fixtures", "tqqq-2026-10-23.json");
+
 // synthetic series helper: builds a data object from closes with a fixed spread
 function synth(lows, { spread = 1, vol = 1000 } = {}) {
   const n = lows.length;
@@ -166,8 +170,7 @@ test("window limits which pivots are used", () => {
 
 // The Mondays view is display only — levels always stay on daily data.
 test("Mondays view samples each week's Monday session exactly", () => {
-  const file = path.join(__dirname, "..", "docs", "data", "tqqq.json");
-  if (!fs.existsSync(file)) return;
+  const file = FIXTURE;
   const d = SR.fromPayload(JSON.parse(fs.readFileSync(file, "utf8")));
   const res = SR.analyze(d, {});
   const wk = SR.chartModel(d, res, "weekly");
@@ -205,8 +208,7 @@ test("Mondays view samples each week's Monday session exactly", () => {
 });
 
 test("Mondays view maps swing lows onto the week that contained them", () => {
-  const file = path.join(__dirname, "..", "docs", "data", "tqqq.json");
-  if (!fs.existsSync(file)) return;
+  const file = FIXTURE;
   const d = SR.fromPayload(JSON.parse(fs.readFileSync(file, "utf8")));
   const res = SR.analyze(d, {});
   const wk = SR.chartModel(d, res, "weekly");
@@ -221,8 +223,7 @@ test("Mondays view maps swing lows onto the week that contained them", () => {
 });
 
 test("chartModel leaves the daily view untouched", () => {
-  const file = path.join(__dirname, "..", "docs", "data", "tqqq.json");
-  if (!fs.existsSync(file)) return;
+  const file = FIXTURE;
   const d = SR.fromPayload(JSON.parse(fs.readFileSync(file, "utf8")));
   const res = SR.analyze(d, {});
   const dy = SR.chartModel(d, res, "daily");
@@ -281,8 +282,7 @@ test("sessionsBetween skips weekends", () => {
 });
 
 test("bottomLine leads with a headline and stays short", () => {
-  const file = path.join(__dirname, "..", "docs", "data", "tqqq.json");
-  if (!fs.existsSync(file)) return;
+  const file = FIXTURE;
   const d = SR.fromPayload(JSON.parse(fs.readFileSync(file, "utf8")));
   for (const w of Object.values(SR.WINDOW_PRESETS)) {
     const res = SR.analyze(d, { window: w });
@@ -298,8 +298,7 @@ test("bottomLine leads with a headline and stays short", () => {
 });
 
 test("bottomLine names no indicator a layman would have to look up", () => {
-  const file = path.join(__dirname, "..", "docs", "data", "tqqq.json");
-  if (!fs.existsSync(file)) return;
+  const file = FIXTURE;
   const d = SR.fromPayload(JSON.parse(fs.readFileSync(file, "utf8")));
   // terms that need a definition before they mean anything. They are fine further
   // down the page, where there is room to explain them; the summary must not need one.
@@ -327,8 +326,7 @@ test("bottomLine says so plainly when there is no floor to report", () => {
 });
 
 test("Bollinger label distinguishes closing through a band from nearing one", () => {
-  const file = path.join(__dirname, "..", "docs", "data", "tqqq.json");
-  if (!fs.existsSync(file)) return;
+  const file = FIXTURE;
   const base = SR.fromPayload(JSON.parse(fs.readFileSync(file, "utf8")));
   const i = base.close.length - 1;
   const lo = base.bb_lower[i], hi = base.bb_upper[i];
@@ -376,8 +374,7 @@ test("diffSnapshots reports a level being reclaimed", () => {
 });
 
 test("real TQQQ fixture: sane output for every preset window", () => {
-  const file = path.join(__dirname, "..", "docs", "data", "tqqq.json");
-  if (!fs.existsSync(file)) return;
+  const file = FIXTURE;
   const d = SR.fromPayload(JSON.parse(fs.readFileSync(file, "utf8")));
   for (const w of Object.values(SR.WINDOW_PRESETS)) {
     const res = SR.analyze(d, { window: w });

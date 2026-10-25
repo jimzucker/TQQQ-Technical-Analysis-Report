@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    name: Python and JavaScript unit tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,6 +20,38 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: pip install -r pipeline/requirements.txt
-      - run: python -m pytest -q pipeline/tests
-      - run: node --test tests/*.test.js
+      - run: pip install -r pipeline/requirements.txt pytest-cov
+      - name: Python tests, with coverage
+        run: |
+          python -m pytest -q --cov=pipeline --cov-report=term --cov-report=markdown-append:"$GITHUB_STEP_SUMMARY" pipeline/tests
+      - name: JavaScript tests, with coverage
+        run: |
+          node --test --experimental-test-coverage tests/*.test.js | tee js-tests.txt
+          {
+            echo "### JavaScript test coverage"
+            echo '```'
+            grep -E "file +\||\.js +\||all files" js-tests.txt | sed 's/^ℹ //'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  browser:
+    name: Browser tests (the page itself)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+      - name: Keep the report when a test fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14

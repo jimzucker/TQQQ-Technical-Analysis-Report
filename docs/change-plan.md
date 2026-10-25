@@ -1,0 +1,186 @@
+# Change plan — support levels above price, any ticker, chart navigation, indicators
+
+Written 2026-10-25. This file records what was asked for, what the review found, and the plan agreed. It is meant to be shared with the original owner of the app. The [README change log](../README.md#change-log) records each phase as it lands.
+
+**Status:** test automation is done (this pull request). Phases 1–5 are not started; phases 3 and 1 follow in the next pull request.
+
+---
+
+## 1. What was asked for
+
+The requests, copied word for word:
+
+> do a review of this application and create a plan to modify it to show a)all support levels even if they are above the current levels, currnetly it only shows support for current price and below, it removes higher support levels b) a second phase to let me request different tickers not just TQQQ
+
+> c) phase 3 to make the navigation of chart more standard, now hwne scrollign the page with finger press on mause pad the chart starts zooming d) add bollinger bands e) give abilitty to hid show indictors to make ti easier to read
+
+> Above-price levels on the chart do as recommended / Phase 2 - option b, default list TQQQ, QQQ, SPY if a user asks for a ticker it should be validate and if valid add to default list so it is maintained
+
+> keep alog of my prompt and this plan in a file id docs so it can be shared with the original owner of the the app, in readme add a change log
+
+> oh ok, do 3 and one on this branch that will be the first PR for the owner
+
+> do a review of the application do we have good test coverage automation, do we have any gaps we need to close before we submit a PR with these 2 changes
+
+> i want to make a branch with any required test automation improvmements that will be PR#1 to the app owner, then make all our functional changes a second PR ontop of PR#1 leveraing all the ststs
+
+> does each branch contain a file with the prompt and plan adn update hte change log inreadme?
+
+## 2. Decisions made
+
+| Question | Decision |
+|---|---|
+| Levels above price: shown by default? | **Yes**, in a muted colour, with a switch to hide them |
+| Other tickers: fixed list, or any ticker? | **Any ticker.** A requested ticker is checked; if it passes, it is added to the daily list and kept up to date from then on |
+| Starting list | TQQQ, QQQ, SPY |
+| Who may add tickers, and how many | **Not decided yet.** Proposed: anyone, at most 50 tickers on the list, at most 5 additions per visitor per day. The other choice is only the owner, using a passphrase |
+
+## 3. How the app works today
+
+| Part | What it does |
+|---|---|
+| `pipeline/fetch.py`, `pipeline/build.py` | Download TQQQ and QQQ daily prices (Yahoo, with Tiingo and Alpha Vantage as backups), check them, write `docs/data/tqqq.json` |
+| `docs/js/support.js` | The support method. The page and the nightly snapshot job (`pipeline/snapshot.js`) use this one file |
+| `docs/js/app.js`, `docs/js/charts.js` | Draw the report and the charts. The site is static GitHub Pages with no server |
+| `.github/workflows/refresh.yml` | Runs every weekday evening after the US close and commits new data |
+
+---
+
+## 4. Phase 1 — show support levels above the current price
+
+**What the review found.** `docs/js/support.js:165` marks a zone as "broken" when the close is below it:
+
+```js
+z.broken = price < z.low - half;
+```
+
+Every zone above today's price therefore counts as broken, and `support.js:175` keeps only zones that are not broken. The levels above price only show up as one line at the foot of the table and in the "what changed" feed.
+
+Measured on the data as of 2026-10-23 (close $66.29):
+
+| Window | Levels shown | Levels hidden above the price |
+|---|---|---|
+| 1 month | **none** | $67.43 (score 97), $75.47 (score 83) |
+| 3 months | 2 | $75.47 |
+| 6 months | 2 | $70.26 (3 touches, score 70, Strong) |
+| 12 months | 5 | $70.26 (3 touches), $75.47 |
+
+The 1-month view says no support was found, even though two well-scored levels sit just above the price.
+
+**Plan.**
+
+| Step | Change | Where |
+|---|---|---|
+| 1 | Split zones into **at or below price** (S1–S5, unchanged) and **above price**, returned as their own list, nearest first, limit 5 | `support.js:164–180` |
+| 2 | Own labels for levels above price (A1, A2, …) with the status "Above price — was support, price closed below it". They do not take places from S1–S5 | `support.js` |
+| 3 | Show them in the levels table above the "Last close" row, so the table reads in price order | `app.js:228–252` |
+| 4 | Draw them on the chart in a muted colour, shown by default, with a legend entry and a switch | `app.js:413`, legend |
+| 5 | Add "Nearest level above price: $X, Y% above" to the findings and the bottom line. Stop the 1-month view saying no levels exist when some sit above the price | `findings()`, `bottomLine()` |
+| 6 | Save every level above price in the daily snapshot, not just the first 5 | `snapshot()` at `support.js:537` |
+| 7 | Add them to the CSV export. Update the README glossary and the Method panel in `index.html:169,181` | |
+| 8 | Tests: a zone above price is listed, not dropped. S1–S5 match today's output on every saved history file | `tests/support.test.js` |
+
+---
+
+## 5. Phase 2 — any ticker, added to the daily list once it passes the checks
+
+**What the review found.** "TQQQ", "QQQ" and the 3× leverage are hard-coded in about 40 places: the data file name, the fetch calls, page titles, the benchmark panel, the "daily resetting cost" finding and the disclaimer. A browser can't download prices from Yahoo directly, because Yahoo blocks requests coming from other websites, so viewing a new ticker live needs a small proxy service.
+
+**How it will work.**
+
+1. The visitor types a ticker.
+2. If it is on the daily list, the page loads its saved data: the full report, with history and what-changed.
+3. If it is not, the page asks the proxy. The proxy checks that the ticker exists and has at least 260 trading days of data, sends the prices back so the report shows right away, and asks GitHub to start an **add-ticker** job.
+4. The add-ticker job runs the same checks as the nightly refresh (`fetch.py validate()`). If the ticker passes, the job adds it to `tickers.json`, builds its data and commits. The nightly refresh keeps it up to date from then on.
+5. If it fails, the page says why in plain words ("only 140 trading days of history; 260 needed") and nothing is added.
+
+**Plan.**
+
+| Step | Change |
+|---|---|
+| 1 | `pipeline/tickers.json`: TQQQ (benchmark QQQ, 3×), QQQ (benchmark SPY, 1×), SPY (no benchmark, 1×). New tickers default to 1× against SPY |
+| 2 | `build.py --symbol X` writes `docs/data/<sym>/`. Move TQQQ's existing files there so its history is kept. The nightly job loops over the list, and one failed ticker does not stop the others |
+| 3 | Copy the indicator maths (`indicators.py`) into JS so the page can work out indicators for a live ticker. A test checks the JS numbers match the Python ones on every series in the saved data |
+| 4 | Proxy: a free-tier Cloudflare Worker in a new `proxy/` folder, with `GET /prices?symbol=` and `POST /add?symbol=` |
+| 5 | New `.github/workflows/add-ticker.yml`, started by the proxy: checks again, adds to the list, builds, commits |
+| 6 | Page: a ticker box with a dropdown of listed tickers, `?ticker=` in the page address, and all ticker, benchmark and leverage wording taken from the ticker's settings. Leverage text only for leveraged funds |
+
+**Limits, because the site is public** (see the open question in section 2):
+- Tickers must be 1–10 characters (letters, digits, `.`, `-`, `^`), and only stocks and ETFs are accepted.
+- At most 50 tickers on the list. Once it is full, a new ticker can still be viewed live but is not added.
+- At most 5 additions per visitor per day.
+- A listed ticker that fails 5 nightly runs in a row opens an issue rather than being retried for ever.
+- Not measured yet: how long the nightly run takes with 50 tickers, and whether Yahoo slows down repeated downloads. This will be timed with a real list before the limit is raised.
+
+**Setup the owner will need to do** (about 10 minutes; step-by-step notes will come with the code):
+- A free Cloudflare account, and one `npx wrangler deploy`.
+- A GitHub fine-grained token for this repository only, with **Actions: write** and nothing else, saved as a secret in the Worker.
+
+---
+
+## 6. Phase 3 — standard chart navigation
+
+**What the review found.** `app.js:375` sets `wheelZoom: true` on the main chart, so the handler at `charts.js:322–331` turns every scroll event over the chart into a zoom and stops the page scrolling. Two-finger scrolling on a trackpad sends the same scroll events, so moving down the page zooms the chart whenever the pointer passes over it.
+
+**Plan**, matching how TradingView and embedded Google Maps behave:
+
+| Gesture | Today | After |
+|---|---|---|
+| Two-finger scroll up/down, mouse wheel | Zooms the chart | **Scrolls the page** |
+| Two-finger swipe left/right | Ignored | **Moves the chart through time** |
+| Trackpad pinch | Zooms | Zooms. The Mac browser sends a pinch as a scroll with Ctrl held, which the existing check already handles |
+| Ctrl/⌘ + scroll | Zooms | Zooms |
+| Drag, double-click, + / − / 0 keys, phone pinch | Work | Unchanged |
+| Buttons | Reset view | Add **+** and **−** |
+
+Steps: remove `wheelZoom: true`; add a sideways-swipe handler that pans the chart; show a 2-second hint on the first plain scroll ("Pinch or hold ⌘ and scroll to zoom"); update the help text in `index.html:104` and `README.md:129`. Checked by hand in Chrome and Safari with a trackpad, because the unit tests do not cover gestures.
+
+---
+
+## 7. Phase 4 — Bollinger Bands
+
+**What the review found.** The bands are already worked out (`indicators.py:77`) and saved in `tqqq.json`, but they only feed the written findings and the indicator table. Nothing draws them.
+
+**Plan.** Draw the upper and lower bands on the price chart as thin lines with a light fill between them. Draw the middle band only if it differs from the 20-day average line, which will be checked against the data first. Add the band values to the hover tooltip and a legend entry. Off by default, with a switch.
+
+---
+
+## 8. Phase 5 — show or hide every indicator
+
+**What the review found.** Volume, RSI, MACD, % below 12-month high, the 3-day low and Volume by price can already be switched on and off (`index.html:96–101`). The 20, 50 and 200-day averages, the support zones and the swing-low markers are always drawn.
+
+**Plan.**
+1. Two rows of switches. **On the price chart:** 20 / 50 / 200-day averages, Bollinger Bands, support below price, levels above price, swing-low markers, 3-day low, Volume by price. **Panels below:** Volume, RSI, MACD, % below 12-month high.
+2. A **Simple view** button (candles, support zones, 50 and 200-day averages only) and a **Show all** button.
+3. Choices are kept between visits, as they already are, and saved in the page address so a shared link opens with the same view.
+4. The legend lists only the layers that are switched on.
+
+---
+
+## 9. Test automation (done first, as its own pull request)
+
+The review of the tests found that the page code had no tests at all, and both changes above are mostly page code. That pull request comes first, so the changes can be checked against it. It adds no features.
+
+| Gap found | Closed by |
+|---|---|
+| `app.js` and `charts.js` (about 1,300 lines) had no tests | Browser tests that open the real page in Chrome, desktop and phone sizes |
+| Nothing showed whether a change moved a support level | `tests/golden.test.js`: every level and "what changed" item for 241 sessions, compared with a recorded copy |
+| Seven tests read the live data file, which changes daily, and passed without checking anything if it was missing | They read a frozen copy in `tests/fixtures/` |
+| `pipeline/snapshot.js` (the nightly job) had no tests | `tests/snapshot.test.js` runs it on a temporary folder |
+| `fetch.py` was 66% covered; choosing between data sources was untested | `pipeline/tests/test_sources.py`, no network needed; now 85% |
+| Coverage was never measured | Shown per file on each CI run's summary page |
+
+Found while doing this, not changed:
+- **Reset view does not return to the opening view.** The chart opens on the chosen window, but Reset view, double-click and the 0 key show all two years of history. A browser test records this as the current behaviour.
+- `fetch.py:95` uses `datetime.utcfromtimestamp()`, which Python has marked for removal.
+
+## 10. Order of work
+
+| Order | Phase | Size |
+|---|---|---|
+| 1st | 3 — chart navigation | Small |
+| 2nd | 1 — levels above price | Small |
+| 3rd | 4 + 5 — Bollinger Bands and switches, done together | Medium |
+| 4th | 2 — any ticker | Largest |
+
+Each phase goes on its own branch with its own pull request, and gets a line in the README change log when it is merged.
