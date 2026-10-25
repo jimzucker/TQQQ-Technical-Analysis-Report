@@ -140,7 +140,7 @@ Only Volume and RSI are on by default — the chart is deliberately quiet until 
 
 ### The window (the headline setting)
 
-Buttons for **1M, 3M, 6M, 9M, 12M**, plus a free-text box for any value from **21 to 252 trading sessions**. A shorter window reacts faster and finds fewer, more recent levels; a longer window finds levels that have survived more market conditions. The page opens on **1M**. The daily snapshot and "What changed" always use 12 months, so each day is compared on the same basis.
+Buttons for **1M, 3M, 6M, 9M, 12M**, plus a free-text box for any value from **21 to 252 trading sessions**. A shorter window reacts faster and finds fewer, more recent levels; a longer window finds levels that have survived more market conditions. The page opens on **1M** the first time; after that it reopens with the window and settings you last used in that browser (a link that includes settings wins). The daily snapshot and "What changed" always use 12 months, so each day is compared on the same basis.
 
 ### Method settings (under the "Method settings" dropdown)
 
@@ -410,6 +410,7 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-10-25 | **Remembers your choices, and readable dates.** The window and method settings are now remembered in your browser along with the theme, panels and Daily/Mondays, so the page reopens as you left it; a link that carries settings still wins. The chart's dates moved out from on top of the volume bars into their own strip, and read "Sep 25", "Oct", "Jan 2026"; the hover date reads "Fri, Oct 16, 2026". |
 | 2026-10-25 | **The page opens on the 1-month window** instead of 12 months. The daily snapshot and "What changed" still use 12 months. |
 | 2026-10-25 | **Levels above price.** Support zones the price has closed below are no longer dropped. They are shown as A1, A2, … in grey on the chart (with a switch to hide them), above the last close in the table, in the CSV, in the findings and in the bottom line. S1–S5 are unchanged: the recorded output matches for all 241 sessions tested. |
 | 2026-10-25 | **Chart scrolling.** Scrolling up or down over the chart now scrolls the page instead of zooming. Zoom with a pinch, Ctrl/⌘ + scroll, or the new + and − buttons. Swipe sideways, or Shift + scroll, to move through time. Reset view, double-click and the 0 key now return to the window the chart opened on, instead of all two years. |

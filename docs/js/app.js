@@ -24,8 +24,14 @@
   if (navigator.webdriver) window.__dashboard = state;
 
   /* ------------------------------------------------------------ URL <-> settings */
+  const SETTING_KEYS = ["window", "period", "cluster", "touches"];
+
   function readUrl() {
-    const q = new URLSearchParams(location.search);
+    // a link that carries settings wins; otherwise reopen with this browser's last ones
+    let q = new URLSearchParams(location.search);
+    if (!SETTING_KEYS.some((k) => q.has(k))) {
+      try { q = new URLSearchParams(localStorage.getItem("settings") || ""); } catch (e) { /* storage unavailable */ }
+    }
     const o = { window: SR.WINDOW_PRESETS[PAGE_WINDOW] };
     const w = q.get("window");
     if (w) {
@@ -56,6 +62,7 @@
     if (o.clusterMult !== d.clusterMult) q.set("cluster", o.clusterMult);
     if (o.minTouches !== d.minTouches) q.set("touches", o.minTouches);
     history.replaceState(null, "", "?" + q.toString());
+    try { localStorage.setItem("settings", q.toString()); } catch (e) { /* storage unavailable */ }
   }
 
   /* ------------------------------------------------------------ controls */

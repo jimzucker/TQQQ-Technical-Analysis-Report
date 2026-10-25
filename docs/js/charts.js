@@ -10,6 +10,10 @@
   const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   const FONT = '11px system-ui, -apple-system, "Segoe UI", sans-serif';
+  const AXIS_FONT = '12px system-ui, -apple-system, "Segoe UI", sans-serif';
+  const AXIS_FONT_BOLD = '600 12px system-ui, -apple-system, "Segoe UI", sans-serif';
+  // "2026-10-23" -> parts in UTC, so a date never shifts with the reader's time zone
+  const dateParts = (iso, opts) => new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", { timeZone: "UTC", ...opts });
 
   function niceTicks(min, max, count = 5) {
     if (!(max > min)) return [min];
@@ -128,7 +132,7 @@
       const w = this.host.clientWidth;
       const mobile = w < 640;
       const axisW = mobile ? 46 : 58;
-      const top = 8, xAxisH = 22;
+      const top = 8, xAxisH = 26;
       let y = top;
       const panes = this.o.panes.map((p) => {
         const h = mobile ? (p.mobileHeight ?? p.height * 0.7) : p.height;
@@ -136,8 +140,11 @@
         y += h + (p.gap ?? 14);
         return pane;
       });
-      const height = y - 14 + xAxisH;
-      return { w, height, left: 6, right: w - axisW, axisW, panes, mobile, xAxisY: y - 14 };
+      // the dates get their own strip under the last pane, whatever gap that pane has
+      // (the last pane's gap is 0, which used to put the dates on top of its bars)
+      const last = panes[panes.length - 1];
+      const bottom = last.y + last.h;
+      return { w, height: bottom + xAxisH, left: 6, right: w - axisW, axisW, panes, mobile, xAxisY: bottom };
     }
 
     render() {
@@ -163,22 +170,36 @@
       const dates = this.o.dates;
       const span = i1 - i0;
       const monthStep = span > 400 ? 3 : span > 200 ? 2 : 1;
+      // Short ranges label days ("Sep 25"); longer ones label months ("Oct").
+      // The first trading day of a month is in bold, and January carries its year.
       const xTicks = [];
-      let lastX = -1e9;
+      let lastRight = -1e9;
+      const every = Math.max(1, Math.ceil(span / 6));
       for (let i = Math.max(i0, 1); i <= i1; i++) {
         const m = +dates[i].slice(5, 7), pm = +dates[i - 1].slice(5, 7);
+        const newMonth = m !== pm;
+        const mon = dateParts(dates[i], { month: "short" });
         let label = null;
         if (span <= 45) {
-          if (i % Math.ceil(span / 6) === 0) label = dates[i].slice(5);
-        } else if (m !== pm && (m - 1) % monthStep === 0) {
-          label = m === 1 ? dates[i].slice(0, 4) : new Date(dates[i] + "T12:00:00Z").toLocaleString("en-US", { month: "short", timeZone: "UTC" });
+          if (newMonth) label = m === 1 ? `${mon} ${dates[i].slice(0, 4)}` : mon;
+          else if (i % every === 0) label = `${mon} ${+dates[i].slice(8, 10)}`;
+        } else if (newMonth && (m - 1) % monthStep === 0) {
+          label = m === 1 ? `${mon} ${dates[i].slice(0, 4)}` : mon;
         }
         if (!label) continue;
-        const x = xScale(i);
-        if (x - lastX < 44) continue;
-        lastX = x;
-        xTicks.push({ x, label });
+        const strong = newMonth;
+        ctx.font = strong ? AXIS_FONT_BOLD : AXIS_FONT;
+        const x = xScale(i), half = ctx.measureText(label).width / 2;
+        if (x - half < lastRight + 10) {
+          // too close to the label before: a month start replaces a plain day label
+          const prev = xTicks[xTicks.length - 1];
+          if (!strong || !prev || prev.strong) continue;
+          xTicks.pop();
+        }
+        lastRight = x + half;
+        xTicks.push({ x, label, strong });
       }
+      this.ticks = xTicks; // kept for the browser tests
       ctx.strokeStyle = ink.grid; ctx.lineWidth = 1;
       for (const t of xTicks) {
         for (const p of L.panes) { ctx.beginPath(); ctx.moveTo(Math.round(t.x) + 0.5, p.y); ctx.lineTo(Math.round(t.x) + 0.5, p.y + p.h); ctx.stroke(); }
@@ -229,8 +250,15 @@
       }
 
       // x axis labels, over the rules already drawn under the data
-      ctx.fillStyle = ink.muted; ctx.textAlign = "center"; ctx.textBaseline = "top";
-      for (const t of xTicks) ctx.fillText(t.label, t.x, L.xAxisY + 5);
+      ctx.textAlign = "center"; ctx.textBaseline = "top";
+      ctx.strokeStyle = ink.axis;
+      for (const t of xTicks) {
+        ctx.beginPath(); ctx.moveTo(Math.round(t.x) + 0.5, L.xAxisY); ctx.lineTo(Math.round(t.x) + 0.5, L.xAxisY + 4); ctx.stroke();
+        ctx.font = t.strong ? AXIS_FONT_BOLD : AXIS_FONT;
+        ctx.fillStyle = ink.text;
+        ctx.fillText(t.label, t.x, L.xAxisY + 7);
+      }
+      ctx.font = FONT;
 
       this.drawHover();
     }
@@ -246,13 +274,15 @@
       for (const p of L.panes) { ctx.beginPath(); ctx.moveTo(x, p.y); ctx.lineTo(x, p.y + p.h); ctx.stroke(); }
       ctx.setLineDash([]);
       // date label on the axis
-      const d = this.o.dates[i];
-      ctx.font = FONT;
-      const tw = ctx.measureText(d).width + 10;
+      const d = dateParts(this.o.dates[i], { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+      ctx.font = AXIS_FONT_BOLD;
+      const tw = ctx.measureText(d).width + 12;
+      const lx = clamp(x, L.left + tw / 2, L.right - tw / 2); // keep the tag on the chart near the edges
       ctx.fillStyle = css("--text-primary");
-      ctx.fillRect(x - tw / 2, L.xAxisY + 2, tw, 16);
+      ctx.fillRect(lx - tw / 2, L.xAxisY + 3, tw, 19);
       ctx.fillStyle = css("--surface-1"); ctx.textAlign = "center"; ctx.textBaseline = "top";
-      ctx.fillText(d, x, L.xAxisY + 5);
+      ctx.fillText(d, lx, L.xAxisY + 7);
+      ctx.font = FONT;
       if (this.hoverY != null) {
         const p = L.panes.find((q) => this.hoverY >= q.y && this.hoverY <= q.y + q.h);
         if (p) {
