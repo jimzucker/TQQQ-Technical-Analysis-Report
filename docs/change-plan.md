@@ -2,7 +2,7 @@
 
 Written 2026-10-25. This file records what was asked for, what the review found, and the plan agreed. It is meant to be shared with the original owner of the app. The [README change log](../README.md#change-log) records each phase as it lands.
 
-**Status:** test automation, the security checks, phase 3 (chart scrolling), phase 1 (levels above price), remembered settings with readable dates, phase 4 (Bollinger Bands), levels from at least 200 sessions, the every-combination tests, and phase 5 (show or hide every layer) are done. Phase 2 is under way: part 1 (several tickers from a list) is done; parts 2 and 3 are not started.
+**Status:** test automation, the security checks, phase 3 (chart scrolling), phase 1 (levels above price), remembered settings with readable dates, phase 4 (Bollinger Bands), levels from at least 200 sessions, the every-combination tests, and phase 5 (show or hide every layer) are done. Phase 2 is done in code: several tickers from a list, and any ticker live with adding to the list. The lookup service still has to be deployed by the owner.
 
 **Pull requests, each built on the one before:**
 
@@ -17,6 +17,7 @@ Written 2026-10-25. This file records what was asked for, what the review found,
 | 7 | `test-every-combination` | Tests only: the chart checked in every combination of options (section 13) |
 | 8 | `show-hide-indicators` | Phase 5: show or hide every chart layer, with its tests (section 8) |
 | 9 | `multi-ticker` | Phase 2, part 1: several tickers from a list (section 5) |
+| 10 | `any-ticker` | Phase 2, part 2: any ticker, live, and adding it to the daily list (section 5) |
 
 ---
 
@@ -158,6 +159,16 @@ The requests, copied word for word:
 
 > never mind my review was wrong its oK
 
+> send PR 9
+
+> explain pr 10?
+
+> fold it into PR 11
+
+> yes start PR 10
+
+> the UX is not intuitve to set the ticker
+
 ## 2. Decisions made
 
 | Question | Decision |
@@ -255,13 +266,19 @@ The 1-month view says no support was found, even though two well-scored levels s
 | PR | What | Status |
 |---|---|---|
 | 9 | Several tickers from `docs/data/tickers.json` (TQQQ, QQQ, SPY): a menu and `?ticker=` links, per-ticker data folders, wording from each ticker's entry, the nightly refresh building every ticker | Done |
-| 10 | The indicator maths in JavaScript, so the page can analyse a ticker not yet on the list | Not started |
-| 11 | Request any ticker: a Cloudflare Worker fetches it and starts an "add ticker" job, within the limits above | Not started; needs the owner's Cloudflare account and a GitHub token |
+| 10 | Request any ticker, with the indicator maths in JavaScript folded in (asked for: one pull request with a visible feature rather than one with none): a Cloudflare Worker fetches it and starts an "add ticker" job, within the limits above | Done; switching it on needs the owner's Cloudflare account and a GitHub token (`proxy/README.md`) |
 
 **Decisions made while building PR 9.**
 - TQQQ's files stay at `docs/data/` (no move, so its history and anything linking to `docs/data/tqqq.json` are untouched); other tickers get `docs/data/<symbol>/`.
 - SPY's benchmark is QQQ rather than none: it compares the S&P 500 with the Nasdaq-100 and avoids a special "no benchmark" case throughout the page.
 - The benchmark series is now `bench_close`; files written before the change (`qqq_close`) are still read.
+**Building PR 10, what was measured and decided.**
+- The JavaScript indicators first seemed to differ from Python's (RSI by up to 0.0002). The cause was measured, not guessed: the data files store prices rounded to 4 decimals, while Python worked from unrounded prices. Run on the same prices, the two agree to 1.7e-10 on every day of every series. The test compares them on the same prices, against a reference file that a Python test keeps up to date.
+- A ticker added from the page gets plain (unleveraged) wording and no index, since neither is known; an owner can edit its entry.
+- The add job builds the data file before adding the entry, so the list never names a ticker whose data is missing; if building fails, the list is unchanged.
+- The lookup service leaves out today's bar until 16:15 New York time, like the nightly refresh.
+- Choosing a ticker was not obvious: a menu hidden in the title for listed tickers, and a separate box elsewhere for any other. Replaced by one labelled **Ticker** field at the left of the top bar. It suggests the listed tickers with their names (it empties on click so all of them show) and takes any symbol. A picked suggestion opens straight away; typed letters wait for Enter, so typing "QQQM" does not stop at "QQQ".
+
 - The time buttons (1M–12M) had always been in the bar at the top of the page. Since levels now come from at least 200 sessions, they mainly set how much of the chart is shown, so they moved into a toolbar directly above the chart, with Daily/Mondays and the zoom buttons (asked for while reviewing this pull request).
 
 ## 6. Phase 3 — standard chart navigation

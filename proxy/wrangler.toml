@@ -1,0 +1,21 @@
+# Cloudflare Worker for the "any ticker" feature. Setup steps: proxy/README.md.
+name = "support-levels-proxy"
+main = "worker.mjs"
+compatibility_date = "2025-06-01"
+
+[vars]
+# the report's GitHub repository and branch, and its public address
+GITHUB_REPO = "mpromisel002/TQQQ-Technical-Analysis-Report"
+GITHUB_REF = "main"
+SITE = "https://mpromisel002.github.io/TQQQ-Technical-Analysis-Report"
+# only the report's own pages may call the Worker
+ALLOW_ORIGIN = "https://mpromisel002.github.io"
+MAX_TICKERS = "50"
+ADDS_PER_DAY = "5"
+
+# the per-visitor limit on additions; create it with:
+#   npx wrangler kv namespace create LIMITS
+# and paste the id it prints here
+[[kv_namespaces]]
+binding = "LIMITS"
+id = "PASTE-THE-ID-HERE"
