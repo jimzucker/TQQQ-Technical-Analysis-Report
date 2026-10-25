@@ -23,6 +23,16 @@ function synth(lows, { spread = 1, vol = 1000 } = {}) {
   };
 }
 
+// flat indicator series, so labels() / findings() / bottomLine() can run on synthetic prices
+function fakeIndicators(n) {
+  const ones = (v) => Array(n).fill(v);
+  return {
+    sma20: ones(null), sma50: ones(null), sma200: ones(null), rsi14: ones(50),
+    macd: ones(0), macd_signal: ones(0), macd_hist: ones(0), bb_upper: ones(null), bb_lower: ones(null),
+    vol_avg20: ones(1000), drawdown: ones(-10), qqq_close: Array.from({ length: n }, (_, i) => 100 + i),
+  };
+}
+
 test("normalize clamps settings and understands presets", () => {
   assert.equal(SR.normalize({ window: "6m" }).window, 126);
   assert.equal(SR.normalize({ window: 5000 }).window, 252);
@@ -105,16 +115,52 @@ test("no resistance is reported anywhere in the output", () => {
   assert.ok(Array.isArray(res.broken));
 });
 
-test("a support that price closed below is Broken and leaves the support list", () => {
+test("a support that price closed below moves from the support list to the levels above price", () => {
   const path = [70, 69, 68, 60, 68, 69, 70, 69, 68, 67, 66, 65, 60, 55, 54, 53, 52, 52, 52];
   const d = synth(path);
   const res = SR.analyze(d, { window: 252 });
   const z = res.zones.find((x) => Math.abs(x.price - 60) < 0.01);
   assert.ok(z);
   assert.equal(z.broken, true);
-  assert.equal(z.status, "Broken");
+  assert.equal(z.status, "Above price");
   assert.ok(res.broken.includes(z));
   assert.ok(!res.supports.includes(z));
+  assert.ok(res.above.includes(z));
+  assert.equal(z.id, "A1");
+  // the break is dated to the first close clearly below the zone: 55 on bar 13
+  assert.equal(z.brokeDate, d.dates[13]);
+});
+
+test("levels above price: strongest topAbove kept, listed nearest the price first", () => {
+  // five separate dips at 90, 85, 80, 75, 70, then the price falls to 50
+  const path = [100, 99, 98];
+  for (const b of [90, 85, 80, 75, 70]) path.push(b, 98, 99, 100);
+  for (let i = 0; i < 6; i++) path.push(60 - i * 2);
+  const res = SR.analyze(synth(path), { window: 252, topAbove: 3 });
+  assert.equal(res.supports.length, 0);
+  assert.equal(res.broken.length, 5);
+  assert.equal(res.above.length, 3);
+  assert.deepEqual(res.above.map((z) => z.id), ["A1", "A2", "A3"]);
+  for (let k = 1; k < res.above.length; k++) assert.ok(res.above[k].price > res.above[k - 1].price);
+  assert.ok(res.above.every((z) => z.distancePct > 0 && z.status === "Above price"));
+  // the 1-month style case: no floor below, so the findings and bottom line must name the level above
+  const lab = SR.labels({ ...synth(path), ...fakeIndicators(path.length) }, res);
+  const items = SR.findings({ ...synth(path), ...fakeIndicators(path.length) }, res, lab);
+  assert.ok(items.some((x) => /nearest level above the price is A1/.test(x.html)));
+  const bl = SR.bottomLine({ ...synth(path), ...fakeIndicators(path.length) }, res, lab);
+  assert.ok(/nearest level is above the price/.test(bl.headline));
+  assert.ok(bl.rows.some((r) => r.label === "Above the price"));
+});
+
+test("snapshot keeps every level above price, with its A label", () => {
+  const path = [100, 99, 98];
+  for (const b of [90, 85, 80, 75, 70, 65, 62]) path.push(b, 98, 99, 100);
+  for (let i = 0; i < 6; i++) path.push(55 - i * 2);
+  const data = { ...synth(path), ...fakeIndicators(path.length) };
+  const snap = SR.snapshot(data, { window: 252 });
+  assert.equal(snap.broken.length, 7); // the old snapshot kept only 5
+  assert.deepEqual(snap.broken.slice(0, 5).map((z) => z.id), ["A1", "A2", "A3", "A4", "A5"]);
+  assert.ok(snap.broken.slice(5).every((z) => z.id === null));
 });
 
 test("status tells apart in-play, recently tested and holding zones", () => {
@@ -289,7 +335,7 @@ test("bottomLine leads with a headline and stays short", () => {
     const bl = SR.bottomLine(d, res, SR.labels(d, res));
     assert.ok(bl.headline && bl.headline.length < 220, "headline is one sentence");
     // the summary must stay a summary: far shorter than the full findings list
-    assert.ok(bl.rows.length >= 3 && bl.rows.length <= 5, `got ${bl.rows.length} rows`);
+    assert.ok(bl.rows.length >= 3 && bl.rows.length <= 6, `got ${bl.rows.length} rows`);
     assert.ok(bl.rows.every((r) => r.label && r.html));
     const all = [bl.headline, ...bl.rows.map((r) => r.html)].join(" ");
     assert.ok(!/undefined|NaN/.test(all));
@@ -382,12 +428,16 @@ test("real TQQQ fixture: sane output for every preset window", () => {
     for (const z of res.zones) {
       assert.ok(z.low <= z.price + 1e-9 && z.price <= z.high + 1e-9, "price inside band");
       assert.ok(z.score >= 0 && z.score <= 100);
-      assert.ok(["Holding", "Recently tested", "In play", "Broken"].includes(z.status));
+      assert.ok(["Holding", "Recently tested", "In play", "Above price"].includes(z.status));
       assert.ok(["Strong", "Moderate", "Weak"].includes(z.strength));
     }
     // every level the report shows is a floor: no zone sits clearly above the last close
     assert.ok(res.supports.every((z) => z.low - res.tol / 2 <= res.price));
-    assert.ok(res.broken.every((z) => z.status === "Broken"));
+    assert.ok(res.broken.every((z) => z.status === "Above price"));
+    // levels above price really are above it, are at most topAbove, and run nearest first
+    assert.ok(res.above.length <= SR.DEFAULTS.topAbove);
+    assert.ok(res.above.every((z) => res.broken.includes(z) && z.low - res.tol / 2 > res.price));
+    for (let k = 1; k < res.above.length; k++) assert.ok(res.above[k].price > res.above[k - 1].price);
     const lab = SR.labels(d, res);
     assert.ok(["Uptrend", "Downtrend", "Mixed"].includes(lab.trend.label));
     // the report promises at least ten findings, in four known groups

@@ -75,8 +75,10 @@
       this.render();
     }
 
+    /** Back to the opening view (`home`, when the page sets one), else everything loaded. */
     resetView() {
-      this.setView(this.bounds[0], this.bounds[1]);
+      const [from, to] = this.home || this.bounds;
+      this.setView(from, to);
     }
 
     clampView() {
@@ -93,6 +95,33 @@
       this.view = { from: a - (a - from) * factor, to: a + (to - a) * factor };
       this.clampView();
       this.render();
+    }
+
+    /** Move the view sideways by `px` screen pixels (positive = later dates). */
+    pan(px) {
+      if (!this.L) return;
+      const { from, to } = this.view;
+      const perBar = (this.L.right - this.L.left) / (to - from + 1 + this.o.rightPad);
+      const shift = px / perBar;
+      this.view = { from: from + shift, to: to + shift };
+      this.clampView();
+      this.hover = null;
+      this.render();
+    }
+
+    /** Tell someone scrolling over the chart how to zoom, without stopping the scroll. */
+    showHint() {
+      if (!this.hint) {
+        const mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+        this.hint = document.createElement("div");
+        this.hint.className = "chart-hint";
+        this.hint.setAttribute("aria-hidden", "true");
+        this.hint.textContent = `To zoom: pinch, or hold ${mac ? "⌘" : "Ctrl"} and scroll`;
+        this.host.append(this.hint);
+      }
+      this.hint.classList.add("show");
+      clearTimeout(this.hintTimer);
+      this.hintTimer = setTimeout(() => this.hint.classList.remove("show"), 2000);
     }
 
     layout() {
@@ -320,15 +349,28 @@
       c.addEventListener("pointercancel", end);
       c.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { this.setHover(null, null); } });
       c.addEventListener("wheel", (e) => {
-        // wheelZoom charts zoom on a plain scroll while the pointer is over them;
-        // the rest keep the modifier so the page still scrolls past them.
-        if (!this.o.wheelZoom && !(e.ctrlKey || e.metaKey || e.shiftKey)) return;
-        e.preventDefault();
-        // normalise across mice (deltaMode 0, ~100 a notch) and trackpads (small deltas),
-        // then scale continuously so a trackpad glides instead of jumping a step per event
+        // Same rules as most chart sites: an up/down scroll belongs to the page, a
+        // sideways swipe moves the chart through time, and zooming needs a pinch or
+        // Ctrl/⌘ + scroll. Browsers report a trackpad pinch as a wheel event with
+        // ctrlKey set, so the pinch arrives through the same check.
+        // normalise across mice (deltaMode 0, ~100 a notch) and trackpads (small deltas)
         const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1;
-        const dy = clamp(e.deltaY * unit, -600, 600);
-        this.zoom(Math.pow(1.0015, dy), this.indexAt(pos(e).x));
+        if (e.ctrlKey || e.metaKey) {
+          e.preventDefault();
+          // scale continuously so a trackpad glides instead of jumping a step per event
+          const dy = clamp(e.deltaY * unit, -600, 600);
+          this.zoom(Math.pow(1.0015, dy), this.indexAt(pos(e).x));
+          return;
+        }
+        // Shift + mouse wheel is the usual way to scroll sideways with a mouse
+        const dx = (e.shiftKey && !e.deltaX ? e.deltaY : e.deltaX) * unit;
+        const dy = e.shiftKey ? 0 : e.deltaY * unit;
+        if (Math.abs(dx) > Math.abs(dy)) {
+          e.preventDefault(); // also stops the browser treating the swipe as Back
+          this.pan(dx);
+          return;
+        }
+        if (dy) this.showHint();
       }, { passive: false });
       c.addEventListener("dblclick", () => this.resetView());
       c.tabIndex = 0;
