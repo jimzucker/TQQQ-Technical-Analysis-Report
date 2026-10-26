@@ -159,7 +159,9 @@
       state.panes = { ...next };
       try { localStorage.setItem("panes", JSON.stringify(state.panes)); } catch (e) { /* storage unavailable */ }
       $$(".chips input[data-pane]").forEach((cb) => (cb.checked = !!state.panes[cb.dataset.pane]));
-      writeUrl();
+      // at once, not on the usual delay: a reload reads ?show= back, and a reload can
+      // land inside that delay, in which case the stale address would undo the switch
+      writeUrl({ now: true });
       if (panelsChanged) rebuildMainChart(); else { renderLegends(); renderCharts({ keepView: true }); }
     };
     $$(".chips input[data-pane]").forEach((cb) => {
