@@ -1,0 +1,99 @@
+// The report renders every section from the frozen data, and every control works.
+const { test, expect } = require("@playwright/test");
+const { openPage } = require("./helpers");
+
+test("page renders every section with no errors", async ({ page }) => {
+  const errors = await openPage(page);
+  await expect(page.locator("#blHeadline")).toContainText("TQQQ closed at $66.29");
+  await expect(page.locator("#asOf")).toContainText(/Oct 23, 2026|2026-10-23/);
+  await expect(page.locator("#kpis .kpi")).toHaveCount(6);
+  await expect(page.locator("#blRows dt").first()).toHaveText("Nearest floor");
+  // the levels table lists S1-S5 for the default 12-month window, nearest first
+  const ids = await page.locator("#levels tbody .lvl.support").allTextContents();
+  expect(ids).toEqual(["S1", "S2", "S3", "S4", "S5"]);
+  await expect(page.locator("#levels tbody tr", { hasText: "S1" })).toContainText("$66.72");
+  await page.locator("#findingsSummary").click();
+  expect(await page.locator("#findings li, #findings p").count()).toBeGreaterThanOrEqual(10);
+  for (const id of ["#mainChart", "#cmpChart", "#benchChart"]) await expect(page.locator(`${id} canvas`)).toBeVisible();
+  await expect(page.locator("#indTable tbody tr").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("a missing data file shows a message instead of a blank page", async ({ page }) => {
+  await openPage(page, "", { data: null });
+  await expect(page.locator("#blHeadline")).toContainText("Could not load the data file");
+  await expect(page.locator("#asOf")).toHaveText("Data unavailable");
+});
+
+test("window buttons change the analysis and the page address", async ({ page }) => {
+  const errors = await openPage(page);
+  for (const [key, sessions] of [["1m", 21], ["3m", 63], ["6m", 126], ["9m", 189], ["12m", 252]]) {
+    await page.locator(`#windowSeg button[data-w="${key}"]`).click();
+    await expect(page.locator(`#windowSeg button[data-w="${key}"]`)).toHaveAttribute("aria-checked", "true");
+    expect(new URL(page.url()).searchParams.get("window")).toBe(key);
+    expect(await page.evaluate(() => window.__dashboard.res.opts.window)).toBe(sessions);
+  }
+  // a custom number of sessions, clamped to the allowed range
+  await page.locator("#customWin").fill("40");
+  await page.locator("#customWin").press("Enter");
+  expect(await page.evaluate(() => window.__dashboard.res.opts.window)).toBe(40);
+  expect(errors).toEqual([]);
+});
+
+test("settings in the page address are applied on load", async ({ page }) => {
+  await openPage(page, "?window=3m&period=4");
+  expect(await page.evaluate(() => window.__dashboard.res.opts)).toMatchObject({ window: 63, period: 4 });
+  await expect(page.locator("#periodText")).toHaveText("4");
+});
+
+test("method settings sliders recalculate, and Reset puts the defaults back", async ({ page }) => {
+  const errors = await openPage(page);
+  await page.locator("#settings summary").click();
+  await page.locator("#period").fill("5");
+  await expect(page.locator("#periodOut")).toHaveText("5");
+  await expect(page.locator("#periodText")).toHaveText("5");
+  expect(await page.evaluate(() => window.__dashboard.res.opts.period)).toBe(5);
+  await page.locator("#resetSettings").click();
+  expect(await page.evaluate(() => window.__dashboard.res.opts.period)).toBe(3);
+  expect(errors).toEqual([]);
+});
+
+test("panel switches show and hide chart panels, and are remembered", async ({ page }) => {
+  const errors = await openPage(page);
+  const panes = () => page.evaluate(() => window.__dashboard.charts.main.o.panes.map((p) => p.id));
+  expect(await panes()).toEqual(["price", "vol", "rsi"]);
+  await page.locator('input[data-pane="macd"]').check();
+  await page.locator('input[data-pane="vol"]').uncheck();
+  expect(await panes()).toEqual(["price", "rsi", "macd"]);
+  await page.reload();
+  await page.waitForFunction(() => window.__dashboard && window.__dashboard.res);
+  expect(await panes()).toEqual(["price", "rsi", "macd"]);
+  await expect(page.locator('input[data-pane="vol"]')).not.toBeChecked();
+  expect(errors).toEqual([]);
+});
+
+test("theme button switches between light and dark", async ({ page }) => {
+  const errors = await openPage(page);
+  const theme = () => page.evaluate(() => document.documentElement.dataset.theme || "auto");
+  const before = await theme();
+  await page.locator("#themeBtn").click();
+  expect(await theme()).not.toBe(before);
+  expect(errors).toEqual([]);
+});
+
+test("CSV download holds the levels and the daily rows", async ({ page }) => {
+  await openPage(page);
+  const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#dlCsv").click()]);
+  expect(download.suggestedFilename()).toBe("tqqq-support-2026-10-23-252d.csv");
+  const text = require("fs").readFileSync(await download.path(), "utf8");
+  const lines = text.split("\n");
+  expect(lines[1]).toMatch(/^level,zone_price,/);
+  expect(lines.filter((l) => /^S\d,/.test(l))).toHaveLength(5);
+  expect(lines.filter((l) => /^\d{4}-\d{2}-\d{2},/.test(l))).toHaveLength(252);
+});
+
+test("PNG download produces an image", async ({ page }) => {
+  await openPage(page);
+  const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#dlPng").click()]);
+  expect(download.suggestedFilename()).toMatch(/^tqqq-support-2026-10-23-252d\.png$/);
+});

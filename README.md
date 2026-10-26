@@ -25,6 +25,7 @@ The look-back window is configurable from **1 month up to 12 months** (or any cu
 - [Setup](#setup)
 - [Run it locally](#run-it-locally)
 - [Limitations you should know about](#limitations-you-should-know-about)
+- [Change log](#change-log)
 - [Disclaimer](#disclaimer)
 
 ---
@@ -312,6 +313,10 @@ GitHub Actions — every 30 min from 16:15 New York, first to find new data wins
 | `pipeline/snapshot.js` | Daily level snapshots and the "what changed" feed |
 | `pipeline/tests/` | pytest checks on the saved price data |
 | `tests/support.test.js` | Node unit tests for the support method |
+| `tests/golden.test.js`, `tests/golden/` | The recorded support output, checked on every run |
+| `tests/snapshot.test.js` | End-to-end test of the snapshot job |
+| `tests/browser/`, `playwright.config.js` | Browser tests of the page (Playwright) |
+| `tests/fixtures/` | Frozen data the JavaScript and browser tests run against |
 | `.github/workflows/refresh.yml` | The daily schedule, manual trigger, tests, build, commit and failure issue |
 | `.github/workflows/tests.yml` | Tests on every code push and pull request |
 
@@ -342,8 +347,10 @@ pip install -r pipeline/requirements.txt
 python pipeline/build.py --force        # download prices and build the data file
 node pipeline/snapshot.js               # levels snapshot + "what changed"
 
-python -m pytest -q pipeline/tests      # Python tests (data validation)
-node --test tests/*.test.js             # JavaScript tests (the method)
+python -m pytest -q pipeline/tests      # Python tests (data download and checks)
+node --test tests/*.test.js             # JavaScript tests (the method and the snapshot job)
+npm ci && npx playwright install chromium
+npx playwright test                     # browser tests (the page itself)
 
 python -m http.server -d docs 8000      # then open http://localhost:8000
 ```
@@ -356,7 +363,25 @@ python pipeline/build.py --csv-dir path/to/folder --force
 
 # Rebuild the level history for the last 30 sessions
 node pipeline/snapshot.js --backfill 30
+
+# After a change that is meant to move support levels, re-record the expected output
+UPDATE_GOLDEN=1 node --test tests/golden.test.js
 ```
+
+### What the tests cover
+
+All tests run on every pull request (`.github/workflows/tests.yml`), and the coverage for each file is shown on the run's summary page. The daily refresh runs the unit tests again before it publishes.
+
+| Tests | What they check |
+|---|---|
+| `pipeline/tests/test_pipeline.py` | The checks on downloaded prices, the indicators, and when a corrected session is published again |
+| `pipeline/tests/test_sources.py` | Which data source is used when one fails or lags, and how each source's reply is read. No network needed |
+| `tests/support.test.js` | The support method: swing lows, zones, scores, statuses, findings, the bottom line, the Mondays view, freshness |
+| `tests/golden.test.js` | Runs the method over every session in the frozen data, at 1, 3, 6 and 12 months, and compares every support level and "what changed" item with `tests/golden/levels.txt`. Any change that moves a level fails here and names the line |
+| `tests/snapshot.test.js` | Runs the nightly snapshot job on a temporary folder: the files it writes, backfilling, and keeping at most 400 snapshots |
+| `tests/browser/` | Opens the real page in Chrome, on a desktop and a phone screen size: every section appears, every control works, the chart responds to keyboard, mouse and trackpad, the downloads work, and nothing makes the page scroll sideways |
+
+The tests use a frozen copy of the data (`tests/fixtures/`, as of 2026-10-23) rather than the live file, which changes every weekday.
 
 ---
 
@@ -371,6 +396,17 @@ Worth reading before anyone acts on the output.
 - **Leverage decay is real.** TQQQ's long-run path differs from 3× the Nasdaq-100's, especially through choppy markets. The TQQQ-vs-QQQ panel quantifies this for the window you selected.
 - **Data can be wrong or delayed.** Prices come from free sources. The pipeline validates them and refuses to publish when a check fails, but no validation catches everything — the provenance line in the Method panel tells you which source produced the current file.
 - **Nothing here is a trading system.** There is no entry rule, no position sizing and no backtest. It is a descriptive report.
+
+---
+
+## Change log
+
+Newest first. The full plan behind these changes, including the original requests, is in [`docs/change-plan.md`](docs/change-plan.md).
+
+| Date | Change |
+|---|---|
+| 2026-10-25 | **Test automation.** Browser tests of the page, a recorded copy of the support output checked on every run, tests for the snapshot job and the data sources, and coverage per file on each CI run. No change to what the app does. |
+| 2026-10-25 | Plan written for five changes: show support levels above the current price; view any ticker and add it to the daily list once it passes the checks (starting list TQQQ, QQQ, SPY); make plain scrolling move the page instead of zooming the chart; draw Bollinger Bands; show or hide every indicator. No code changed yet. |
 
 ---
 

@@ -1,0 +1,1205 @@
+2025-11-07 w21 support S1:48.0557:48.0557:48.0557:1:73:Holding | close-below -
+2025-11-07 w63 support S1:47.9326:47.3554:48.3882:3:90:Holding S2:41.8045:41.7725:41.8369:2:63:Holding | close-below -
+2025-11-07 w126 support S1:47.9326:47.3554:48.3882:3:79:Holding S2:41.2160:40.5875:41.8369:4:84:Holding S3:35.5464:35.3123:35.7326:2:56:Holding S4:32.5714:32.0688:33.1467:2:52:Holding | close-below -
+2025-11-07 w252 support S1:47.9326:47.3554:48.3882:3:54:Holding S2:41.1412:40.4734:41.8369:6:71:Holding S3:38.0481:37.5043:38.5706:5:58:Holding S4:35.7505:35.3123:36.1550:4:52:Holding S5:17.3051:17.3051:17.3051:1:49:Holding | close-below -
+2025-11-07 changes -
+2025-11-10 w21 support - | close-below -
+2025-11-10 w63 support S1:47.9326:47.3554:48.3882:3:89:Holding S2:41.8045:41.7725:41.8369:2:62:Holding | close-below -
+2025-11-10 w126 support S1:47.9326:47.3554:48.3882:3:79:Holding S2:41.2160:40.5875:41.8369:4:84:Holding S3:35.5464:35.3123:35.7326:2:55:Holding S4:32.5714:32.0688:33.1467:2:52:Holding | close-below -
+2025-11-10 w252 support S1:47.9326:47.3554:48.3882:3:54:Holding S2:41.1412:40.4734:41.8369:6:70:Holding S3:38.0481:37.5043:38.5706:5:58:Holding S4:35.7505:35.3123:36.1550:4:52:Holding S5:17.3051:17.3051:17.3051:1:49:Holding | close-below -
+2025-11-10 changes -
+2025-11-11 w21 support - | close-below -
+2025-11-11 w63 support S1:47.9326:47.3554:48.3882:3:89:Holding S2:41.8045:41.7725:41.8369:2:62:Holding | close-below -
+2025-11-11 w126 support S1:47.9326:47.3554:48.3882:3:79:Holding S2:41.2160:40.5875:41.8369:4:84:Holding S3:35.5464:35.3123:35.7326:2:55:Holding S4:32.5714:32.0688:33.1467:2:52:Holding | close-below -
+2025-11-11 w252 support S1:47.9326:47.3554:48.3882:3:54:Holding S2:41.1412:40.4734:41.8369:6:70:Holding S3:38.0481:37.5043:38.5706:5:58:Holding S4:35.7505:35.3123:36.1550:4:52:Holding S5:17.3051:17.3051:17.3051:1:49:Holding | close-below -
+2025-11-11 changes -
+2025-11-12 w21 support S1:49.6091:49.6091:49.6091:1:96:Recently tested | close-below -
+2025-11-12 w63 support S1:49.6091:49.6091:49.6091:1:71:Recently tested S2:47.9326:47.3554:48.3882:3:87:Holding S3:41.8045:41.7725:41.8369:2:60:Holding | close-below -
+2025-11-12 w126 support S1:49.6091:49.6091:49.6091:1:65:Recently tested S2:47.9326:47.3554:48.3882:3:79:Holding S3:41.2160:40.5875:41.8369:4:84:Holding S4:35.5464:35.3123:35.7326:2:55:Holding S5:32.5714:32.0688:33.1467:2:51:Holding | close-below -
+2025-11-12 w252 support S1:47.9326:47.3554:48.3882:3:54:Holding S2:41.1412:40.4734:41.8369:6:70:Holding S3:38.0481:37.5043:38.5706:5:58:Holding S4:35.7505:35.3123:36.1550:4:52:Holding S5:17.3051:17.3051:17.3051:1:48:Holding | close-below -
+2025-11-12 changes trend: Trend changed from Mixed to Uptrend.
+2025-11-13 w21 support S1:49.6091:49.6091:49.6091:1:94:Recently tested | close-below -
+2025-11-13 w63 support S1:49.6091:49.6091:49.6091:1:71:Recently tested S2:47.9326:47.3554:48.3882:3:86:Holding S3:41.8045:41.7725:41.8369:2:60:Holding | close-below -
+2025-11-13 w126 support S1:49.6091:49.6091:49.6091:1:65:Recently tested S2:47.9326:47.3554:48.3882:3:79:Holding S3:41.2160:40.5875:41.8369:4:83:Holding S4:35.5464:35.3123:35.7326:2:55:Holding S5:32.5714:32.0688:33.1467:2:51:Holding | close-below -
+2025-11-13 w252 support S1:47.9326:47.3554:48.3882:3:54:Holding S2:41.1412:40.4734:41.8369:6:70:Holding S3:38.0481:37.5043:38.5706:5:58:Holding S4:35.7505:35.3123:36.1550:4:52:Holding S5:17.3051:17.3051:17.3051:1:48:Holding | close-below -
+2025-11-13 changes trend: Trend changed from Uptrend to Mixed.
+2025-11-14 w21 support S1:49.6091:49.6091:49.6091:1:100:Recently tested | close-below -
+2025-11-14 w63 support S1:49.6091:49.6091:49.6091:1:73:Recently tested S2:47.9326:47.3554:48.3882:3:97:Recently tested S3:41.8045:41.7725:41.8369:2:59:Holding | close-below -
+2025-11-14 w126 support S1:49.6091:49.6091:49.6091:1:66:Recently tested S2:47.9326:47.3554:48.3882:3:84:Recently tested S3:41.2160:40.5875:41.8369:4:83:Holding S4:35.5464:35.3123:35.7326:2:54:Holding S5:32.5714:32.0688:33.1467:2:51:Holding | close-below -
+2025-11-14 w252 support S1:47.9326:47.3554:48.3882:3:57:Recently tested S2:41.1412:40.4734:41.8369:6:70:Holding S3:38.0481:37.5043:38.5706:5:58:Holding S4:35.7505:35.3123:36.1550:4:52:Holding S5:17.3051:17.3051:17.3051:1:48:Holding | close-below -
+2025-11-14 changes -
+2025-11-17 w21 support S1:49.6091:49.6091:49.6091:1:100:Recently tested | close-below -
+2025-11-17 w63 support S1:49.6091:49.6091:49.6091:1:73:Recently tested S2:47.9326:47.3554:48.3882:3:97:Recently tested S3:41.8045:41.7725:41.8369:2:59:Holding | close-below -
+2025-11-17 w126 support S1:49.6091:49.6091:49.6091:1:66:Recently tested S2:47.9326:47.3554:48.3882:3:84:Recently tested S3:41.2160:40.5875:41.8369:4:83:Holding S4:35.5464:35.3123:35.7326:2:54:Holding S5:32.5714:32.0688:33.1467:2:51:Holding | close-below -
+2025-11-17 w252 support S1:47.9326:47.3554:48.3882:3:57:Recently tested S2:41.1412:40.4734:41.8369:6:70:Holding S3:38.0481:37.5043:38.5706:5:58:Holding S4:35.7505:35.3123:36.1550:4:52:Holding S5:17.3051:17.3051:17.3051:1:48:Holding | close-below -
+2025-11-17 changes -
+2025-11-18 w21 support - | close-below 49.6091
+2025-11-18 w63 support S1:47.9326:47.3554:48.3882:3:95:In play S2:41.7725:41.7725:41.7725:1:45:Holding | close-below 49.6091
+2025-11-18 w126 support S1:47.9326:47.3554:48.3882:3:84:In play S2:41.2160:40.5875:41.8369:4:83:Holding S3:35.5464:35.3123:35.7326:2:54:Holding S4:32.5714:32.0688:33.1467:2:50:Holding | close-below 49.6091
+2025-11-18 w252 support S1:47.9326:47.3554:48.3882:3:57:In play S2:41.1412:40.4734:41.8369:6:70:Holding S3:38.0481:37.5043:38.5706:5:58:Holding S4:35.7505:35.3123:36.1550:4:51:Holding S5:17.3051:17.3051:17.3051:1:48:Holding | close-below 49.6091
+2025-11-18 changes -
+2025-11-19 w21 support S1:49.6091:49.6091:49.6091:1:100:In play | close-below -
+2025-11-19 w63 support S1:49.6091:49.6091:49.6091:1:71:In play S2:47.9326:47.3554:48.3882:3:95:Recently tested S3:41.7725:41.7725:41.7725:1:44:Holding | close-below -
+2025-11-19 w126 support S1:49.6091:49.6091:49.6091:1:66:In play S2:47.9326:47.3554:48.3882:3:84:Recently tested S3:41.2160:40.5875:41.8369:4:83:Holding S4:35.5464:35.3123:35.7326:2:54:Holding S5:32.5714:32.0688:33.1467:2:50:Holding | close-below -
+2025-11-19 w252 support S1:47.9326:47.3554:48.3882:3:57:Recently tested S2:41.1412:40.4734:41.8369:6:70:Holding S3:38.0481:37.5043:38.5706:5:57:Holding S4:35.6868:35.3123:36.1550:3:45:Holding S5:17.3051:17.3051:17.3051:1:48:Holding | close-below -
+2025-11-19 changes -
+2025-11-20 w21 support - | close-below 49.6091
+2025-11-20 w63 support S1:41.7725:41.7725:41.7725:1:44:Holding | close-below 47.9326 49.6091
+2025-11-20 w126 support S1:41.2160:40.5875:41.8369:4:82:Holding S2:35.5464:35.3123:35.7326:2:53:Holding S3:32.5714:32.0688:33.1467:2:50:Holding | close-below 47.9326 49.6091
+2025-11-20 w252 support S1:41.1412:40.4734:41.8369:6:69:Holding S2:38.0481:37.5043:38.5706:5:57:Holding S3:35.6868:35.3123:36.1550:3:45:Holding S4:27.7126:27.2382:28.1194:2:38:Holding S5:17.3051:17.3051:17.3051:1:48:Holding | close-below 47.9326 49.6091
+2025-11-20 changes new: Support at $27.71 (2 touches) moved into the top 5. / broken: Support at $47.93 broke — price closed below the zone.
+2025-11-21 w21 support - | close-below 49.6091
+2025-11-21 w63 support S1:47.9326:47.3554:48.3882:3:95:In play S2:41.7725:41.7725:41.7725:1:43:Holding | close-below 49.6091
+2025-11-21 w126 support S1:47.9326:47.3554:48.3882:3:85:In play S2:41.2160:40.5875:41.8369:4:83:Holding S3:35.5464:35.3123:35.7326:2:54:Holding S4:33.1467:33.1467:33.1467:1:39:Holding | close-below 49.6091
+2025-11-21 w252 support S1:47.9326:47.3554:48.3882:3:57:In play S2:41.1412:40.4734:41.8369:6:69:Holding S3:38.0481:37.5043:38.5706:5:57:Holding S4:35.6868:35.3123:36.1550:3:45:Holding S5:17.3051:17.3051:17.3051:1:48:Holding | close-below 49.6091
+2025-11-21 changes reclaimed: Price climbed back above $47.93; that zone is acting as support again. / dropped: Support at $27.71 dropped out of the top list.
+2025-11-24 w21 support S1:49.6091:49.6091:49.6091:1:100:Recently tested | close-below -
+2025-11-24 w63 support S1:49.6091:49.6091:49.6091:1:71:Recently tested S2:47.9326:47.3554:48.3882:3:95:Recently tested S3:41.7725:41.7725:41.7725:1:43:Holding | close-below -
+2025-11-24 w126 support S1:49.6091:49.6091:49.6091:1:67:Recently tested S2:47.9326:47.3554:48.3882:3:85:Recently tested S3:41.2160:40.5875:41.8369:4:83:Holding S4:35.5464:35.3123:35.7326:2:54:Holding S5:33.1467:33.1467:33.1467:1:39:Holding | close-below -
+2025-11-24 w252 support S1:47.9326:47.3554:48.3882:3:57:Recently tested S2:41.1412:40.4734:41.8369:6:69:Holding S3:38.0481:37.5043:38.5706:5:57:Holding S4:35.6868:35.3123:36.1550:3:45:Holding S5:17.3051:17.3051:17.3051:1:48:Holding | close-below -
+2025-11-24 changes -
+2025-11-25 w21 support S1:49.6091:49.6091:49.6091:1:100:Recently tested | close-below -
+2025-11-25 w63 support S1:49.6091:49.6091:49.6091:1:71:Recently tested S2:47.9326:47.3554:48.3882:3:95:Recently tested S3:41.7725:41.7725:41.7725:1:42:Holding | close-below -
+2025-11-25 w126 support S1:49.6091:49.6091:49.6091:1:67:Recently tested S2:47.9326:47.3554:48.3882:3:85:Recently tested S3:41.2160:40.5875:41.8369:4:83:Holding S4:35.5464:35.3123:35.7326:2:54:Holding S5:33.1467:33.1467:33.1467:1:38:Holding | close-below -
+2025-11-25 w252 support S1:47.9326:47.3554:48.3882:3:57:Recently tested S2:41.1412:40.4734:41.8369:6:69:Holding S3:38.0481:37.5043:38.5706:5:57:Holding S4:35.6868:35.3123:36.1550:3:45:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-11-25 changes -
+2025-11-26 w21 support S1:49.6091:49.6091:49.6091:1:96:Recently tested S2:44.9043:44.9043:44.9043:1:95:Recently tested | close-below -
+2025-11-26 w63 support S1:49.6091:49.6091:49.6091:1:70:Recently tested S2:47.9326:47.3554:48.3882:3:94:Recently tested S3:44.9043:44.9043:44.9043:1:71:Recently tested S4:41.7725:41.7725:41.7725:1:42:Holding | close-below -
+2025-11-26 w126 support S1:49.6091:49.6091:49.6091:1:66:Recently tested S2:47.9326:47.3554:48.3882:3:84:Recently tested S3:44.9043:44.9043:44.9043:1:68:Recently tested S4:41.2160:40.5875:41.8369:4:82:Holding S5:35.5464:35.3123:35.7326:2:53:Holding | close-below -
+2025-11-26 w252 support S1:47.9326:47.3554:48.3882:3:57:Recently tested S2:41.1412:40.4734:41.8369:6:69:Holding S3:38.0481:37.5043:38.5706:5:57:Holding S4:35.6868:35.3123:36.1550:3:45:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-11-26 changes -
+2025-11-28 w21 support S1:49.6091:49.6091:49.6091:1:94:Recently tested S2:44.9043:44.9043:44.9043:1:94:Recently tested | close-below -
+2025-11-28 w63 support S1:49.6091:49.6091:49.6091:1:69:Recently tested S2:47.9326:47.3554:48.3882:3:93:Recently tested S3:44.9043:44.9043:44.9043:1:71:Recently tested S4:41.7725:41.7725:41.7725:1:40:Holding | close-below -
+2025-11-28 w126 support S1:49.6091:49.6091:49.6091:1:65:Recently tested S2:47.9326:47.3554:48.3882:3:83:Recently tested S3:44.9043:44.9043:44.9043:1:68:Recently tested S4:41.2160:40.5875:41.8369:4:81:Holding S5:35.5464:35.3123:35.7326:2:52:Holding | close-below -
+2025-11-28 w252 support S1:47.9326:47.3554:48.3882:3:56:Recently tested S2:44.9043:44.9043:44.9043:1:45:Recently tested S3:41.1412:40.4734:41.8369:6:69:Holding S4:38.0481:37.5043:38.5706:5:57:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-11-28 changes new: Support at $44.90 (1 touch) moved into the top 5. / dropped: Support at $35.69 dropped out of the top list. / macd: MACD turned bullish.
+2025-12-01 w21 support S1:49.6091:49.6091:49.6091:1:92:Recently tested S2:44.9043:44.9043:44.9043:1:92:Recently tested | close-below -
+2025-12-01 w63 support S1:49.6091:49.6091:49.6091:1:68:Recently tested S2:47.9326:47.3554:48.3882:3:93:Recently tested S3:44.9043:44.9043:44.9043:1:70:Recently tested | close-below -
+2025-12-01 w126 support S1:49.6091:49.6091:49.6091:1:65:Recently tested S2:47.9326:47.3554:48.3882:3:83:Recently tested S3:44.9043:44.9043:44.9043:1:68:Recently tested S4:41.2160:40.5875:41.8369:4:81:Holding S5:35.5464:35.3123:35.7326:2:52:Holding | close-below -
+2025-12-01 w252 support S1:47.9326:47.3554:48.3882:3:56:Recently tested S2:44.9043:44.9043:44.9043:1:45:Recently tested S3:41.1412:40.4734:41.8369:6:69:Holding S4:38.0481:37.5043:38.5706:5:57:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-01 changes -
+2025-12-02 w21 support S1:49.6091:49.6091:49.6091:1:90:Recently tested S2:44.9043:44.9043:44.9043:1:91:Recently tested | close-below -
+2025-12-02 w63 support S1:49.6091:49.6091:49.6091:1:67:Recently tested S2:47.9326:47.3554:48.3882:3:92:Recently tested S3:44.9043:44.9043:44.9043:1:70:Recently tested | close-below -
+2025-12-02 w126 support S1:49.6091:49.6091:49.6091:1:64:Recently tested S2:47.9326:47.3554:48.3882:3:82:Recently tested S3:44.9043:44.9043:44.9043:1:68:Recently tested S4:41.2160:40.5875:41.8369:4:80:Holding S5:35.5464:35.3123:35.7326:2:51:Holding | close-below -
+2025-12-02 w252 support S1:47.9326:47.3554:48.3882:3:56:Recently tested S2:44.9043:44.9043:44.9043:1:45:Recently tested S3:41.1412:40.4734:41.8369:6:69:Holding S4:38.1190:37.7276:38.5706:4:50:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-02 changes -
+2025-12-03 w21 support S1:49.6091:49.6091:49.6091:1:88:Recently tested S2:44.9043:44.9043:44.9043:1:89:Recently tested | close-below -
+2025-12-03 w63 support S1:49.6091:49.6091:49.6091:1:67:Recently tested S2:47.9326:47.3554:48.3882:3:91:Recently tested S3:44.9043:44.9043:44.9043:1:70:Recently tested | close-below -
+2025-12-03 w126 support S1:49.6091:49.6091:49.6091:1:64:Recently tested S2:47.9326:47.3554:48.3882:3:82:Recently tested S3:44.9043:44.9043:44.9043:1:67:Recently tested S4:41.2160:40.5875:41.8369:4:79:Holding S5:35.5464:35.3123:35.7326:2:50:Holding | close-below -
+2025-12-03 w252 support S1:47.9326:47.3554:48.3882:3:56:Recently tested S2:44.9043:44.9043:44.9043:1:45:Recently tested S3:41.1412:40.4734:41.8369:6:69:Holding S4:38.1190:37.7276:38.5706:4:50:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-03 changes -
+2025-12-04 w21 support S1:49.6091:49.6091:49.6091:1:87:Recently tested S2:44.9043:44.9043:44.9043:1:88:Recently tested | close-below -
+2025-12-04 w63 support S1:49.6091:49.6091:49.6091:1:66:Recently tested S2:47.9326:47.3554:48.3882:3:91:Recently tested S3:44.9043:44.9043:44.9043:1:69:Recently tested | close-below -
+2025-12-04 w126 support S1:49.6091:49.6091:49.6091:1:64:Recently tested S2:47.9326:47.3554:48.3882:3:82:Recently tested S3:44.9043:44.9043:44.9043:1:67:Recently tested S4:41.2160:40.5875:41.8369:4:79:Holding S5:35.5464:35.3123:35.7326:2:50:Holding | close-below -
+2025-12-04 w252 support S1:47.9326:47.3554:48.3882:3:56:Recently tested S2:44.9043:44.9043:44.9043:1:45:Recently tested S3:41.1412:40.4734:41.8369:6:68:Holding S4:38.1190:37.7276:38.5706:4:50:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-04 changes -
+2025-12-05 w21 support S1:49.6091:49.6091:49.6091:1:85:Recently tested S2:44.9043:44.9043:44.9043:1:86:Recently tested | close-below -
+2025-12-05 w63 support S1:49.6091:49.6091:49.6091:1:65:Recently tested S2:47.9326:47.3554:48.3882:3:90:Recently tested S3:44.9043:44.9043:44.9043:1:69:Recently tested | close-below -
+2025-12-05 w126 support S1:49.6091:49.6091:49.6091:1:63:Recently tested S2:47.9326:47.3554:48.3882:3:81:Recently tested S3:44.9043:44.9043:44.9043:1:67:Recently tested S4:41.2160:40.5875:41.8369:4:78:Holding S5:35.5464:35.3123:35.7326:2:49:Holding | close-below -
+2025-12-05 w252 support S1:47.9326:47.3554:48.3882:3:56:Recently tested S2:44.9043:44.9043:44.9043:1:45:Recently tested S3:41.1412:40.4734:41.8369:6:68:Holding S4:38.1190:37.7276:38.5706:4:50:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-05 changes -
+2025-12-08 w21 support S1:49.6091:49.6091:49.6091:1:83:Recently tested S2:44.9043:44.9043:44.9043:1:85:Recently tested | close-below -
+2025-12-08 w63 support S1:49.6091:49.6091:49.6091:1:65:Recently tested S2:47.9326:47.3554:48.3882:3:89:Recently tested S3:44.9043:44.9043:44.9043:1:68:Recently tested | close-below -
+2025-12-08 w126 support S1:49.6091:49.6091:49.6091:1:63:Recently tested S2:47.9326:47.3554:48.3882:3:81:Recently tested S3:44.9043:44.9043:44.9043:1:67:Recently tested S4:41.2160:40.5875:41.8369:4:78:Holding S5:35.5464:35.3123:35.7326:2:49:Holding | close-below -
+2025-12-08 w252 support S1:47.9326:47.3554:48.3882:3:56:Recently tested S2:44.9043:44.9043:44.9043:1:45:Recently tested S3:41.1412:40.4734:41.8369:6:68:Holding S4:38.1190:37.7276:38.5706:4:50:Holding S5:17.3051:17.3051:17.3051:1:46:Holding | close-below -
+2025-12-08 changes -
+2025-12-09 w21 support S1:44.9043:44.9043:44.9043:1:84:Holding | close-below -
+2025-12-09 w63 support S1:49.6091:49.6091:49.6091:1:64:Recently tested S2:47.9326:47.3554:48.3882:3:89:Recently tested S3:44.9043:44.9043:44.9043:1:68:Holding | close-below -
+2025-12-09 w126 support S1:49.6091:49.6091:49.6091:1:62:Recently tested S2:47.9326:47.3554:48.3882:3:80:Recently tested S3:44.9043:44.9043:44.9043:1:66:Holding S4:41.2160:40.5875:41.8369:4:78:Holding S5:35.5464:35.3123:35.7326:2:48:Holding | close-below -
+2025-12-09 w252 support S1:47.9326:47.3554:48.3882:3:56:Recently tested S2:44.9043:44.9043:44.9043:1:45:Holding S3:41.1412:40.4734:41.8369:6:68:Holding S4:38.1190:37.7276:38.5706:4:49:Holding S5:17.3051:17.3051:17.3051:1:46:Holding | close-below -
+2025-12-09 changes -
+2025-12-10 w21 support S1:44.9043:44.9043:44.9043:1:82:Holding | close-below -
+2025-12-10 w63 support S1:49.6091:49.6091:49.6091:1:64:Recently tested S2:47.9326:47.3554:48.3882:3:88:Recently tested S3:44.9043:44.9043:44.9043:1:67:Holding | close-below -
+2025-12-10 w126 support S1:49.6091:49.6091:49.6091:1:62:Recently tested S2:47.9326:47.3554:48.3882:3:80:Recently tested S3:44.9043:44.9043:44.9043:1:66:Holding S4:41.2160:40.5875:41.8369:4:78:Holding S5:35.5464:35.3123:35.7326:2:48:Holding | close-below -
+2025-12-10 w252 support S1:47.9326:47.3554:48.3882:3:55:Recently tested S2:44.9043:44.9043:44.9043:1:45:Holding S3:41.1412:40.4734:41.8369:6:68:Holding S4:38.1190:37.7276:38.5706:4:49:Holding S5:17.3051:17.3051:17.3051:1:46:Holding | close-below -
+2025-12-10 changes -
+2025-12-11 w21 support S1:44.9043:44.9043:44.9043:1:81:Holding | close-below -
+2025-12-11 w63 support S1:49.6091:49.6091:49.6091:1:63:Holding S2:47.9326:47.3554:48.3882:3:88:Holding S3:44.9043:44.9043:44.9043:1:67:Holding | close-below -
+2025-12-11 w126 support S1:49.6091:49.6091:49.6091:1:62:Holding S2:47.9326:47.3554:48.3882:3:80:Holding S3:44.9043:44.9043:44.9043:1:66:Holding S4:41.2160:40.5875:41.8369:4:77:Holding S5:35.5464:35.3123:35.7326:2:48:Holding | close-below -
+2025-12-11 w252 support S1:47.9326:47.3554:48.3882:3:55:Holding S2:44.9043:44.9043:44.9043:1:45:Holding S3:41.1412:40.4734:41.8369:6:68:Holding S4:38.1190:37.7276:38.5706:4:49:Holding S5:17.3051:17.3051:17.3051:1:46:Holding | close-below -
+2025-12-11 changes -
+2025-12-12 w21 support S1:44.9043:44.9043:44.9043:1:79:Holding | close-below -
+2025-12-12 w63 support S1:49.6091:49.6091:49.6091:1:63:Holding S2:47.9326:47.3554:48.3882:3:87:Holding S3:44.9043:44.9043:44.9043:1:66:Holding | close-below -
+2025-12-12 w126 support S1:49.6091:49.6091:49.6091:1:62:Holding S2:47.9326:47.3554:48.3882:3:80:Holding S3:44.9043:44.9043:44.9043:1:66:Holding S4:41.2160:40.5875:41.8369:4:78:Holding S5:35.3123:35.3123:35.3123:1:37:Holding | close-below -
+2025-12-12 w252 support S1:47.9326:47.3554:48.3882:3:59:Holding S2:41.1275:40.4734:41.8369:5:68:Holding S3:38.1190:37.7276:38.5706:4:54:Holding S4:35.6868:35.3123:36.1550:3:47:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-12 changes new: Support at $35.69 (3 touches) moved into the top 5. / dropped: Support at $44.90 dropped out of the top list.
+2025-12-15 w21 support S1:44.9043:44.9043:44.9043:1:78:Holding | close-below -
+2025-12-15 w63 support S1:49.6091:49.6091:49.6091:1:62:Holding S2:47.9326:47.3554:48.3882:3:87:Holding S3:44.9043:44.9043:44.9043:1:66:Holding | close-below -
+2025-12-15 w126 support S1:49.6091:49.6091:49.6091:1:62:Holding S2:47.9326:47.3554:48.3882:3:80:Holding S3:44.9043:44.9043:44.9043:1:66:Holding S4:41.2160:40.5875:41.8369:4:78:Holding S5:35.3123:35.3123:35.3123:1:37:Holding | close-below -
+2025-12-15 w252 support S1:47.9326:47.3554:48.3882:3:59:Holding S2:41.1275:40.4734:41.8369:5:68:Holding S3:38.1190:37.7276:38.5706:4:54:Holding S4:35.6868:35.3123:36.1550:3:47:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-15 changes macd: MACD turned bearish.
+2025-12-16 w21 support S1:44.9043:44.9043:44.9043:1:76:Holding | close-below -
+2025-12-16 w63 support S1:49.6091:49.6091:49.6091:1:68:Holding S2:48.1689:48.0557:48.3882:2:88:Holding S3:44.9043:44.9043:44.9043:1:72:Holding | close-below -
+2025-12-16 w126 support S1:49.6091:49.6091:49.6091:1:62:Holding S2:47.9326:47.3554:48.3882:3:80:Holding S3:44.9043:44.9043:44.9043:1:66:Holding S4:41.2160:40.5875:41.8369:4:77:Holding S5:35.3123:35.3123:35.3123:1:36:Holding | close-below -
+2025-12-16 w252 support S1:47.9326:47.3554:48.3882:3:59:Holding S2:41.1275:40.4734:41.8369:5:68:Holding S3:38.1190:37.7276:38.5706:4:54:Holding S4:35.6868:35.3123:36.1550:3:47:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-16 changes -
+2025-12-17 w21 support S1:44.9043:44.9043:44.9043:1:75:Holding | close-below -
+2025-12-17 w63 support S1:49.6091:49.6091:49.6091:1:75:In play S2:48.1689:48.0557:48.3882:2:95:Recently tested S3:44.9043:44.9043:44.9043:1:71:Holding | close-below -
+2025-12-17 w126 support S1:49.6091:49.6091:49.6091:1:65:In play S2:47.9326:47.3554:48.3882:3:83:Recently tested S3:44.9043:44.9043:44.9043:1:65:Holding S4:41.2160:40.5875:41.8369:4:77:Holding S5:35.3123:35.3123:35.3123:1:36:Holding | close-below -
+2025-12-17 w252 support S1:47.9326:47.3554:48.3882:3:61:Recently tested S2:41.1275:40.4734:41.8369:5:68:Holding S3:38.1190:37.7276:38.5706:4:54:Holding S4:35.6868:35.3123:36.1550:3:47:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-17 changes -
+2025-12-18 w21 support S1:44.9043:44.9043:44.9043:1:73:Holding | close-below -
+2025-12-18 w63 support S1:49.6091:49.6091:49.6091:1:75:Recently tested S2:48.1689:48.0557:48.3882:2:94:Recently tested S3:44.9043:44.9043:44.9043:1:71:Holding | close-below -
+2025-12-18 w126 support S1:49.6091:49.6091:49.6091:1:65:Recently tested S2:47.9326:47.3554:48.3882:3:83:Recently tested S3:44.9043:44.9043:44.9043:1:65:Holding S4:41.2160:40.5875:41.8369:4:77:Holding S5:35.3123:35.3123:35.3123:1:36:Holding | close-below -
+2025-12-18 w252 support S1:47.9326:47.3554:48.3882:3:61:Recently tested S2:41.1275:40.4734:41.8369:5:68:Holding S3:38.1190:37.7276:38.5706:4:54:Holding S4:35.6868:35.3123:36.1550:3:47:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-18 changes -
+2025-12-19 w21 support S1:44.9043:44.9043:44.9043:1:72:Holding | close-below -
+2025-12-19 w63 support S1:49.6091:49.6091:49.6091:1:74:Recently tested S2:48.1689:48.0557:48.3882:2:94:Recently tested S3:44.9043:44.9043:44.9043:1:70:Holding | close-below -
+2025-12-19 w126 support S1:49.6091:49.6091:49.6091:1:65:Recently tested S2:47.9326:47.3554:48.3882:3:83:Recently tested S3:44.9043:44.9043:44.9043:1:65:Holding S4:41.2160:40.5875:41.8369:4:77:Holding | close-below -
+2025-12-19 w252 support S1:47.9326:47.3554:48.3882:3:60:Recently tested S2:41.1275:40.4734:41.8369:5:68:Holding S3:38.1190:37.7276:38.5706:4:54:Holding S4:35.6868:35.3123:36.1550:3:47:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-19 changes -
+2025-12-22 w21 support S1:49.0036:49.0036:49.0036:1:84:Recently tested S2:44.9043:44.9043:44.9043:1:70:Holding | close-below -
+2025-12-22 w63 support S1:49.6091:49.6091:49.6091:1:67:Recently tested S2:48.3844:48.0557:49.0036:3:91:Recently tested S3:44.9043:44.9043:44.9043:1:63:Holding | close-below -
+2025-12-22 w126 support S1:49.6091:49.6091:49.6091:1:64:Recently tested S2:48.1447:47.3554:49.0036:4:91:Recently tested S3:44.9043:44.9043:44.9043:1:65:Holding S4:41.2160:40.5875:41.8369:4:76:Holding | close-below -
+2025-12-22 w252 support S1:48.1447:47.3554:49.0036:4:68:Recently tested S2:41.1275:40.4734:41.8369:5:67:Holding S3:38.1190:37.7276:38.5706:4:54:Holding S4:35.6868:35.3123:36.1550:3:47:Holding S5:17.3051:17.3051:17.3051:1:47:Holding | close-below -
+2025-12-22 changes trend: Trend changed from Mixed to Uptrend.
+2025-12-23 w21 support S1:49.0036:49.0036:49.0036:1:94:Recently tested | close-below -
+2025-12-23 w63 support S1:49.6091:49.6091:49.6091:1:67:Recently tested S2:48.3844:48.0557:49.0036:3:91:Recently tested S3:44.9043:44.9043:44.9043:1:63:Holding | close-below -
+2025-12-23 w126 support S1:49.6091:49.6091:49.6091:1:64:Recently tested S2:48.1447:47.3554:49.0036:4:91:Recently tested S3:44.9043:44.9043:44.9043:1:65:Holding S4:41.2160:40.5875:41.8369:4:76:Holding | close-below -
+2025-12-23 w252 support S1:48.1447:47.3554:49.0036:4:68:Recently tested S2:41.1275:40.4734:41.8369:5:67:Holding S3:38.1190:37.7276:38.5706:4:54:Holding S4:35.6868:35.3123:36.1550:3:46:Holding S5:17.3051:17.3051:17.3051:1:46:Holding | close-below -
+2025-12-23 changes -
+2025-12-24 w21 support S1:49.0036:49.0036:49.0036:1:93:Recently tested | close-below -
+2025-12-24 w63 support S1:49.6091:49.6091:49.6091:1:73:Recently tested S2:48.3831:48.0557:49.0036:2:93:Recently tested S3:44.9043:44.9043:44.9043:1:69:Holding | close-below -
+2025-12-24 w126 support S1:49.6091:49.6091:49.6091:1:64:Recently tested S2:48.1447:47.3554:49.0036:4:91:Recently tested S3:44.9043:44.9043:44.9043:1:64:Holding S4:41.2160:40.5875:41.8369:4:76:Holding | close-below -
+2025-12-24 w252 support S1:48.1447:47.3554:49.0036:4:68:Recently tested S2:41.1275:40.4734:41.8369:5:67:Holding S3:37.9753:37.7276:38.1269:3:45:Holding S4:35.6868:35.3123:36.1550:3:46:Holding S5:17.3051:17.3051:17.3051:1:46:Holding | close-below -
+2025-12-24 changes macd: MACD turned bullish.
+2025-12-26 w21 support S1:49.0036:49.0036:49.0036:1:91:Recently tested | close-below -
+2025-12-26 w63 support S1:49.6091:49.6091:49.6091:1:72:Recently tested S2:48.3831:48.0557:49.0036:2:92:Recently tested S3:44.9043:44.9043:44.9043:1:68:Holding | close-below -
+2025-12-26 w126 support S1:49.3631:49.0036:49.6091:2:76:Recently tested S2:47.9326:47.3554:48.3882:3:87:Holding S3:44.9043:44.9043:44.9043:1:66:Holding S4:41.8045:41.7725:41.8369:2:60:Holding S5:40.7114:40.5875:40.8750:2:58:Holding | close-below -
+2025-12-26 w252 support S1:49.3631:49.0036:49.6091:2:62:Recently tested S2:47.9326:47.3554:48.3882:3:74:Holding S3:40.6636:40.4734:40.8750:3:64:Holding S4:37.9753:37.7276:38.1269:3:61:Holding S5:35.6868:35.3123:36.1550:3:62:Holding | close-below -
+2025-12-26 changes new: Support at $49.36 (2 touches) moved into the top 5. / dropped: Support at $17.31 dropped out of the top list.
+2025-12-29 w21 support S1:49.0036:49.0036:49.0036:1:89:Recently tested | close-below -
+2025-12-29 w63 support S1:49.6091:49.6091:49.6091:1:72:Recently tested S2:48.3831:48.0557:49.0036:2:92:Recently tested S3:44.9043:44.9043:44.9043:1:68:Holding | close-below -
+2025-12-29 w126 support S1:49.3631:49.0036:49.6091:2:76:Recently tested S2:47.9326:47.3554:48.3882:3:87:Holding S3:44.9043:44.9043:44.9043:1:66:Holding S4:41.8045:41.7725:41.8369:2:60:Holding S5:40.7114:40.5875:40.8750:2:57:Holding | close-below -
+2025-12-29 w252 support S1:49.3631:49.0036:49.6091:2:62:Recently tested S2:47.9326:47.3554:48.3882:3:74:Holding S3:40.6636:40.4734:40.8750:3:64:Holding S4:37.9753:37.7276:38.1269:3:61:Holding S5:35.6868:35.3123:36.1550:3:62:Holding | close-below -
+2025-12-29 changes -
+2025-12-30 w21 support S1:49.0036:49.0036:49.0036:1:88:Recently tested | close-below -
+2025-12-30 w63 support S1:49.6091:49.6091:49.6091:1:71:Recently tested S2:48.3831:48.0557:49.0036:2:91:Recently tested S3:44.9043:44.9043:44.9043:1:67:Holding | close-below -
+2025-12-30 w126 support S1:49.3631:49.0036:49.6091:2:76:Recently tested S2:47.9326:47.3554:48.3882:3:87:Holding S3:44.9043:44.9043:44.9043:1:66:Holding S4:41.8045:41.7725:41.8369:2:59:Holding S5:40.7114:40.5875:40.8750:2:57:Holding | close-below -
+2025-12-30 w252 support S1:49.3631:49.0036:49.6091:2:62:Recently tested S2:47.9326:47.3554:48.3882:3:74:Holding S3:40.6636:40.4734:40.8750:3:64:Holding S4:37.9753:37.7276:38.1269:3:61:Holding S5:35.6868:35.3123:36.1550:3:62:Holding | close-below -
+2025-12-30 changes trend: Trend changed from Uptrend to Mixed.
+2025-12-31 w21 support S1:49.0036:49.0036:49.0036:1:87:Recently tested | close-below -
+2025-12-31 w63 support S1:49.6091:49.6091:49.6091:1:71:Recently tested S2:48.3831:48.0557:49.0036:2:91:Recently tested S3:44.9043:44.9043:44.9043:1:67:Holding | close-below -
+2025-12-31 w126 support S1:49.3631:49.0036:49.6091:2:76:Recently tested S2:47.9326:47.3554:48.3882:3:87:Holding S3:44.9043:44.9043:44.9043:1:66:Holding S4:41.8045:41.7725:41.8369:2:59:Holding S5:40.7114:40.5875:40.8750:2:57:Holding | close-below -
+2025-12-31 w252 support S1:49.3631:49.0036:49.6091:2:62:Recently tested S2:47.9326:47.3554:48.3882:3:74:Holding S3:40.6636:40.4734:40.8750:3:64:Holding S4:37.9753:37.7276:38.1269:3:61:Holding S5:35.6868:35.3123:36.1550:3:62:Holding | close-below -
+2025-12-31 changes macd: MACD turned bearish.
+2026-01-02 w21 support S1:49.0036:49.0036:49.0036:1:85:Recently tested | close-below -
+2026-01-02 w63 support S1:49.6091:49.6091:49.6091:1:70:Recently tested S2:48.3831:48.0557:49.0036:2:90:Recently tested S3:44.9043:44.9043:44.9043:1:67:Holding | close-below -
+2026-01-02 w126 support S1:49.3631:49.0036:49.6091:2:75:Recently tested S2:47.9326:47.3554:48.3882:3:86:Holding S3:44.9043:44.9043:44.9043:1:65:Holding S4:41.8045:41.7725:41.8369:2:59:Holding S5:40.7114:40.5875:40.8750:2:57:Holding | close-below -
+2026-01-02 w252 support S1:49.3631:49.0036:49.6091:2:62:Recently tested S2:47.9326:47.3554:48.3882:3:74:Holding S3:40.6636:40.4734:40.8750:3:64:Holding S4:37.9753:37.7276:38.1269:3:61:Holding S5:35.6868:35.3123:36.1550:3:62:Holding | close-below -
+2026-01-02 changes -
+2026-01-05 w21 support S1:49.0036:49.0036:49.0036:1:84:Holding | close-below -
+2026-01-05 w63 support S1:49.6091:49.6091:49.6091:1:70:Holding S2:48.3831:48.0557:49.0036:2:90:Holding S3:44.9043:44.9043:44.9043:1:66:Holding | close-below -
+2026-01-05 w126 support S1:49.3631:49.0036:49.6091:2:75:Holding S2:47.9326:47.3554:48.3882:3:86:Holding S3:44.9043:44.9043:44.9043:1:65:Holding S4:41.8045:41.7725:41.8369:2:59:Holding S5:40.7114:40.5875:40.8750:2:56:Holding | close-below -
+2026-01-05 w252 support S1:49.3631:49.0036:49.6091:2:62:Holding S2:47.9326:47.3554:48.3882:3:74:Holding S3:40.6636:40.4734:40.8750:3:64:Holding S4:37.9753:37.7276:38.1269:3:61:Holding S5:35.6868:35.3123:36.1550:3:62:Holding | close-below -
+2026-01-05 changes -
+2026-01-06 w21 support S1:49.0036:49.0036:49.0036:1:82:Holding | close-below -
+2026-01-06 w63 support S1:49.6091:49.6091:49.6091:1:69:Holding S2:48.3831:48.0557:49.0036:2:89:Holding S3:44.9043:44.9043:44.9043:1:66:Holding | close-below -
+2026-01-06 w126 support S1:49.3631:49.0036:49.6091:2:75:Holding S2:47.9326:47.3554:48.3882:3:86:Holding S3:44.9043:44.9043:44.9043:1:65:Holding S4:41.8045:41.7725:41.8369:2:58:Holding S5:40.7114:40.5875:40.8750:2:56:Holding | close-below -
+2026-01-06 w252 support S1:49.3631:49.0036:49.6091:2:62:Holding S2:47.9326:47.3554:48.3882:3:73:Holding S3:41.8045:41.7725:41.8369:2:53:Holding S4:40.6636:40.4734:40.8750:3:64:Holding S5:35.6868:35.3123:36.1550:3:61:Holding | close-below -
+2026-01-06 changes new: Support at $41.80 (2 touches) moved into the top 5. / dropped: Support at $37.98 dropped out of the top list. / trend: Trend changed from Mixed to Uptrend. / macd: MACD turned bullish.
+2026-01-07 w21 support S1:51.3072:51.3072:51.3072:1:89:Recently tested S2:49.0036:49.0036:49.0036:1:81:Holding | close-below -
+2026-01-07 w63 support S1:51.3072:51.3072:51.3072:1:64:Recently tested S2:49.6091:49.6091:49.6091:1:69:Holding S3:48.3831:48.0557:49.0036:2:89:Holding S4:44.9043:44.9043:44.9043:1:65:Holding | close-below -
+2026-01-07 w126 support S1:51.3072:51.3072:51.3072:1:57:Recently tested S2:49.3631:49.0036:49.6091:2:75:Holding S3:47.9326:47.3554:48.3882:3:86:Holding S4:44.9043:44.9043:44.9043:1:65:Holding S5:41.8045:41.7725:41.8369:2:58:Holding | close-below -
+2026-01-07 w252 support S1:49.3631:49.0036:49.6091:2:62:Holding S2:47.9326:47.3554:48.3882:3:73:Holding S3:41.8045:41.7725:41.8369:2:53:Holding S4:40.6636:40.4734:40.8750:3:64:Holding S5:35.6868:35.3123:36.1550:3:61:Holding | close-below -
+2026-01-07 changes -
+2026-01-08 w21 support S1:51.3072:51.3072:51.3072:1:88:Recently tested S2:49.0036:49.0036:49.0036:1:79:Holding | close-below -
+2026-01-08 w63 support S1:51.3072:51.3072:51.3072:1:63:Recently tested S2:49.6091:49.6091:49.6091:1:68:Holding S3:48.3831:48.0557:49.0036:2:88:Holding S4:44.9043:44.9043:44.9043:1:65:Holding | close-below -
+2026-01-08 w126 support S1:51.3072:51.3072:51.3072:1:57:Recently tested S2:49.3631:49.0036:49.6091:2:74:Holding S3:47.9326:47.3554:48.3882:3:85:Holding S4:44.9043:44.9043:44.9043:1:64:Holding S5:41.8045:41.7725:41.8369:2:58:Holding | close-below -
+2026-01-08 w252 support S1:49.3631:49.0036:49.6091:2:61:Holding S2:47.9326:47.3554:48.3882:3:73:Holding S3:41.8045:41.7725:41.8369:2:53:Holding S4:40.6636:40.4734:40.8750:3:63:Holding S5:35.6868:35.3123:36.1550:3:61:Holding | close-below -
+2026-01-08 changes -
+2026-01-09 w21 support S1:51.3072:51.3072:51.3072:1:86:Recently tested S2:49.0036:49.0036:49.0036:1:78:Holding | close-below -
+2026-01-09 w63 support S1:51.3072:51.3072:51.3072:1:63:Recently tested S2:49.6091:49.6091:49.6091:1:68:Holding S3:48.3831:48.0557:49.0036:2:88:Holding S4:44.9043:44.9043:44.9043:1:64:Holding | close-below -
+2026-01-09 w126 support S1:51.3072:51.3072:51.3072:1:57:Recently tested S2:49.3631:49.0036:49.6091:2:74:Holding S3:47.9326:47.3554:48.3882:3:85:Holding S4:44.9043:44.9043:44.9043:1:64:Holding S5:41.8045:41.7725:41.8369:2:58:Holding | close-below -
+2026-01-09 w252 support S1:49.3631:49.0036:49.6091:2:61:Holding S2:47.9326:47.3554:48.3882:3:73:Holding S3:41.8045:41.7725:41.8369:2:53:Holding S4:40.6636:40.4734:40.8750:3:63:Holding S5:35.6868:35.3123:36.1550:3:61:Holding | close-below -
+2026-01-09 changes -
+2026-01-12 w21 support S1:51.3072:51.3072:51.3072:1:85:Recently tested S2:49.0036:49.0036:49.0036:1:76:Holding | close-below -
+2026-01-12 w63 support S1:51.3072:51.3072:51.3072:1:63:Recently tested S2:49.3631:49.0036:49.6091:2:85:Holding S3:44.9043:44.9043:44.9043:1:64:Holding | close-below -
+2026-01-12 w126 support S1:51.3072:51.3072:51.3072:1:57:Recently tested S2:49.3631:49.0036:49.6091:2:74:Holding S3:47.9326:47.3554:48.3882:3:85:Holding S4:44.9043:44.9043:44.9043:1:64:Holding S5:41.8045:41.7725:41.8369:2:57:Holding | close-below -
+2026-01-12 w252 support S1:49.3631:49.0036:49.6091:2:61:Holding S2:47.9326:47.3554:48.3882:3:73:Holding S3:41.8045:41.7725:41.8369:2:53:Holding S4:40.6636:40.4734:40.8750:3:63:Holding S5:35.6868:35.3123:36.1550:3:61:Holding | close-below -
+2026-01-12 changes -
+2026-01-13 w21 support S1:51.3072:51.3072:51.3072:1:84:Recently tested S2:49.0036:49.0036:49.0036:1:75:Holding | close-below -
+2026-01-13 w63 support S1:51.3072:51.3072:51.3072:1:62:Recently tested S2:49.3631:49.0036:49.6091:2:84:Holding S3:44.9043:44.9043:44.9043:1:64:Holding | close-below -
+2026-01-13 w126 support S1:51.3072:51.3072:51.3072:1:56:Recently tested S2:49.3631:49.0036:49.6091:2:74:Holding S3:47.9326:47.3554:48.3882:3:85:Holding S4:44.9043:44.9043:44.9043:1:64:Holding S5:41.8045:41.7725:41.8369:2:57:Holding | close-below -
+2026-01-13 w252 support S1:49.3631:49.0036:49.6091:2:61:Holding S2:47.9326:47.3554:48.3882:3:73:Holding S3:41.8045:41.7725:41.8369:2:53:Holding S4:40.6636:40.4734:40.8750:3:63:Holding S5:35.6868:35.3123:36.1550:3:61:Holding | close-below -
+2026-01-13 changes -
+2026-01-14 w21 support S1:51.3072:51.3072:51.3072:1:82:Recently tested S2:49.0036:49.0036:49.0036:1:73:Holding | close-below -
+2026-01-14 w63 support S1:51.3072:51.3072:51.3072:1:62:Recently tested S2:49.3631:49.0036:49.6091:2:84:Holding S3:44.9043:44.9043:44.9043:1:63:Holding | close-below -
+2026-01-14 w126 support S1:51.3072:51.3072:51.3072:1:55:Recently tested S2:49.3631:49.0036:49.6091:2:72:Holding S3:47.9326:47.3554:48.3882:3:82:Holding S4:44.9043:44.9043:44.9043:1:61:Holding S5:41.8045:41.7725:41.8369:2:55:Holding | close-below -
+2026-01-14 w252 support S1:49.3631:49.0036:49.6091:2:61:Holding S2:47.9326:47.3554:48.3882:3:73:Holding S3:41.8045:41.7725:41.8369:2:52:Holding S4:40.6636:40.4734:40.8750:3:63:Holding S5:17.3051:17.3051:17.3051:1:50:Holding | close-below -
+2026-01-14 changes new: Support at $17.31 (1 touch) moved into the top 5. / dropped: Support at $35.69 dropped out of the top list. / trend: Trend changed from Uptrend to Mixed.
+2026-01-15 w21 support S1:51.3072:51.3072:51.3072:1:81:Recently tested S2:49.0036:49.0036:49.0036:1:72:Holding | close-below -
+2026-01-15 w63 support S1:51.3072:51.3072:51.3072:1:61:Recently tested S2:49.3631:49.0036:49.6091:2:83:Holding S3:44.9043:44.9043:44.9043:1:63:Holding | close-below -
+2026-01-15 w126 support S1:51.3072:51.3072:51.3072:1:55:Recently tested S2:49.3631:49.0036:49.6091:2:71:Holding S3:47.9326:47.3554:48.3882:3:82:Holding S4:44.9043:44.9043:44.9043:1:61:Holding S5:41.8045:41.7725:41.8369:2:55:Holding | close-below -
+2026-01-15 w252 support S1:49.3631:49.0036:49.6091:2:61:Holding S2:47.9326:47.3554:48.3882:3:73:Holding S3:41.8045:41.7725:41.8369:2:52:Holding S4:40.6636:40.4734:40.8750:3:63:Holding S5:17.3051:17.3051:17.3051:1:50:Holding | close-below -
+2026-01-15 changes -
+2026-01-16 w21 support S1:51.3072:51.3072:51.3072:1:79:Recently tested S2:49.0036:49.0036:49.0036:1:70:Holding | close-below -
+2026-01-16 w63 support S1:51.3072:51.3072:51.3072:1:61:Recently tested S2:49.3631:49.0036:49.6091:2:83:Holding S3:44.9043:44.9043:44.9043:1:62:Holding | close-below -
+2026-01-16 w126 support S1:51.3072:51.3072:51.3072:1:54:Recently tested S2:49.3631:49.0036:49.6091:2:71:Holding S3:47.9326:47.3554:48.3882:3:82:Holding S4:44.9043:44.9043:44.9043:1:61:Holding S5:41.8045:41.7725:41.8369:2:54:Holding | close-below -
+2026-01-16 w252 support S1:49.3631:49.0036:49.6091:2:61:Holding S2:47.9326:47.3554:48.3882:3:72:Holding S3:41.8045:41.7725:41.8369:2:52:Holding S4:40.6636:40.4734:40.8750:3:63:Holding S5:17.3051:17.3051:17.3051:1:50:Holding | close-below -
+2026-01-16 changes macd: MACD turned bearish.
+2026-01-20 w21 support - | close-below 51.3072
+2026-01-20 w63 support S1:49.3631:49.0036:49.6091:2:82:Holding S2:44.9043:44.9043:44.9043:1:62:Holding | close-below 51.3072
+2026-01-20 w126 support S1:49.3631:49.0036:49.6091:2:71:Holding S2:47.9326:47.3554:48.3882:3:81:Holding S3:44.9043:44.9043:44.9043:1:61:Holding S4:41.8045:41.7725:41.8369:2:54:Holding S5:40.5875:40.5875:40.5875:1:42:Holding | close-below 51.3072
+2026-01-20 w252 support S1:49.3631:49.0036:49.6091:2:61:Holding S2:47.9326:47.3554:48.3882:3:72:Holding S3:41.8045:41.7725:41.8369:2:52:Holding S4:40.6636:40.4734:40.8750:3:63:Holding S5:17.3051:17.3051:17.3051:1:50:Holding | close-below 51.3072
+2026-01-20 changes -
+2026-01-21 w21 support S1:51.3072:51.3072:51.3072:1:100:Recently tested | close-below -
+2026-01-21 w63 support S1:51.3072:51.3072:51.3072:1:66:Recently tested S2:49.3631:49.0036:49.6091:2:82:Holding S3:44.9043:44.9043:44.9043:1:61:Holding | close-below -
+2026-01-21 w126 support S1:51.3072:51.3072:51.3072:1:53:Recently tested S2:49.6091:49.6091:49.6091:1:57:Holding S3:48.1447:47.3554:49.0036:4:84:Holding S4:44.9043:44.9043:44.9043:1:57:Holding S5:41.8045:41.7725:41.8369:2:47:Holding | close-below -
+2026-01-21 w252 support S1:48.1447:47.3554:49.0036:4:74:Holding S2:44.9043:44.9043:44.9043:1:45:Holding S3:41.8045:41.7725:41.8369:2:45:Holding S4:40.6636:40.4734:40.8750:3:52:Holding S5:17.3051:17.3051:17.3051:1:46:Holding | close-below -
+2026-01-21 changes new: Support at $44.90 (1 touch) moved into the top 5. / dropped: Support at $49.36 dropped out of the top list.
+2026-01-22 w21 support S1:51.3072:51.3072:51.3072:1:99:Recently tested | close-below -
+2026-01-22 w63 support S1:51.3072:51.3072:51.3072:1:65:Recently tested S2:49.3631:49.0036:49.6091:2:81:Holding S3:44.9043:44.9043:44.9043:1:61:Holding | close-below -
+2026-01-22 w126 support S1:51.3072:51.3072:51.3072:1:56:Recently tested S2:49.3631:49.0036:49.6091:2:70:Holding S3:47.9326:47.3554:48.3882:3:81:Holding S4:44.9043:44.9043:44.9043:1:60:Holding S5:41.8045:41.7725:41.8369:2:54:Holding | close-below -
+2026-01-22 w252 support S1:49.3631:49.0036:49.6091:2:60:Holding S2:47.9326:47.3554:48.3882:3:72:Holding S3:41.8045:41.7725:41.8369:2:52:Holding S4:40.6636:40.4734:40.8750:3:62:Holding S5:17.3051:17.3051:17.3051:1:50:Holding | close-below -
+2026-01-22 changes new: Support at $49.36 (2 touches) moved into the top 5. / dropped: Support at $44.90 dropped out of the top list.
+2026-01-23 w21 support S1:51.3072:51.3072:51.3072:1:94:Recently tested S2:50.1839:50.1839:50.1839:1:97:Recently tested | close-below -
+2026-01-23 w63 support S1:51.3072:51.3072:51.3072:1:58:Recently tested S2:49.6050:49.0036:50.1839:3:90:Recently tested S3:44.9043:44.9043:44.9043:1:53:Holding | close-below -
+2026-01-23 w126 support S1:51.3072:51.3072:51.3072:1:56:Recently tested S2:49.6050:49.0036:50.1839:3:87:Recently tested S3:47.9326:47.3554:48.3882:3:81:Holding S4:44.9043:44.9043:44.9043:1:60:Holding S5:41.8045:41.7725:41.8369:2:53:Holding | close-below -
+2026-01-23 w252 support S1:49.6050:49.0036:50.1839:3:76:Recently tested S2:47.9326:47.3554:48.3882:3:72:Holding S3:41.8045:41.7725:41.8369:2:52:Holding S4:40.6636:40.4734:40.8750:3:62:Holding S5:17.3051:17.3051:17.3051:1:49:Holding | close-below -
+2026-01-23 changes -
+2026-01-26 w21 support S1:51.3072:51.3072:51.3072:1:91:Recently tested S2:50.1839:50.1839:50.1839:1:96:Recently tested | close-below -
+2026-01-26 w63 support S1:51.3072:51.3072:51.3072:1:57:Recently tested S2:49.6050:49.0036:50.1839:3:90:Recently tested S3:44.9043:44.9043:44.9043:1:53:Holding | close-below -
+2026-01-26 w126 support S1:51.3072:51.3072:51.3072:1:56:Recently tested S2:49.6050:49.0036:50.1839:3:87:Recently tested S3:47.9326:47.3554:48.3882:3:81:Holding S4:44.9043:44.9043:44.9043:1:60:Holding S5:41.8045:41.7725:41.8369:2:53:Holding | close-below -
+2026-01-26 w252 support S1:49.6050:49.0036:50.1839:3:76:Recently tested S2:47.9326:47.3554:48.3882:3:72:Holding S3:41.8045:41.7725:41.8369:2:52:Holding S4:40.6636:40.4734:40.8750:3:62:Holding S5:17.3051:17.3051:17.3051:1:49:Holding | close-below -
+2026-01-26 changes -
+2026-01-27 w21 support S1:51.3072:51.3072:51.3072:1:88:Recently tested S2:50.1839:50.1839:50.1839:1:94:Recently tested | close-below -
+2026-01-27 w63 support S1:51.3072:51.3072:51.3072:1:57:Recently tested S2:49.6050:49.0036:50.1839:3:89:Recently tested S3:44.9043:44.9043:44.9043:1:53:Holding | close-below -
+2026-01-27 w126 support S1:51.3072:51.3072:51.3072:1:56:Recently tested S2:49.6050:49.0036:50.1839:3:87:Recently tested S3:47.9326:47.3554:48.3882:3:80:Holding S4:44.9043:44.9043:44.9043:1:59:Holding S5:41.8045:41.7725:41.8369:2:53:Holding | close-below -
+2026-01-27 w252 support S1:49.6050:49.0036:50.1839:3:76:Recently tested S2:47.9326:47.3554:48.3882:3:72:Holding S3:41.8045:41.7725:41.8369:2:52:Holding S4:40.6636:40.4734:40.8750:3:62:Holding S5:17.3051:17.3051:17.3051:1:49:Holding | close-below -
+2026-01-27 changes macd: MACD turned bullish.
+2026-01-28 w21 support S1:51.3072:51.3072:51.3072:1:85:Recently tested S2:50.1839:50.1839:50.1839:1:93:Recently tested | close-below -
+2026-01-28 w63 support S1:51.3072:51.3072:51.3072:1:56:Recently tested S2:49.6050:49.0036:50.1839:3:89:Recently tested S3:44.9043:44.9043:44.9043:1:52:Holding | close-below -
+2026-01-28 w126 support S1:51.3072:51.3072:51.3072:1:56:Recently tested S2:49.6050:49.0036:50.1839:3:87:Recently tested S3:47.9326:47.3554:48.3882:3:80:Holding S4:44.9043:44.9043:44.9043:1:59:Holding S5:41.8045:41.7725:41.8369:2:53:Holding | close-below -
+2026-01-28 w252 support S1:49.6050:49.0036:50.1839:3:76:Recently tested S2:47.9326:47.3554:48.3882:3:72:Holding S3:41.8045:41.7725:41.8369:2:51:Holding S4:40.6636:40.4734:40.8750:3:62:Holding S5:17.3051:17.3051:17.3051:1:49:Holding | close-below -
+2026-01-28 changes -
+2026-01-29 w21 support S1:51.3072:51.3072:51.3072:1:84:Recently tested S2:50.1839:50.1839:50.1839:1:91:Recently tested | close-below -
+2026-01-29 w63 support S1:51.3072:51.3072:51.3072:1:56:Recently tested S2:49.6050:49.0036:50.1839:3:89:Recently tested S3:44.9043:44.9043:44.9043:1:52:Holding | close-below -
+2026-01-29 w126 support S1:51.3072:51.3072:51.3072:1:52:Recently tested S2:49.8465:49.6091:50.1839:2:68:Recently tested S3:48.1447:47.3554:49.0036:4:82:Holding S4:44.9043:44.9043:44.9043:1:56:Holding S5:41.8045:41.7725:41.8369:2:46:Holding | close-below -
+2026-01-29 w252 support S1:49.8465:49.6091:50.1839:2:56:Recently tested S2:48.1447:47.3554:49.0036:4:73:Holding S3:41.8045:41.7725:41.8369:2:45:Holding S4:40.6636:40.4734:40.8750:3:52:Holding S5:17.3051:17.3051:17.3051:1:46:Holding | close-below -
+2026-01-29 changes -
+2026-01-30 w21 support S1:51.3072:51.3072:51.3072:1:82:Recently tested S2:50.1839:50.1839:50.1839:1:89:Recently tested | close-below -
+2026-01-30 w63 support S1:51.3072:51.3072:51.3072:1:56:Recently tested S2:49.6050:49.0036:50.1839:3:88:Recently tested S3:44.9043:44.9043:44.9043:1:51:Holding | close-below -
+2026-01-30 w126 support S1:51.3072:51.3072:51.3072:1:52:Recently tested S2:49.8465:49.6091:50.1839:2:68:Recently tested S3:48.1447:47.3554:49.0036:4:82:Holding S4:44.9043:44.9043:44.9043:1:55:Holding S5:41.8045:41.7725:41.8369:2:46:Holding | close-below -
+2026-01-30 w252 support S1:49.8465:49.6091:50.1839:2:56:Recently tested S2:48.1447:47.3554:49.0036:4:73:Holding S3:41.8045:41.7725:41.8369:2:44:Holding S4:40.6636:40.4734:40.8750:3:52:Holding S5:17.3051:17.3051:17.3051:1:45:Holding | close-below -
+2026-01-30 changes -
+2026-02-02 w21 support S1:51.3072:51.3072:51.3072:1:81:Recently tested S2:50.1839:50.1839:50.1839:1:88:Recently tested | close-below -
+2026-02-02 w63 support S1:51.3072:51.3072:51.3072:1:55:Recently tested S2:49.6050:49.0036:50.1839:3:88:Recently tested S3:44.9043:44.9043:44.9043:1:51:Holding | close-below -
+2026-02-02 w126 support S1:51.3072:51.3072:51.3072:1:54:Recently tested S2:49.8465:49.6091:50.1839:2:71:Recently tested S3:48.1447:47.3554:49.0036:4:85:Holding S4:44.9043:44.9043:44.9043:1:59:Holding S5:41.8045:41.7725:41.8369:2:49:Holding | close-below -
+2026-02-02 w252 support S1:49.8465:49.6091:50.1839:2:56:Recently tested S2:48.1447:47.3554:49.0036:4:73:Holding S3:41.8045:41.7725:41.8369:2:44:Holding S4:40.6636:40.4734:40.8750:3:52:Holding S5:17.3051:17.3051:17.3051:1:45:Holding | close-below -
+2026-02-02 changes -
+2026-02-03 w21 support S1:50.1839:50.1839:50.1839:1:87:Recently tested | close-below -
+2026-02-03 w63 support S1:51.3072:51.3072:51.3072:1:59:Recently tested S2:49.6050:49.0036:50.1839:3:87:Recently tested S3:44.9043:44.9043:44.9043:1:50:Holding | close-below -
+2026-02-03 w126 support S1:51.3072:51.3072:51.3072:1:56:Recently tested S2:49.8465:49.6091:50.1839:2:71:Recently tested S3:48.1447:47.3554:49.0036:4:85:Holding S4:44.9043:44.9043:44.9043:1:58:Holding S5:41.8045:41.7725:41.8369:2:48:Holding | close-below -
+2026-02-03 w252 support S1:51.3072:51.3072:51.3072:1:43:Recently tested S2:49.8465:49.6091:50.1839:2:52:Recently tested S3:48.1447:47.3554:49.0036:4:65:Holding S4:41.1275:40.4734:41.8369:5:64:Holding S5:17.3051:17.3051:17.3051:1:43:Holding | close-below -
+2026-02-03 changes new: A new support zone formed at $51.31 after today's swing low. / dropped: Support at $41.80 dropped out of the top list. / macd: MACD turned bearish.
+2026-02-04 w21 support - | close-below 50.1839
+2026-02-04 w63 support S1:49.6050:49.0036:50.1839:3:92:In play S2:44.9043:44.9043:44.9043:1:50:Holding | close-below 51.3072
+2026-02-04 w126 support S1:49.8465:49.6091:50.1839:2:73:In play S2:48.1447:47.3554:49.0036:4:92:In play S3:44.9043:44.9043:44.9043:1:58:Holding S4:41.8045:41.7725:41.8369:2:48:Holding | close-below 51.3072
+2026-02-04 w252 support S1:49.8465:49.6091:50.1839:2:53:In play S2:48.1447:47.3554:49.0036:4:68:In play S3:44.9043:44.9043:44.9043:1:42:Holding S4:41.1275:40.4734:41.8369:5:64:Holding S5:17.3051:17.3051:17.3051:1:43:Holding | close-below 51.3072
+2026-02-04 changes new: Support at $44.90 (1 touch) moved into the top 5. / broken: Support at $51.31 broke — price closed below the zone.
+2026-02-05 w21 support - | close-below 50.1839
+2026-02-05 w63 support S1:44.9043:44.9043:44.9043:1:49:Holding | close-below 49.6050 51.3072
+2026-02-05 w126 support S1:48.1447:47.3554:49.0036:4:92:In play S2:44.9043:44.9043:44.9043:1:58:Holding S3:41.8045:41.7725:41.8369:2:48:Holding | close-below 49.8465 51.3072
+2026-02-05 w252 support S1:48.1447:47.3554:49.0036:4:68:In play S2:44.9043:44.9043:44.9043:1:42:Holding S3:41.1275:40.4734:41.8369:5:64:Holding S4:35.5464:35.3123:35.7326:2:35:Holding S5:17.3051:17.3051:17.3051:1:43:Holding | close-below 49.8465 51.3072
+2026-02-05 changes new: Support at $35.55 (2 touches) moved into the top 5. / broken: Support at $49.85 broke — price closed below the zone.
+2026-02-06 w21 support S1:50.1839:50.1839:50.1839:1:100:In play | close-below -
+2026-02-06 w63 support S1:49.6050:49.0036:50.1839:3:92:In play S2:44.9043:44.9043:44.9043:1:49:Holding | close-below 51.3072
+2026-02-06 w126 support S1:49.8465:49.6091:50.1839:2:73:In play S2:48.1447:47.3554:49.0036:4:92:Recently tested S3:44.9043:44.9043:44.9043:1:58:Holding S4:41.8045:41.7725:41.8369:2:48:Holding | close-below 51.3072
+2026-02-06 w252 support S1:49.8465:49.6091:50.1839:2:53:In play S2:48.1447:47.3554:49.0036:4:68:Recently tested S3:44.9043:44.9043:44.9043:1:41:Holding S4:41.1275:40.4734:41.8369:5:64:Holding S5:17.3051:17.3051:17.3051:1:43:Holding | close-below 51.3072
+2026-02-06 changes reclaimed: Price climbed back above $49.85; that zone is acting as support again. / dropped: Support at $35.55 dropped out of the top list.
+2026-02-09 w21 support S1:50.1839:50.1839:50.1839:1:100:Recently tested | close-below -
+2026-02-09 w63 support S1:51.3072:51.3072:51.3072:1:59:In play S2:49.6050:49.0036:50.1839:3:92:Recently tested S3:44.9043:44.9043:44.9043:1:48:Holding | close-below -
+2026-02-09 w126 support S1:51.3072:51.3072:51.3072:1:56:In play S2:49.8465:49.6091:50.1839:2:73:Recently tested S3:48.1447:47.3554:49.0036:4:92:Recently tested S4:44.9043:44.9043:44.9043:1:58:Holding S5:41.8045:41.7725:41.8369:2:48:Holding | close-below -
+2026-02-09 w252 support S1:51.3072:51.3072:51.3072:1:43:In play S2:49.8465:49.6091:50.1839:2:53:Recently tested S3:48.1447:47.3554:49.0036:4:68:Recently tested S4:41.1275:40.4734:41.8369:5:64:Holding S5:17.3051:17.3051:17.3051:1:43:Holding | close-below -
+2026-02-09 changes reclaimed: Price climbed back above $51.31; that zone is acting as support again. / dropped: Support at $44.90 dropped out of the top list.
+2026-02-10 w21 support S1:50.1839:50.1839:50.1839:1:96:In play S2:46.7839:46.7839:46.7839:1:93:Recently tested | close-below -
+2026-02-10 w63 support S1:51.3072:51.3072:51.3072:1:66:In play S2:49.6021:49.0036:50.1839:2:90:In play S3:46.7839:46.7839:46.7839:1:71:Recently tested S4:44.9043:44.9043:44.9043:1:54:Holding | close-below -
+2026-02-10 w126 support S1:51.3072:51.3072:51.3072:1:56:In play S2:49.6050:49.0036:50.1839:3:82:In play S3:47.6594:46.7839:48.3882:4:93:Recently tested S4:44.9043:44.9043:44.9043:1:57:Holding S5:41.8045:41.7725:41.8369:2:47:Holding | close-below -
+2026-02-10 w252 support S1:51.3072:51.3072:51.3072:1:43:In play S2:49.6050:49.0036:50.1839:3:60:In play S3:47.6594:46.7839:48.3882:4:68:Recently tested S4:41.1275:40.4734:41.8369:5:63:Holding S5:17.3051:17.3051:17.3051:1:43:Holding | close-below -
+2026-02-10 changes -
+2026-02-11 w21 support S1:50.1839:50.1839:50.1839:1:96:Recently tested S2:46.7839:46.7839:46.7839:1:92:Recently tested | close-below -
+2026-02-11 w63 support S1:51.3072:51.3072:51.3072:1:66:In play S2:49.6021:49.0036:50.1839:2:90:Recently tested S3:46.7839:46.7839:46.7839:1:70:Recently tested S4:44.9043:44.9043:44.9043:1:54:Holding | close-below -
+2026-02-11 w126 support S1:51.3072:51.3072:51.3072:1:56:In play S2:49.6050:49.0036:50.1839:3:82:Recently tested S3:47.6594:46.7839:48.3882:4:92:Recently tested S4:44.9043:44.9043:44.9043:1:57:Holding S5:41.8045:41.7725:41.8369:2:47:Holding | close-below -
+2026-02-11 w252 support S1:51.3072:51.3072:51.3072:1:43:In play S2:49.6050:49.0036:50.1839:3:60:Recently tested S3:47.6594:46.7839:48.3882:4:68:Recently tested S4:41.1275:40.4734:41.8369:5:63:Holding S5:17.3051:17.3051:17.3051:1:43:Holding | close-below -
+2026-02-11 changes -
+2026-02-12 w21 support S1:46.7839:46.7839:46.7839:1:90:Recently tested | close-below 50.1839
+2026-02-12 w63 support S1:46.7839:46.7839:46.7839:1:70:Recently tested S2:44.9043:44.9043:44.9043:1:53:Holding | close-below 49.6021 51.3072
+2026-02-12 w126 support S1:47.6594:46.7839:48.3882:4:93:In play S2:44.9043:44.9043:44.9043:1:57:Holding S3:41.8045:41.7725:41.8369:2:47:Holding | close-below 49.6050 51.3072
+2026-02-12 w252 support S1:47.6594:46.7839:48.3882:4:69:In play S2:44.9043:44.9043:44.9043:1:41:Holding S3:41.1275:40.4734:41.8369:5:63:Holding S4:35.5464:35.3123:35.7326:2:35:Holding S5:17.3051:17.3051:17.3051:1:42:Holding | close-below 49.6050 51.3072
+2026-02-12 changes new: Support at $44.90 (1 touch) moved into the top 5. / new: Support at $35.55 (2 touches) moved into the top 5. / broken: Support at $51.31 broke — price closed below the zone. / broken: Support at $49.61 broke — price closed below the zone.
+2026-02-13 w21 support S1:46.7839:46.7839:46.7839:1:98:Recently tested | close-below 50.1839
+2026-02-13 w63 support S1:46.7839:46.7839:46.7839:1:72:Recently tested S2:44.9043:44.9043:44.9043:1:53:Holding | close-below 49.6021 51.3072
+2026-02-13 w126 support S1:47.6594:46.7839:48.3882:4:93:In play S2:44.9043:44.9043:44.9043:1:57:Holding S3:41.8045:41.7725:41.8369:2:47:Holding | close-below 49.6050 51.3072
+2026-02-13 w252 support S1:47.6594:46.7839:48.3882:4:77:In play S2:44.9043:44.9043:44.9043:1:43:Holding S3:41.2160:40.5875:41.8369:4:64:Holding S4:35.5464:35.3123:35.7326:2:39:Holding S5:17.3051:17.3051:17.3051:1:44:Holding | close-below 49.6050 51.3072
+2026-02-13 changes -
+2026-02-17 w21 support S1:46.7839:46.7839:46.7839:1:98:Recently tested | close-below 50.1839
+2026-02-17 w63 support S1:46.7839:46.7839:46.7839:1:72:Recently tested S2:44.9043:44.9043:44.9043:1:52:Holding | close-below 49.6021 51.3072
+2026-02-17 w126 support S1:47.6594:46.7839:48.3882:4:93:In play S2:44.9043:44.9043:44.9043:1:56:Holding S3:41.8045:41.7725:41.8369:2:46:Holding | close-below 49.6050 51.3072
+2026-02-17 w252 support S1:47.6594:46.7839:48.3882:4:77:In play S2:44.9043:44.9043:44.9043:1:43:Holding S3:41.2160:40.5875:41.8369:4:64:Holding S4:35.5464:35.3123:35.7326:2:39:Holding S5:17.3051:17.3051:17.3051:1:44:Holding | close-below 49.6050 51.3072
+2026-02-17 changes -
+2026-02-18 w21 support S1:46.7839:46.7839:46.7839:1:96:Recently tested | close-below 50.1839
+2026-02-18 w63 support S1:49.6021:49.0036:50.1839:2:90:In play S2:46.7839:46.7839:46.7839:1:72:Recently tested S3:44.9043:44.9043:44.9043:1:52:Holding | close-below 51.3072
+2026-02-18 w126 support S1:49.6050:49.0036:50.1839:3:82:In play S2:47.6594:46.7839:48.3882:4:93:Recently tested S3:44.9043:44.9043:44.9043:1:56:Holding S4:41.8045:41.7725:41.8369:2:46:Holding | close-below 51.3072
+2026-02-18 w252 support S1:49.6050:49.0036:50.1839:3:66:In play S2:47.6594:46.7839:48.3882:4:77:Recently tested S3:44.9043:44.9043:44.9043:1:43:Holding S4:41.2160:40.5875:41.8369:4:63:Holding S5:17.3051:17.3051:17.3051:1:44:Holding | close-below 51.3072
+2026-02-18 changes reclaimed: Price climbed back above $49.61; that zone is acting as support again. / dropped: Support at $35.55 dropped out of the top list.
+2026-02-19 w21 support S1:46.7839:46.7839:46.7839:1:97:Recently tested | close-below -
+2026-02-19 w63 support S1:49.6021:49.0036:50.1839:2:90:In play S2:46.7839:46.7839:46.7839:1:71:Recently tested S3:44.9043:44.9043:44.9043:1:51:Holding | close-below 51.3072
+2026-02-19 w126 support S1:49.6050:49.0036:50.1839:3:82:In play S2:47.6594:46.7839:48.3882:4:93:In play S3:44.9043:44.9043:44.9043:1:56:Holding S4:41.8045:41.7725:41.8369:2:46:Holding | close-below 51.3072
+2026-02-19 w252 support S1:49.6050:49.0036:50.1839:3:66:In play S2:47.6594:46.7839:48.3882:4:77:In play S3:44.9043:44.9043:44.9043:1:42:Holding S4:41.2160:40.5875:41.8369:4:63:Holding S5:17.3051:17.3051:17.3051:1:44:Holding | close-below 51.3072
+2026-02-19 changes -
+2026-02-20 w21 support S1:46.5138:46.1477:46.7839:2:96:Recently tested | close-below -
+2026-02-20 w63 support S1:49.6021:49.0036:50.1839:2:94:In play S2:46.7839:46.7839:46.7839:1:75:Recently tested S3:45.3950:44.9043:46.1477:2:97:Recently tested | close-below 51.3072
+2026-02-20 w126 support S1:49.6050:49.0036:50.1839:3:85:In play S2:47.6594:46.7839:48.3882:4:97:Recently tested S3:45.3950:44.9043:46.1477:2:77:Recently tested S4:41.7725:41.7725:41.7725:1:42:Holding | close-below 51.3072
+2026-02-20 w252 support S1:49.6050:49.0036:50.1839:3:66:In play S2:47.6594:46.7839:48.3882:4:77:Recently tested S3:45.3950:44.9043:46.1477:2:57:Recently tested S4:41.2160:40.5875:41.8369:4:63:Holding S5:17.3051:17.3051:17.3051:1:44:Holding | close-below 51.3072
+2026-02-20 changes -
+2026-02-23 w21 support S1:46.5138:46.1477:46.7839:2:100:Recently tested | close-below -
+2026-02-23 w63 support S1:46.5138:46.1477:46.7839:2:89:Recently tested S2:44.9043:44.9043:44.9043:1:50:Holding | close-below 49.6021 51.3072
+2026-02-23 w126 support S1:48.7200:48.0557:49.6091:4:94:In play S2:46.8073:46.1477:47.3554:3:80:In play S3:44.9043:44.9043:44.9043:1:55:Holding S4:41.7725:41.7725:41.7725:1:37:Holding | close-below 50.6933
+2026-02-23 w252 support S1:48.7200:48.0557:49.6091:4:77:In play S2:46.8073:46.1477:47.3554:3:65:In play S3:44.9043:44.9043:44.9043:1:42:Holding S4:41.2160:40.5875:41.8369:4:63:Holding S5:17.3051:17.3051:17.3051:1:44:Holding | close-below 50.6933
+2026-02-23 changes new: Support at $48.72 (4 touches) moved into the top 5. / new: Support at $46.81 (3 touches) moved into the top 5. / dropped: Support at $49.61 dropped out of the top list. / dropped: Support at $47.66 dropped out of the top list.
+2026-02-24 w21 support S1:46.5138:46.1477:46.7839:2:99:Recently tested | close-below -
+2026-02-24 w63 support S1:49.6021:49.0036:50.1839:2:90:In play S2:46.5138:46.1477:46.7839:2:89:Recently tested S3:44.9043:44.9043:44.9043:1:50:Holding | close-below 51.3072
+2026-02-24 w126 support S1:48.7200:48.0557:49.6091:4:94:In play S2:46.8073:46.1477:47.3554:3:80:Recently tested S3:44.9043:44.9043:44.9043:1:55:Holding S4:41.7725:41.7725:41.7725:1:37:Holding | close-below 50.6933
+2026-02-24 w252 support S1:48.7200:48.0557:49.6091:4:77:In play S2:46.8073:46.1477:47.3554:3:65:Recently tested S3:44.9043:44.9043:44.9043:1:42:Holding S4:41.2160:40.5875:41.8369:4:63:Holding S5:17.3051:17.3051:17.3051:1:44:Holding | close-below 50.6933
+2026-02-24 changes -
+2026-02-25 w21 support S1:46.5138:46.1477:46.7839:2:97:Recently tested | close-below -
+2026-02-25 w63 support S1:51.3072:51.3072:51.3072:1:72:In play S2:49.6021:49.0036:50.1839:2:98:Recently tested S3:46.5138:46.1477:46.7839:2:97:Recently tested | close-below -
+2026-02-25 w126 support S1:51.3072:51.3072:51.3072:1:59:In play S2:49.8465:49.6091:50.1839:2:80:Recently tested S3:48.3844:48.0557:49.0036:3:93:Recently tested S4:46.8073:46.1477:47.3554:3:90:Recently tested S5:44.9043:44.9043:44.9043:1:58:Holding | close-below -
+2026-02-25 w252 support S1:51.3072:51.3072:51.3072:1:45:In play S2:49.8465:49.6091:50.1839:2:57:Recently tested S3:48.3844:48.0557:49.0036:3:67:Recently tested S4:46.8073:46.1477:47.3554:3:66:Recently tested S5:41.2160:40.5875:41.8369:4:63:Holding | close-below -
+2026-02-25 changes reclaimed: Price climbed back above $51.31; that zone is acting as support again. / new: Support at $49.85 (2 touches) moved into the top 5. / dropped: Support at $44.90 dropped out of the top list. / dropped: Support at $17.31 dropped out of the top list. / macd: MACD turned bullish.
+2026-02-26 w21 support S1:46.7305:46.1477:47.3804:3:97:Recently tested | close-below -
+2026-02-26 w63 support S1:49.6021:49.0036:50.1839:2:87:In play S2:46.7305:46.1477:47.3804:3:96:Recently tested | close-below 51.3072
+2026-02-26 w126 support S1:49.6050:49.0036:50.1839:3:79:In play S2:47.6256:46.7839:48.3882:5:94:Recently tested S3:45.3950:44.9043:46.1477:2:72:Recently tested S4:41.7725:41.7725:41.7725:1:38:Holding | close-below 51.3072
+2026-02-26 w252 support S1:49.6050:49.0036:50.1839:3:60:In play S2:47.6256:46.7839:48.3882:5:76:Recently tested S3:45.3950:44.9043:46.1477:2:53:Recently tested S4:41.2160:40.5875:41.8369:4:55:Holding S5:17.3051:17.3051:17.3051:1:41:Holding | close-below 51.3072
+2026-02-26 changes new: Support at $47.63 (5 touches) moved into the top 5. / new: Support at $45.39 (2 touches) moved into the top 5. / new: Support at $17.31 (1 touch) moved into the top 5. / broken: Support at $51.31 broke — price closed below the zone. / dropped: Support at $48.38 dropped out of the top list. / dropped: Support at $46.81 dropped out of the top list.
+2026-02-27 w21 support S1:46.7305:46.1477:47.3804:3:100:Recently tested | close-below -
+2026-02-27 w63 support S1:49.6021:49.0036:50.1839:2:87:In play S2:46.7305:46.1477:47.3804:3:97:Recently tested | close-below 51.3072
+2026-02-27 w126 support S1:49.6050:49.0036:50.1839:3:72:In play S2:47.4281:46.1477:48.3882:6:91:Recently tested S3:44.9043:44.9043:44.9043:1:51:Holding S4:41.7725:41.7725:41.7725:1:33:Holding | close-below 51.3072
+2026-02-27 w252 support S1:49.6050:49.0036:50.1839:3:56:In play S2:47.4281:46.1477:48.3882:6:76:Recently tested S3:44.9043:44.9043:44.9043:1:38:Holding S4:41.2160:40.5875:41.8369:4:49:Holding S5:17.3051:17.3051:17.3051:1:40:Holding | close-below 51.3072
+2026-02-27 changes -
+2026-03-02 w21 support S1:46.7305:46.1477:47.3804:3:100:Recently tested | close-below -
+2026-03-02 w63 support S1:49.6021:49.0036:50.1839:2:87:In play S2:46.7305:46.1477:47.3804:3:97:Recently tested | close-below 51.3072
+2026-03-02 w126 support S1:49.6050:49.0036:50.1839:3:72:In play S2:47.4281:46.1477:48.3882:6:91:Recently tested S3:44.9043:44.9043:44.9043:1:51:Holding S4:41.7725:41.7725:41.7725:1:33:Holding | close-below 51.3072
+2026-03-02 w252 support S1:49.6050:49.0036:50.1839:3:56:In play S2:47.4281:46.1477:48.3882:6:76:Recently tested S3:44.9043:44.9043:44.9043:1:38:Holding S4:41.2160:40.5875:41.8369:4:49:Holding S5:17.3051:17.3051:17.3051:1:40:Holding | close-below 51.3072
+2026-03-02 changes -
+2026-03-03 w21 support S1:46.7305:46.1477:47.3804:3:100:In play | close-below -
+2026-03-03 w63 support S1:46.7305:46.1477:47.3804:3:97:In play | close-below 49.6021 51.3072
+2026-03-03 w126 support S1:47.6256:46.7839:48.3882:5:94:In play S2:45.3950:44.9043:46.1477:2:74:Recently tested S3:41.7725:41.7725:41.7725:1:38:Holding | close-below 49.6050 51.3072
+2026-03-03 w252 support S1:47.6256:46.7839:48.3882:5:76:In play S2:45.3950:44.9043:46.1477:2:53:Recently tested S3:41.2160:40.5875:41.8369:4:54:Holding S4:35.5464:35.3123:35.7326:2:33:Holding S5:17.3051:17.3051:17.3051:1:41:Holding | close-below 49.6050 51.3072
+2026-03-03 changes new: Support at $35.55 (2 touches) moved into the top 5. / broken: Support at $49.61 broke — price closed below the zone.
+2026-03-04 w21 support S1:46.7305:46.1477:47.3804:3:99:Recently tested | close-below -
+2026-03-04 w63 support S1:49.6021:49.0036:50.1839:2:87:In play S2:46.7305:46.1477:47.3804:3:96:Recently tested | close-below 51.3072
+2026-03-04 w126 support S1:49.6050:49.0036:50.1839:3:81:In play S2:47.6256:46.7839:48.3882:5:96:Recently tested S3:45.3950:44.9043:46.1477:2:75:Recently tested | close-below 51.3072
+2026-03-04 w252 support S1:49.6050:49.0036:50.1839:3:60:In play S2:47.6256:46.7839:48.3882:5:76:Recently tested S3:45.3950:44.9043:46.1477:2:53:Recently tested S4:41.2160:40.5875:41.8369:4:54:Holding S5:17.3051:17.3051:17.3051:1:41:Holding | close-below 51.3072
+2026-03-04 changes reclaimed: Price climbed back above $49.61; that zone is acting as support again. / dropped: Support at $35.55 dropped out of the top list.
+2026-03-05 w21 support S1:46.7305:46.1477:47.3804:3:100:Recently tested | close-below -
+2026-03-05 w63 support S1:49.6021:49.0036:50.1839:2:87:In play S2:46.7305:46.1477:47.3804:3:97:Recently tested | close-below 51.3072
+2026-03-05 w126 support S1:49.6050:49.0036:50.1839:3:81:In play S2:47.6256:46.7839:48.3882:5:96:Recently tested S3:45.3950:44.9043:46.1477:2:75:Recently tested | close-below 51.3072
+2026-03-05 w252 support S1:49.6050:49.0036:50.1839:3:60:In play S2:47.6256:46.7839:48.3882:5:76:Recently tested S3:45.3950:44.9043:46.1477:2:53:Recently tested S4:41.2160:40.5875:41.8369:4:54:Holding S5:17.3051:17.3051:17.3051:1:41:Holding | close-below 51.3072
+2026-03-05 changes -
+2026-03-06 w21 support S1:46.3372:45.4518:47.3804:4:100:In play | close-below -
+2026-03-06 w63 support S1:46.3372:45.4518:47.3804:4:98:In play | close-below 49.6021 51.3072
+2026-03-06 w126 support S1:47.6256:46.7839:48.3882:5:97:In play S2:45.4152:44.9043:46.1477:3:83:Recently tested | close-below 49.6050 51.3072
+2026-03-06 w252 support S1:47.6256:46.7839:48.3882:5:76:In play S2:45.4152:44.9043:46.1477:3:61:Recently tested S3:41.2160:40.5875:41.8369:4:54:Holding S4:35.5464:35.3123:35.7326:2:33:Holding S5:17.3051:17.3051:17.3051:1:41:Holding | close-below 49.6050 51.3072
+2026-03-06 changes new: Support at $35.55 (2 touches) moved into the top 5. / broken: Support at $49.61 broke — price closed below the zone. / trend: Trend changed from Mixed to Downtrend.
+2026-03-09 w21 support S1:47.3804:47.3804:47.3804:1:71:Recently tested S2:45.7423:45.4518:46.1477:2:100:Recently tested | close-below -
+2026-03-09 w63 support S1:49.6021:49.0036:50.1839:2:79:In play S2:46.3372:45.4518:47.3804:4:98:Recently tested | close-below 51.3072
+2026-03-09 w126 support S1:49.6050:49.0036:50.1839:3:82:In play S2:47.6256:46.7839:48.3882:5:97:Recently tested S3:45.4152:44.9043:46.1477:3:84:Recently tested | close-below 51.3072
+2026-03-09 w252 support S1:49.6050:49.0036:50.1839:3:60:In play S2:47.6256:46.7839:48.3882:5:76:Recently tested S3:45.4152:44.9043:46.1477:3:61:Recently tested S4:41.2160:40.5875:41.8369:4:54:Holding S5:17.3051:17.3051:17.3051:1:41:Holding | close-below 51.3072
+2026-03-09 changes reclaimed: Price climbed back above $49.61; that zone is acting as support again. / dropped: Support at $35.55 dropped out of the top list. / trend: Trend changed from Downtrend to Mixed.
+2026-03-10 w21 support S1:47.3804:47.3804:47.3804:1:69:Recently tested S2:45.7423:45.4518:46.1477:2:99:Recently tested | close-below -
+2026-03-10 w63 support S1:49.6021:49.0036:50.1839:2:79:In play S2:46.3372:45.4518:47.3804:4:97:Recently tested | close-below 51.3072
+2026-03-10 w126 support S1:49.6050:49.0036:50.1839:3:82:In play S2:47.6256:46.7839:48.3882:5:97:Recently tested S3:45.4152:44.9043:46.1477:3:84:Recently tested | close-below 51.3072
+2026-03-10 w252 support S1:49.6050:49.0036:50.1839:3:60:In play S2:47.6256:46.7839:48.3882:5:76:Recently tested S3:45.4152:44.9043:46.1477:3:61:Recently tested S4:41.2160:40.5875:41.8369:4:54:Holding S5:17.3051:17.3051:17.3051:1:40:Holding | close-below 51.3072
+2026-03-10 changes -
+2026-03-11 w21 support S1:47.3804:47.3804:47.3804:1:68:Recently tested S2:45.7423:45.4518:46.1477:2:97:Recently tested | close-below -
+2026-03-11 w63 support S1:49.6021:49.0036:50.1839:2:79:In play S2:46.3372:45.4518:47.3804:4:97:Recently tested | close-below 51.3072
+2026-03-11 w126 support S1:49.6050:49.0036:50.1839:3:82:In play S2:47.6256:46.7839:48.3882:5:97:Recently tested S3:45.4152:44.9043:46.1477:3:84:Recently tested | close-below 51.3072
+2026-03-11 w252 support S1:49.6050:49.0036:50.1839:3:60:In play S2:47.6256:46.7839:48.3882:5:76:Recently tested S3:45.4152:44.9043:46.1477:3:61:Recently tested S4:41.2160:40.5875:41.8369:4:54:Holding S5:17.3051:17.3051:17.3051:1:40:Holding | close-below 51.3072
+2026-03-11 changes -
+2026-03-12 w21 support S1:45.5581:45.2331:46.1477:3:100:In play | close-below 47.3804
+2026-03-12 w63 support S1:45.8833:45.2331:46.7839:4:98:In play | close-below 47.3804 49.6021 51.3072
+2026-03-12 w126 support S1:47.6256:46.7839:48.3882:5:97:In play S2:45.3684:44.9043:46.1477:4:92:In play | close-below 49.6050 51.3072
+2026-03-12 w252 support S1:47.6256:46.7839:48.3882:5:76:In play S2:45.3684:44.9043:46.1477:4:69:In play S3:41.2160:40.5875:41.8369:4:53:Holding S4:35.5464:35.3123:35.7326:2:33:Holding S5:17.3051:17.3051:17.3051:1:40:Holding | close-below 49.6050 51.3072
+2026-03-12 changes new: Support at $35.55 (2 touches) moved into the top 5. / broken: Support at $49.61 broke — price closed below the zone. / trend: Trend changed from Mixed to Downtrend. / macd: MACD turned bearish.
+2026-03-13 w21 support S1:45.5581:45.2331:46.1477:3:100:In play | close-below 47.3804
+2026-03-13 w63 support S1:45.8833:45.2331:46.7839:4:98:In play | close-below 47.3804 49.6021 51.3072
+2026-03-13 w126 support S1:45.3684:44.9043:46.1477:4:92:In play | close-below 47.6256 49.6050 51.3072
+2026-03-13 w252 support S1:45.3684:44.9043:46.1477:4:69:In play S2:41.2160:40.5875:41.8369:4:53:Holding S3:35.5464:35.3123:35.7326:2:32:Holding S4:27.7126:27.2382:28.1194:2:31:Holding S5:17.3051:17.3051:17.3051:1:40:Holding | close-below 47.6256 49.6050 51.3072
+2026-03-13 changes new: Support at $27.71 (2 touches) moved into the top 5. / broken: Support at $47.63 broke — price closed below the zone.
+2026-03-16 w21 support S1:47.3804:47.3804:47.3804:1:64:In play S2:45.5581:45.2331:46.1477:3:99:Recently tested | close-below -
+2026-03-16 w63 support S1:47.3804:47.3804:47.3804:1:59:In play S2:45.8833:45.2331:46.7839:4:98:In play | close-below 49.6021 51.3072
+2026-03-16 w126 support S1:47.6256:46.7839:48.3882:5:97:In play S2:45.3684:44.9043:46.1477:4:92:Recently tested | close-below 49.6050 51.3072
+2026-03-16 w252 support S1:47.6256:46.7839:48.3882:5:76:In play S2:45.3684:44.9043:46.1477:4:69:Recently tested S3:41.2160:40.5875:41.8369:4:53:Holding S4:35.5464:35.3123:35.7326:2:32:Holding S5:17.3051:17.3051:17.3051:1:40:Holding | close-below 49.6050 51.3072
+2026-03-16 changes reclaimed: Price climbed back above $47.63; that zone is acting as support again. / dropped: Support at $27.71 dropped out of the top list.
+2026-03-17 w21 support S1:47.3804:47.3804:47.3804:1:64:In play S2:45.5581:45.2331:46.1477:3:97:Recently tested | close-below -
+2026-03-17 w63 support S1:47.3804:47.3804:47.3804:1:59:In play S2:45.8833:45.2331:46.7839:4:98:Recently tested | close-below 49.6021 51.3072
+2026-03-17 w126 support S1:47.6256:46.7839:48.3882:5:97:In play S2:45.3684:44.9043:46.1477:4:92:Recently tested | close-below 49.6050 51.3072
+2026-03-17 w252 support S1:47.6256:46.7839:48.3882:5:76:In play S2:45.3684:44.9043:46.1477:4:69:Recently tested S3:41.2160:40.5875:41.8369:4:53:Holding S4:35.5464:35.3123:35.7326:2:32:Holding S5:17.3051:17.3051:17.3051:1:40:Holding | close-below 49.6050 51.3072
+2026-03-17 changes -
+2026-03-18 w21 support S1:45.3617:45.2331:45.4518:3:100:In play | close-below 47.3804
+2026-03-18 w63 support S1:45.5200:45.2331:46.1477:4:97:In play | close-below 47.0027 49.6021 51.3072
+2026-03-18 w126 support S1:45.3747:44.9043:46.1477:5:100:In play | close-below 47.6256 49.6050 51.3072
+2026-03-18 w252 support S1:45.3747:44.9043:46.1477:5:76:In play S2:41.2160:40.5875:41.8369:4:53:Holding S3:35.5464:35.3123:35.7326:2:32:Holding S4:32.5714:32.0688:33.1467:2:30:Holding S5:17.3051:17.3051:17.3051:1:40:Holding | close-below 47.6256 49.6050 51.3072
+2026-03-18 changes new: Support at $32.57 (2 touches) moved into the top 5. / broken: Support at $47.63 broke — price closed below the zone. / trend: Trend changed from Downtrend to Mixed.
+2026-03-19 w21 support S1:45.3617:45.2331:45.4518:3:100:In play | close-below 47.3804
+2026-03-19 w63 support S1:45.5200:45.2331:46.1477:4:97:In play | close-below 47.0027 49.6021 51.3072
+2026-03-19 w126 support S1:45.3747:44.9043:46.1477:5:100:In play | close-below 47.6908 49.6050 51.3072
+2026-03-19 w252 support S1:45.3747:44.9043:46.1477:5:76:In play S2:41.2160:40.5875:41.8369:4:53:Holding S3:35.5464:35.3123:35.7326:2:32:Holding S4:32.5714:32.0688:33.1467:2:30:Holding S5:17.3051:17.3051:17.3051:1:40:Holding | close-below 47.6256 49.6050 51.3072
+2026-03-19 changes -
+2026-03-20 w21 support - | close-below 45.3617 47.3804
+2026-03-20 w63 support - | close-below 45.5200 47.0027 50.6933
+2026-03-20 w126 support - | close-below 45.3747 47.6908 49.6050 51.3072
+2026-03-20 w252 support S1:41.2160:40.5875:41.8369:4:69:Recently tested S2:35.5464:35.3123:35.7326:2:32:Holding S3:32.5714:32.0688:33.1467:2:30:Holding S4:19.8959:19.8959:19.8959:1:26:Holding S5:17.3051:17.3051:17.3051:1:39:Holding | close-below 45.3747 47.6256 49.6050 51.3072
+2026-03-20 changes new: Support at $19.90 (1 touch) moved into the top 5. / broken: Support at $45.37 broke — price closed below the zone.
+2026-03-23 w21 support - | close-below 45.3617 47.3804
+2026-03-23 w63 support - | close-below 45.5200 47.0027 50.6933
+2026-03-23 w126 support S1:45.3747:44.9043:46.1477:5:100:In play | close-below 47.6908 49.6050 51.3072
+2026-03-23 w252 support S1:45.3747:44.9043:46.1477:5:76:In play S2:41.2160:40.5875:41.8369:4:69:Recently tested S3:35.5464:35.3123:35.7326:2:32:Holding S4:32.5714:32.0688:33.1467:2:30:Holding S5:17.3051:17.3051:17.3051:1:39:Holding | close-below 47.6256 49.6050 51.3072
+2026-03-23 changes reclaimed: Price climbed back above $45.37; that zone is acting as support again. / dropped: Support at $19.90 dropped out of the top list.
+2026-03-24 w21 support - | close-below 45.3617
+2026-03-24 w63 support - | close-below 45.5200 47.0027 50.6933
+2026-03-24 w126 support - | close-below 45.3747 47.6908 49.6050 51.3072
+2026-03-24 w252 support S1:41.2160:40.5875:41.8369:4:69:Recently tested S2:35.5464:35.3123:35.7326:2:32:Holding S3:32.5714:32.0688:33.1467:2:30:Holding S4:24.8798:24.8798:24.8798:1:26:Holding S5:17.3051:17.3051:17.3051:1:39:Holding | close-below 45.3747 47.6256 49.6050 51.3072
+2026-03-24 changes new: Support at $24.88 (1 touch) moved into the top 5. / broken: Support at $45.37 broke — price closed below the zone.
+2026-03-25 w21 support S1:42.0519:42.0519:42.0519:1:66:Recently tested | close-below 45.3617
+2026-03-25 w63 support S1:42.0519:42.0519:42.0519:1:65:Recently tested | close-below 45.5200 47.0027 50.6933
+2026-03-25 w126 support S1:42.0519:42.0519:42.0519:1:62:Recently tested | close-below 45.3747 47.6908 49.6050 51.3072
+2026-03-25 w252 support S1:41.3508:40.5875:42.0519:5:77:Recently tested S2:35.5464:35.3123:35.7326:2:31:Holding S3:32.5714:32.0688:33.1467:2:30:Holding S4:19.8959:19.8959:19.8959:1:25:Holding S5:17.3051:17.3051:17.3051:1:39:Holding | close-below 45.3747 47.6256 49.6050 51.3072
+2026-03-25 changes new: Support at $19.90 (1 touch) moved into the top 5. / dropped: Support at $24.88 dropped out of the top list. / trend: Trend changed from Mixed to Downtrend.
+2026-03-26 w21 support - | close-below 42.0519 45.3617
+2026-03-26 w63 support - | close-below 42.0519 45.5200 47.0027 50.6933
+2026-03-26 w126 support - | close-below 42.0519 45.3747 47.6908 49.6050 51.3072
+2026-03-26 w252 support S1:41.3508:40.5875:42.0519:5:77:In play S2:35.5464:35.3123:35.7326:2:31:Holding S3:32.5714:32.0688:33.1467:2:29:Holding S4:19.8959:19.8959:19.8959:1:25:Holding S5:17.3051:17.3051:17.3051:1:39:Holding | close-below 45.3747 47.6256 49.6050 51.3072
+2026-03-26 changes -
+2026-03-27 w21 support - | close-below 42.0519 45.3617
+2026-03-27 w63 support - | close-below 42.0519 45.5200 47.0027 50.6933
+2026-03-27 w126 support - | close-below 42.0519 45.3747 47.5156 49.6050 51.3072
+2026-03-27 w252 support S1:35.5464:35.3123:35.7326:2:31:Holding S2:32.5714:32.0688:33.1467:2:29:Holding S3:24.8798:24.8798:24.8798:1:25:Holding S4:19.8959:19.8959:19.8959:1:25:Holding S5:17.3051:17.3051:17.3051:1:39:Holding | close-below 41.3508 45.3747 47.6256 49.6050 51.3072
+2026-03-27 changes new: Support at $24.88 (1 touch) moved into the top 5. / broken: Support at $41.35 broke — price closed below the zone. / rsi: RSI moved from neutral to oversold (29.9).
+2026-03-30 w21 support - | close-below 42.0519 45.3617
+2026-03-30 w63 support - | close-below 42.0519 45.5200 47.0027 50.6933
+2026-03-30 w126 support - | close-below 42.0519 45.3747 47.5156 49.6050 51.3072
+2026-03-30 w252 support S1:35.5464:35.3123:35.7326:2:31:Holding S2:32.5714:32.0688:33.1467:2:29:Holding S3:24.8798:24.8798:24.8798:1:25:Holding S4:19.8959:19.8959:19.8959:1:25:Holding S5:17.3051:17.3051:17.3051:1:39:Holding | close-below 41.3508 45.3747 47.6256 49.6050 51.3072
+2026-03-30 changes -
+2026-03-31 w21 support S1:42.0519:42.0519:42.0519:1:70:In play | close-below 45.3617
+2026-03-31 w63 support S1:42.0519:42.0519:42.0519:1:64:In play | close-below 45.7910 47.3804 50.6933
+2026-03-31 w126 support S1:42.0519:42.0519:42.0519:1:62:In play | close-below 45.3747 47.5156 49.6050 51.3072
+2026-03-31 w252 support S1:41.3508:40.5875:42.0519:5:77:In play S2:35.5464:35.3123:35.7326:2:31:Holding S3:32.5714:32.0688:33.1467:2:29:Holding S4:19.8959:19.8959:19.8959:1:25:Holding S5:17.3051:17.3051:17.3051:1:39:Holding | close-below 45.3747 47.6256 49.6050 51.3072
+2026-03-31 changes reclaimed: Price climbed back above $41.35; that zone is acting as support again. / dropped: Support at $24.88 dropped out of the top list. / rsi: RSI moved from oversold to neutral (40.6). / cross: Death cross on 2026-03-31.
+2026-04-01 w21 support S1:42.0519:42.0519:42.0519:1:78:Recently tested | close-below 45.3128
+2026-04-01 w63 support S1:42.0519:42.0519:42.0519:1:64:Recently tested | close-below 45.7910 47.3804 50.6933
+2026-04-01 w126 support S1:42.0519:42.0519:42.0519:1:62:Recently tested | close-below 45.3747 47.5156 49.6050 51.3072
+2026-04-01 w252 support S1:41.3508:40.5875:42.0519:5:77:Recently tested S2:35.5464:35.3123:35.7326:2:31:Holding S3:32.5714:32.0688:33.1467:2:29:Holding S4:19.8959:19.8959:19.8959:1:25:Holding S5:17.3051:17.3051:17.3051:1:38:Holding | close-below 45.3747 47.6256 49.6050 51.3072
+2026-04-01 changes -
+2026-04-02 w21 support S1:42.0519:42.0519:42.0519:1:73:Recently tested S2:37.1624:37.1624:37.1624:1:70:Recently tested | close-below 45.3128
+2026-04-02 w63 support S1:42.0519:42.0519:42.0519:1:62:Recently tested S2:37.1624:37.1624:37.1624:1:62:Recently tested | close-below 45.7910 47.3804 50.6933
+2026-04-02 w126 support S1:42.0519:42.0519:42.0519:1:60:Recently tested S2:37.1624:37.1624:37.1624:1:61:Recently tested | close-below 45.3747 47.5156 49.6050 51.3072
+2026-04-02 w252 support S1:41.3508:40.5875:42.0519:5:77:Recently tested S2:37.1624:37.1624:37.1624:1:44:Recently tested S3:35.5464:35.3123:35.7326:2:31:Holding S4:32.5714:32.0688:33.1467:2:29:Holding S5:17.3051:17.3051:17.3051:1:38:Holding | close-below 45.3747 47.6256 49.6050 51.3072
+2026-04-02 changes new: Support at $37.16 (1 touch) moved into the top 5. / dropped: Support at $19.90 dropped out of the top list.
+2026-04-06 w21 support S1:42.0519:42.0519:42.0519:1:72:Recently tested S2:37.1624:37.1624:37.1624:1:69:Recently tested | close-below 45.3128
+2026-04-06 w63 support S1:42.0519:42.0519:42.0519:1:63:Recently tested S2:37.1624:37.1624:37.1624:1:63:Recently tested | close-below 45.5200 47.0027 50.1839
+2026-04-06 w126 support S1:42.0519:42.0519:42.0519:1:59:Recently tested S2:37.1624:37.1624:37.1624:1:61:Recently tested | close-below 45.3747 47.5156 49.6050 51.3072
+2026-04-06 w252 support S1:41.3508:40.5875:42.0519:5:77:Recently tested S2:37.1624:37.1624:37.1624:1:44:Recently tested S3:35.5464:35.3123:35.7326:2:31:Holding S4:32.5714:32.0688:33.1467:2:29:Holding S5:17.3051:17.3051:17.3051:1:38:Holding | close-below 45.3747 47.6256 49.6050 51.3072
+2026-04-06 changes macd: MACD turned bullish.
+2026-04-07 w21 support S1:42.0519:42.0519:42.0519:1:73:Recently tested S2:37.1624:37.1624:37.1624:1:67:Recently tested | close-below 45.3128
+2026-04-07 w63 support S1:42.0519:42.0519:42.0519:1:64:Recently tested S2:37.1624:37.1624:37.1624:1:63:Recently tested | close-below 45.5200 47.0027 50.1839
+2026-04-07 w126 support S1:42.0519:42.0519:42.0519:1:60:Recently tested S2:37.1624:37.1624:37.1624:1:60:Recently tested | close-below 45.3747 47.5156 49.6050 51.3072
+2026-04-07 w252 support S1:41.3508:40.5875:42.0519:5:77:Recently tested S2:37.1624:37.1624:37.1624:1:44:Recently tested S3:35.5464:35.3123:35.7326:2:30:Holding S4:32.5714:32.0688:33.1467:2:29:Holding S5:17.3051:17.3051:17.3051:1:38:Holding | close-below 45.3747 47.6256 49.6050 51.3072
+2026-04-07 changes -
+2026-04-08 w21 support S1:45.4021:45.4021:45.4021:1:79:Recently tested S2:42.0519:42.0519:42.0519:1:91:Recently tested S3:37.1624:37.1624:37.1624:1:87:Recently tested | close-below -
+2026-04-08 w63 support S1:47.3804:47.3804:47.3804:1:53:In play S2:45.7910:45.2331:46.7839:5:93:Recently tested S3:42.0519:42.0519:42.0519:1:59:Recently tested S4:37.1624:37.1624:37.1624:1:60:Recently tested | close-below 50.1839
+2026-04-08 w126 support S1:47.5156:46.7839:48.0557:3:78:In play S2:45.3747:44.9043:46.1477:5:93:Recently tested S3:42.0519:42.0519:42.0519:1:58:Recently tested S4:37.1624:37.1624:37.1624:1:60:Recently tested | close-below 49.6050 51.3072
+2026-04-08 w252 support S1:47.6256:46.7839:48.3882:5:76:In play S2:45.3747:44.9043:46.1477:5:76:Recently tested S3:41.3508:40.5875:42.0519:5:77:Recently tested S4:37.1624:37.1624:37.1624:1:46:Recently tested S5:17.3051:17.3051:17.3051:1:38:Holding | close-below 49.6050 51.3072
+2026-04-08 changes reclaimed: Price climbed back above $47.63; that zone is acting as support again. / reclaimed: Price climbed back above $45.37; that zone is acting as support again. / dropped: Support at $35.55 dropped out of the top list. / dropped: Support at $32.57 dropped out of the top list.
+2026-04-09 w21 support S1:45.4021:45.4021:45.4021:1:77:Recently tested S2:42.0519:42.0519:42.0519:1:89:Recently tested S3:37.1624:37.1624:37.1624:1:85:Recently tested | close-below -
+2026-04-09 w63 support S1:47.3804:47.3804:47.3804:1:53:Recently tested S2:45.7910:45.2331:46.7839:5:93:Recently tested S3:42.0519:42.0519:42.0519:1:59:Recently tested S4:37.1624:37.1624:37.1624:1:60:Recently tested | close-below 50.1839
+2026-04-09 w126 support S1:49.6050:49.0036:50.1839:3:76:In play S2:47.5156:46.7839:48.0557:3:78:Recently tested S3:45.3747:44.9043:46.1477:5:92:Recently tested S4:42.0519:42.0519:42.0519:1:57:Recently tested S5:37.1624:37.1624:37.1624:1:60:Recently tested | close-below 51.3072
+2026-04-09 w252 support S1:49.6050:49.0036:50.1839:3:68:In play S2:47.6256:46.7839:48.3882:5:84:In play S3:45.3747:44.9043:46.1477:5:84:Recently tested S4:41.3508:40.5875:42.0519:5:85:Recently tested S5:37.1624:37.1624:37.1624:1:52:Recently tested | close-below 51.3072
+2026-04-09 changes reclaimed: Price climbed back above $49.61; that zone is acting as support again. / dropped: Support at $17.31 dropped out of the top list. / trend: Trend changed from Downtrend to Mixed.
+2026-04-10 w21 support S1:45.4021:45.4021:45.4021:1:76:Holding S2:42.0519:42.0519:42.0519:1:88:Recently tested S3:37.1624:37.1624:37.1624:1:84:Recently tested | close-below -
+2026-04-10 w63 support S1:47.0027:46.7839:47.3804:2:70:Recently tested S2:45.5200:45.2331:46.1477:4:88:Holding S3:42.0519:42.0519:42.0519:1:60:Recently tested S4:37.1624:37.1624:37.1624:1:61:Recently tested | close-below 50.1839
+2026-04-10 w126 support S1:49.6050:49.0036:50.1839:3:76:In play S2:47.5156:46.7839:48.0557:3:78:Recently tested S3:45.3747:44.9043:46.1477:5:92:Recently tested S4:42.0519:42.0519:42.0519:1:57:Recently tested S5:37.1624:37.1624:37.1624:1:60:Recently tested | close-below 51.3072
+2026-04-10 w252 support S1:49.6050:49.0036:50.1839:3:68:In play S2:47.6256:46.7839:48.3882:5:84:In play S3:45.3747:44.9043:46.1477:5:84:Recently tested S4:41.3508:40.5875:42.0519:5:85:Recently tested S5:37.1624:37.1624:37.1624:1:52:Recently tested | close-below 51.3072
+2026-04-10 changes -
+2026-04-13 w21 support S1:45.4021:45.4021:45.4021:1:74:Holding S2:42.0519:42.0519:42.0519:1:86:Recently tested S3:37.1624:37.1624:37.1624:1:82:Recently tested | close-below -
+2026-04-13 w63 support S1:50.1839:50.1839:50.1839:1:62:In play S2:47.0027:46.7839:47.3804:2:69:Recently tested S3:45.5200:45.2331:46.1477:4:87:Holding S4:42.0519:42.0519:42.0519:1:60:Recently tested S5:37.1624:37.1624:37.1624:1:61:Recently tested | close-below -
+2026-04-13 w126 support S1:49.6050:49.0036:50.1839:3:76:In play S2:47.5156:46.7839:48.0557:3:77:Recently tested S3:45.3747:44.9043:46.1477:5:91:Recently tested S4:42.0519:42.0519:42.0519:1:57:Recently tested S5:37.1624:37.1624:37.1624:1:60:Recently tested | close-below 51.3072
+2026-04-13 w252 support S1:49.6050:49.0036:50.1839:3:68:In play S2:47.6256:46.7839:48.3882:5:84:Recently tested S3:45.3747:44.9043:46.1477:5:83:Recently tested S4:41.3508:40.5875:42.0519:5:85:Recently tested S5:37.1624:37.1624:37.1624:1:52:Recently tested | close-below 51.3072
+2026-04-13 changes -
+2026-04-14 w21 support S1:42.0519:42.0519:42.0519:1:85:Recently tested S2:37.1624:37.1624:37.1624:1:81:Recently tested | close-below -
+2026-04-14 w63 support S1:50.1839:50.1839:50.1839:1:61:Recently tested S2:47.0027:46.7839:47.3804:2:68:Recently tested S3:45.5200:45.2331:46.1477:4:86:Holding S4:42.0519:42.0519:42.0519:1:59:Recently tested S5:37.1624:37.1624:37.1624:1:60:Recently tested | close-below -
+2026-04-14 w126 support S1:49.6050:49.0036:50.1839:3:76:Recently tested S2:47.0027:46.7839:47.3804:2:64:Recently tested S3:45.3747:44.9043:46.1477:5:92:Recently tested S4:42.0519:42.0519:42.0519:1:57:Recently tested S5:37.1624:37.1624:37.1624:1:60:Recently tested | close-below -
+2026-04-14 w252 support S1:49.6050:49.0036:50.1839:3:68:Recently tested S2:47.6256:46.7839:48.3882:5:84:Recently tested S3:45.3747:44.9043:46.1477:5:83:Recently tested S4:41.3508:40.5875:42.0519:5:85:Recently tested S5:37.1624:37.1624:37.1624:1:54:Recently tested | close-below -
+2026-04-14 changes -
+2026-04-15 w21 support S1:42.0519:42.0519:42.0519:1:83:Recently tested S2:37.1624:37.1624:37.1624:1:80:Holding | close-below -
+2026-04-15 w63 support S1:50.1839:50.1839:50.1839:1:60:Recently tested S2:47.0027:46.7839:47.3804:2:68:Recently tested S3:45.5200:45.2331:46.1477:4:86:Holding S4:42.0519:42.0519:42.0519:1:58:Recently tested S5:37.1624:37.1624:37.1624:1:60:Holding | close-below -
+2026-04-15 w126 support S1:49.6050:49.0036:50.1839:3:76:Recently tested S2:47.0027:46.7839:47.3804:2:64:Recently tested S3:45.3747:44.9043:46.1477:5:91:Recently tested S4:42.0519:42.0519:42.0519:1:57:Recently tested S5:37.1624:37.1624:37.1624:1:60:Holding | close-below -
+2026-04-15 w252 support S1:49.6050:49.0036:50.1839:3:67:Recently tested S2:47.6256:46.7839:48.3882:5:83:Recently tested S3:45.3747:44.9043:46.1477:5:83:Recently tested S4:41.3508:40.5875:42.0519:5:85:Recently tested S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-04-15 changes rsi: RSI moved from neutral to overbought (70.6).
+2026-04-16 w21 support S1:42.0519:42.0519:42.0519:1:82:Recently tested S2:37.1624:37.1624:37.1624:1:78:Holding | close-below -
+2026-04-16 w63 support S1:50.1839:50.1839:50.1839:1:60:Recently tested S2:47.0027:46.7839:47.3804:2:67:Recently tested S3:45.5200:45.2331:46.1477:4:85:Holding S4:42.0519:42.0519:42.0519:1:58:Recently tested S5:37.1624:37.1624:37.1624:1:60:Holding | close-below -
+2026-04-16 w126 support S1:49.6050:49.0036:50.1839:3:76:Recently tested S2:47.0027:46.7839:47.3804:2:64:Recently tested S3:45.3747:44.9043:46.1477:5:91:Recently tested S4:42.0519:42.0519:42.0519:1:57:Recently tested S5:37.1624:37.1624:37.1624:1:60:Holding | close-below -
+2026-04-16 w252 support S1:49.6050:49.0036:50.1839:3:67:Recently tested S2:47.6256:46.7839:48.3882:5:83:Recently tested S3:45.3747:44.9043:46.1477:5:83:Recently tested S4:41.3508:40.5875:42.0519:5:85:Recently tested S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-04-16 changes -
+2026-04-17 w21 support S1:42.0519:42.0519:42.0519:1:80:Recently tested S2:37.1624:37.1624:37.1624:1:77:Holding | close-below -
+2026-04-17 w63 support S1:50.1839:50.1839:50.1839:1:59:Recently tested S2:47.0027:46.7839:47.3804:2:67:Recently tested S3:45.5200:45.2331:46.1477:4:85:Holding S4:42.0519:42.0519:42.0519:1:57:Recently tested S5:37.1624:37.1624:37.1624:1:59:Holding | close-below -
+2026-04-17 w126 support S1:49.6050:49.0036:50.1839:3:75:Recently tested S2:47.0027:46.7839:47.3804:2:63:Recently tested S3:45.3747:44.9043:46.1477:5:91:Recently tested S4:42.0519:42.0519:42.0519:1:56:Recently tested S5:37.1624:37.1624:37.1624:1:60:Holding | close-below -
+2026-04-17 w252 support S1:49.6050:49.0036:50.1839:3:67:Recently tested S2:47.6256:46.7839:48.3882:5:83:Recently tested S3:45.3747:44.9043:46.1477:5:83:Recently tested S4:41.3508:40.5875:42.0519:5:84:Recently tested S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-04-17 changes -
+2026-04-20 w21 support S1:42.0519:42.0519:42.0519:1:79:Recently tested S2:37.1624:37.1624:37.1624:1:75:Holding | close-below -
+2026-04-20 w63 support S1:50.1839:50.1839:50.1839:1:59:Recently tested S2:47.0027:46.7839:47.3804:2:66:Recently tested S3:45.5200:45.2331:46.1477:4:84:Holding S4:42.0519:42.0519:42.0519:1:57:Recently tested S5:37.1624:37.1624:37.1624:1:59:Holding | close-below -
+2026-04-20 w126 support S1:49.6050:49.0036:50.1839:3:75:Recently tested S2:47.0027:46.7839:47.3804:2:63:Recently tested S3:45.3747:44.9043:46.1477:5:91:Recently tested S4:42.0519:42.0519:42.0519:1:56:Recently tested S5:37.1624:37.1624:37.1624:1:59:Holding | close-below -
+2026-04-20 w252 support S1:49.6050:49.0036:50.1839:3:67:Recently tested S2:47.6256:46.7839:48.3882:5:83:Recently tested S3:45.3747:44.9043:46.1477:5:83:Recently tested S4:41.3508:40.5875:42.0519:5:84:Recently tested S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-04-20 changes -
+2026-04-21 w21 support S1:37.1624:37.1624:37.1624:1:78:Holding | close-below -
+2026-04-21 w63 support S1:47.0027:46.7839:47.3804:2:66:Recently tested S2:45.5200:45.2331:46.1477:4:84:Holding S3:42.0519:42.0519:42.0519:1:56:Recently tested S4:37.1624:37.1624:37.1624:1:58:Holding | close-below -
+2026-04-21 w126 support S1:49.6050:49.0036:50.1839:3:75:Recently tested S2:47.0027:46.7839:47.3804:2:63:Recently tested S3:45.3747:44.9043:46.1477:5:90:Holding S4:42.0519:42.0519:42.0519:1:56:Recently tested S5:37.1624:37.1624:37.1624:1:59:Holding | close-below -
+2026-04-21 w252 support S1:49.6050:49.0036:50.1839:3:67:Recently tested S2:47.6256:46.7839:48.3882:5:83:Recently tested S3:45.3747:44.9043:46.1477:5:83:Holding S4:41.3508:40.5875:42.0519:5:84:Recently tested S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-04-21 changes -
+2026-04-22 w21 support S1:37.1624:37.1624:37.1624:1:76:Holding | close-below -
+2026-04-22 w63 support S1:47.0027:46.7839:47.3804:2:65:Recently tested S2:45.5200:45.2331:46.1477:4:83:Holding S3:42.0519:42.0519:42.0519:1:56:Holding S4:37.1624:37.1624:37.1624:1:58:Holding | close-below -
+2026-04-22 w126 support S1:49.6050:49.0036:50.1839:3:75:Recently tested S2:47.0027:46.7839:47.3804:2:63:Recently tested S3:45.3747:44.9043:46.1477:5:90:Holding S4:42.0519:42.0519:42.0519:1:56:Holding S5:37.1624:37.1624:37.1624:1:59:Holding | close-below -
+2026-04-22 w252 support S1:49.6050:49.0036:50.1839:3:67:Recently tested S2:47.6256:46.7839:48.3882:5:83:Recently tested S3:45.3747:44.9043:46.1477:5:83:Holding S4:41.3508:40.5875:42.0519:5:85:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-04-22 changes -
+2026-04-23 w21 support S1:37.1624:37.1624:37.1624:1:75:Holding | close-below -
+2026-04-23 w63 support S1:47.0027:46.7839:47.3804:2:65:Recently tested S2:45.5200:45.2331:46.1477:4:83:Holding S3:42.0519:42.0519:42.0519:1:55:Holding S4:37.1624:37.1624:37.1624:1:57:Holding | close-below -
+2026-04-23 w126 support S1:49.6050:49.0036:50.1839:3:74:Recently tested S2:47.0027:46.7839:47.3804:2:62:Recently tested S3:45.3747:44.9043:46.1477:5:90:Holding S4:42.0519:42.0519:42.0519:1:55:Holding S5:37.1624:37.1624:37.1624:1:59:Holding | close-below -
+2026-04-23 w252 support S1:49.6050:49.0036:50.1839:3:67:Recently tested S2:47.6256:46.7839:48.3882:5:83:Recently tested S3:45.3747:44.9043:46.1477:5:83:Holding S4:41.3508:40.5875:42.0519:5:84:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-04-23 changes -
+2026-04-24 w21 support S1:37.1624:37.1624:37.1624:1:73:Holding | close-below -
+2026-04-24 w63 support S1:47.3804:47.3804:47.3804:1:47:Holding S2:45.7910:45.2331:46.7839:5:87:Holding S3:42.0519:42.0519:42.0519:1:52:Holding S4:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-04-24 w126 support S1:49.6050:49.0036:50.1839:3:74:Recently tested S2:47.0027:46.7839:47.3804:2:62:Holding S3:45.3747:44.9043:46.1477:5:90:Holding S4:42.0519:42.0519:42.0519:1:55:Holding S5:37.1624:37.1624:37.1624:1:58:Holding | close-below -
+2026-04-24 w252 support S1:49.6050:49.0036:50.1839:3:67:Recently tested S2:47.6256:46.7839:48.3882:5:83:Recently tested S3:45.3747:44.9043:46.1477:5:83:Holding S4:41.3508:40.5875:42.0519:5:84:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-04-24 changes -
+2026-04-27 w21 support S1:37.1624:37.1624:37.1624:1:72:Holding | close-below -
+2026-04-27 w63 support S1:47.0027:46.7839:47.3804:2:64:Holding S2:45.5200:45.2331:46.1477:4:82:Holding S3:42.0519:42.0519:42.0519:1:54:Holding S4:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-04-27 w126 support S1:49.6050:49.0036:50.1839:3:74:Recently tested S2:47.0027:46.7839:47.3804:2:62:Holding S3:45.3747:44.9043:46.1477:5:90:Holding S4:42.0519:42.0519:42.0519:1:55:Holding S5:37.1624:37.1624:37.1624:1:58:Holding | close-below -
+2026-04-27 w252 support S1:49.6050:49.0036:50.1839:3:67:Recently tested S2:47.6256:46.7839:48.3882:5:83:Recently tested S3:45.3747:44.9043:46.1477:5:83:Holding S4:41.3508:40.5875:42.0519:5:84:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-04-27 changes -
+2026-04-28 w21 support S1:37.1624:37.1624:37.1624:1:70:Holding | close-below -
+2026-04-28 w63 support S1:47.0027:46.7839:47.3804:2:63:Holding S2:45.5200:45.2331:46.1477:4:81:Holding S3:42.0519:42.0519:42.0519:1:54:Holding S4:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-04-28 w126 support S1:49.6050:49.0036:50.1839:3:74:Holding S2:47.0027:46.7839:47.3804:2:62:Holding S3:45.3747:44.9043:46.1477:5:89:Holding S4:42.0519:42.0519:42.0519:1:55:Holding S5:37.1624:37.1624:37.1624:1:58:Holding | close-below -
+2026-04-28 w252 support S1:49.6050:49.0036:50.1839:3:67:Holding S2:47.6256:46.7839:48.3882:5:83:Holding S3:45.3747:44.9043:46.1477:5:83:Holding S4:41.3508:40.5875:42.0519:5:84:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-04-28 changes rsi: RSI moved from overbought to neutral (68.4).
+2026-04-29 w21 support - | close-below -
+2026-04-29 w63 support S1:47.0027:46.7839:47.3804:2:63:Holding S2:45.5200:45.2331:46.1477:4:81:Holding S3:42.0519:42.0519:42.0519:1:53:Holding S4:37.1624:37.1624:37.1624:1:55:Holding | close-below -
+2026-04-29 w126 support S1:49.6050:49.0036:50.1839:3:74:Holding S2:47.0027:46.7839:47.3804:2:61:Holding S3:45.3747:44.9043:46.1477:5:89:Holding S4:42.0519:42.0519:42.0519:1:54:Holding S5:37.1624:37.1624:37.1624:1:58:Holding | close-below -
+2026-04-29 w252 support S1:49.6050:49.0036:50.1839:3:67:Holding S2:47.6256:46.7839:48.3882:5:83:Holding S3:45.3747:44.9043:46.1477:5:82:Holding S4:41.3508:40.5875:42.0519:5:84:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-04-29 changes rsi: RSI moved from neutral to overbought (70.1).
+2026-04-30 w21 support - | close-below -
+2026-04-30 w63 support S1:47.0027:46.7839:47.3804:2:62:Holding S2:45.5200:45.2331:46.1477:4:80:Holding S3:42.0519:42.0519:42.0519:1:53:Holding S4:37.1624:37.1624:37.1624:1:55:Holding | close-below -
+2026-04-30 w126 support S1:49.6050:49.0036:50.1839:3:73:Holding S2:47.0027:46.7839:47.3804:2:61:Holding S3:45.3747:44.9043:46.1477:5:89:Holding S4:42.0519:42.0519:42.0519:1:54:Holding S5:37.1624:37.1624:37.1624:1:57:Holding | close-below -
+2026-04-30 w252 support S1:49.6050:49.0036:50.1839:3:67:Holding S2:47.6256:46.7839:48.3882:5:82:Holding S3:45.3747:44.9043:46.1477:5:82:Holding S4:41.3508:40.5875:42.0519:5:84:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-04-30 changes -
+2026-05-01 w21 support - | close-below -
+2026-05-01 w63 support S1:47.0027:46.7839:47.3804:2:62:Holding S2:45.5200:45.2331:46.1477:4:80:Holding S3:42.0519:42.0519:42.0519:1:52:Holding S4:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-01 w126 support S1:49.6050:49.0036:50.1839:3:73:Holding S2:47.0027:46.7839:47.3804:2:61:Holding S3:45.3747:44.9043:46.1477:5:89:Holding S4:42.0519:42.0519:42.0519:1:54:Holding S5:37.1624:37.1624:37.1624:1:57:Holding | close-below -
+2026-05-01 w252 support S1:49.6050:49.0036:50.1839:3:70:Holding S2:47.6256:46.7839:48.3882:5:86:Holding S3:45.3747:44.9043:46.1477:5:85:Holding S4:41.3508:40.5875:42.0519:5:87:Holding S5:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-05-01 changes -
+2026-05-04 w21 support - | close-below -
+2026-05-04 w63 support S1:47.0027:46.7839:47.3804:2:61:Holding S2:45.5200:45.2331:46.1477:4:79:Holding S3:42.0519:42.0519:42.0519:1:52:Holding S4:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-04 w126 support S1:49.6050:49.0036:50.1839:3:73:Holding S2:47.0027:46.7839:47.3804:2:61:Holding S3:45.3747:44.9043:46.1477:5:88:Holding S4:42.0519:42.0519:42.0519:1:54:Holding S5:37.1624:37.1624:37.1624:1:57:Holding | close-below -
+2026-05-04 w252 support S1:49.6050:49.0036:50.1839:3:69:Holding S2:47.6256:46.7839:48.3882:5:85:Holding S3:45.3747:44.9043:46.1477:5:85:Holding S4:41.3508:40.5875:42.0519:5:87:Holding S5:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-05-04 changes -
+2026-05-05 w21 support - | close-below -
+2026-05-05 w63 support S1:47.0027:46.7839:47.3804:2:61:Holding S2:45.5200:45.2331:46.1477:4:79:Holding S3:42.0519:42.0519:42.0519:1:51:Holding S4:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-05 w126 support S1:49.6050:49.0036:50.1839:3:73:Holding S2:47.0027:46.7839:47.3804:2:61:Holding S3:45.3747:44.9043:46.1477:5:88:Holding S4:42.0519:42.0519:42.0519:1:53:Holding S5:37.1624:37.1624:37.1624:1:57:Holding | close-below -
+2026-05-05 w252 support S1:49.6050:49.0036:50.1839:3:69:Holding S2:47.6256:46.7839:48.3882:5:85:Holding S3:45.3747:44.9043:46.1477:5:85:Holding S4:41.3508:40.5875:42.0519:5:87:Holding S5:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-05-05 changes cross: Golden cross on 2026-05-05.
+2026-05-06 w21 support - | close-below -
+2026-05-06 w63 support S1:47.3804:47.3804:47.3804:1:43:Holding S2:45.7910:45.2331:46.7839:5:83:Holding S3:42.0519:42.0519:42.0519:1:49:Holding S4:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-05-06 w126 support S1:49.6050:49.0036:50.1839:3:72:Holding S2:47.0027:46.7839:47.3804:2:60:Holding S3:45.3747:44.9043:46.1477:5:88:Holding S4:42.0519:42.0519:42.0519:1:53:Holding S5:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-05-06 w252 support S1:49.6050:49.0036:50.1839:3:69:Holding S2:47.6256:46.7839:48.3882:5:85:Holding S3:45.3747:44.9043:46.1477:5:85:Holding S4:41.3508:40.5875:42.0519:5:87:Holding S5:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-05-06 changes -
+2026-05-07 w21 support - | close-below -
+2026-05-07 w63 support S1:47.3804:47.3804:47.3804:1:45:Holding S2:45.5200:45.2331:46.1477:4:78:Holding S3:42.0519:42.0519:42.0519:1:50:Holding S4:37.1624:37.1624:37.1624:1:52:Holding | close-below -
+2026-05-07 w126 support S1:49.6050:49.0036:50.1839:3:72:Holding S2:47.0027:46.7839:47.3804:2:60:Holding S3:45.3747:44.9043:46.1477:5:88:Holding S4:42.0519:42.0519:42.0519:1:53:Holding S5:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-05-07 w252 support S1:49.6050:49.0036:50.1839:3:69:Holding S2:47.6256:46.7839:48.3882:5:85:Holding S3:45.3747:44.9043:46.1477:5:85:Holding S4:41.3508:40.5875:42.0519:5:87:Holding S5:37.1624:37.1624:37.1624:1:55:Holding | close-below -
+2026-05-07 changes -
+2026-05-08 w21 support - | close-below -
+2026-05-08 w63 support S1:47.3804:47.3804:47.3804:1:45:Holding S2:45.5200:45.2331:46.1477:4:77:Holding S3:42.0519:42.0519:42.0519:1:50:Holding S4:37.1624:37.1624:37.1624:1:52:Holding | close-below -
+2026-05-08 w126 support S1:49.6050:49.0036:50.1839:3:72:Holding S2:47.0027:46.7839:47.3804:2:60:Holding S3:45.3747:44.9043:46.1477:5:87:Holding S4:42.0519:42.0519:42.0519:1:53:Holding S5:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-05-08 w252 support S1:49.8465:49.6091:50.1839:2:60:Holding S2:47.8212:46.7839:49.0036:6:85:Holding S3:45.3747:44.9043:46.1477:5:79:Holding S4:41.3508:40.5875:42.0519:5:81:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-08 changes -
+2026-05-11 w21 support - | close-below -
+2026-05-11 w63 support S1:47.3804:47.3804:47.3804:1:44:Holding S2:45.5200:45.2331:46.1477:4:77:Holding S3:42.0519:42.0519:42.0519:1:49:Holding S4:37.1624:37.1624:37.1624:1:51:Holding | close-below -
+2026-05-11 w126 support S1:49.6050:49.0036:50.1839:3:72:Holding S2:47.0027:46.7839:47.3804:2:60:Holding S3:45.3747:44.9043:46.1477:5:87:Holding S4:42.0519:42.0519:42.0519:1:52:Holding S5:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-05-11 w252 support S1:49.6050:49.0036:50.1839:3:69:Holding S2:47.6256:46.7839:48.3882:5:85:Holding S3:45.3747:44.9043:46.1477:5:85:Holding S4:41.3508:40.5875:42.0519:5:87:Holding S5:37.1624:37.1624:37.1624:1:56:Holding | close-below -
+2026-05-11 changes -
+2026-05-12 w21 support - | close-below -
+2026-05-12 w63 support S1:47.3804:47.3804:47.3804:1:44:Holding S2:45.5200:45.2331:46.1477:4:76:Holding S3:42.0519:42.0519:42.0519:1:49:Holding S4:37.1624:37.1624:37.1624:1:51:Holding | close-below -
+2026-05-12 w126 support S1:51.3072:51.3072:51.3072:1:48:Holding S2:49.6021:49.0036:50.1839:2:58:Holding S3:45.6179:44.9043:46.7839:6:88:Holding S4:42.0519:42.0519:42.0519:1:51:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-12 w252 support S1:49.8465:49.6091:50.1839:2:60:Holding S2:48.0479:47.3554:49.0036:5:78:Holding S3:45.6179:44.9043:46.7839:6:86:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-12 changes -
+2026-05-13 w21 support - | close-below -
+2026-05-13 w63 support S1:47.3804:47.3804:47.3804:1:43:Holding S2:45.5200:45.2331:46.1477:4:76:Holding S3:42.0519:42.0519:42.0519:1:49:Holding S4:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-05-13 w126 support S1:51.3072:51.3072:51.3072:1:48:Holding S2:49.6021:49.0036:50.1839:2:58:Holding S3:45.6179:44.9043:46.7839:6:87:Holding S4:42.0519:42.0519:42.0519:1:51:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-13 w252 support S1:50.2194:49.6091:51.3072:3:64:Holding S2:48.0479:47.3554:49.0036:5:78:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-13 changes -
+2026-05-14 w21 support - | close-below -
+2026-05-14 w63 support S1:47.3804:47.3804:47.3804:1:43:Holding S2:45.5200:45.2331:46.1477:4:75:Holding S3:42.0519:42.0519:42.0519:1:48:Holding S4:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-05-14 w126 support S1:51.3072:51.3072:51.3072:1:48:Holding S2:49.6021:49.0036:50.1839:2:58:Holding S3:45.6179:44.9043:46.7839:6:87:Holding S4:42.0519:42.0519:42.0519:1:50:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-14 w252 support S1:49.8465:49.6091:50.1839:2:59:Holding S2:48.0479:47.3554:49.0036:5:78:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-14 changes -
+2026-05-15 w21 support - | close-below -
+2026-05-15 w63 support S1:47.3804:47.3804:47.3804:1:42:Holding S2:45.5200:45.2331:46.1477:4:75:Holding S3:42.0519:42.0519:42.0519:1:48:Holding S4:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-05-15 w126 support S1:51.3072:51.3072:51.3072:1:47:Holding S2:49.6021:49.0036:50.1839:2:57:Holding S3:45.6179:44.9043:46.7839:6:87:Holding S4:42.0519:42.0519:42.0519:1:50:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-15 w252 support S1:50.2194:49.6091:51.3072:3:64:Holding S2:48.0479:47.3554:49.0036:5:78:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-15 changes rsi: RSI moved from overbought to neutral (70).
+2026-05-18 w21 support - | close-below -
+2026-05-18 w63 support S1:47.3804:47.3804:47.3804:1:44:Holding S2:45.3617:45.2331:45.4518:3:74:Holding S3:42.0519:42.0519:42.0519:1:49:Holding S4:37.1624:37.1624:37.1624:1:51:Holding | close-below -
+2026-05-18 w126 support S1:51.3072:51.3072:51.3072:1:47:Holding S2:49.6021:49.0036:50.1839:2:57:Holding S3:45.6179:44.9043:46.7839:6:87:Holding S4:42.0519:42.0519:42.0519:1:50:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-18 w252 support S1:50.6933:50.1839:51.3072:2:55:Holding S2:48.3630:47.3554:49.6091:6:85:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-18 changes -
+2026-05-19 w21 support - | close-below -
+2026-05-19 w63 support S1:47.3804:47.3804:47.3804:1:44:Holding S2:45.3617:45.2331:45.4518:3:74:Holding S3:42.0519:42.0519:42.0519:1:49:Holding S4:37.1624:37.1624:37.1624:1:51:Holding | close-below -
+2026-05-19 w126 support S1:51.3072:51.3072:51.3072:1:47:Holding S2:49.6021:49.0036:50.1839:2:57:Holding S3:45.6179:44.9043:46.7839:6:86:Holding S4:42.0519:42.0519:42.0519:1:50:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-19 w252 support S1:50.6933:50.1839:51.3072:2:55:Holding S2:48.3630:47.3554:49.6091:6:85:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-19 changes macd: MACD turned bearish.
+2026-05-20 w21 support - | close-below -
+2026-05-20 w63 support S1:47.3804:47.3804:47.3804:1:43:Holding S2:45.3617:45.2331:45.4518:3:73:Holding S3:42.0519:42.0519:42.0519:1:48:Holding S4:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-05-20 w126 support S1:51.3072:51.3072:51.3072:1:47:Holding S2:49.6021:49.0036:50.1839:2:57:Holding S3:45.6179:44.9043:46.7839:6:86:Holding S4:42.0519:42.0519:42.0519:1:49:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-20 w252 support S1:50.6933:50.1839:51.3072:2:55:Holding S2:48.3630:47.3554:49.6091:6:85:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-20 changes -
+2026-05-21 w21 support - | close-below -
+2026-05-21 w63 support S1:47.3804:47.3804:47.3804:1:43:Holding S2:45.3617:45.2331:45.4518:3:73:Holding S3:42.0519:42.0519:42.0519:1:48:Holding S4:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-05-21 w126 support S1:51.3072:51.3072:51.3072:1:46:Holding S2:49.6021:49.0036:50.1839:2:56:Holding S3:45.6179:44.9043:46.7839:6:86:Holding S4:42.0519:42.0519:42.0519:1:49:Holding S5:37.1624:37.1624:37.1624:1:52:Holding | close-below -
+2026-05-21 w252 support S1:50.6933:50.1839:51.3072:2:55:Holding S2:48.3630:47.3554:49.6091:6:85:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-21 changes -
+2026-05-22 w21 support S1:70.6603:70.6603:70.6603:1:96:Recently tested | close-below -
+2026-05-22 w63 support S1:70.6603:70.6603:70.6603:1:56:Recently tested S2:45.3617:45.2331:45.4518:3:72:Holding S3:42.0519:42.0519:42.0519:1:47:Holding S4:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-05-22 w126 support S1:70.6603:70.6603:70.6603:1:50:Recently tested S2:49.6021:49.0036:50.1839:2:56:Holding S3:45.6179:44.9043:46.7839:6:86:Holding S4:42.0519:42.0519:42.0519:1:49:Holding S5:37.1624:37.1624:37.1624:1:52:Holding | close-below -
+2026-05-22 w252 support S1:50.6933:50.1839:51.3072:2:55:Holding S2:48.3630:47.3554:49.6091:6:84:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-22 changes trend: Trend changed from Mixed to Uptrend.
+2026-05-26 w21 support S1:70.6603:70.6603:70.6603:1:94:Recently tested | close-below -
+2026-05-26 w63 support S1:70.6603:70.6603:70.6603:1:56:Recently tested S2:45.3617:45.2331:45.4518:3:72:Holding S3:42.0519:42.0519:42.0519:1:47:Holding S4:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-05-26 w126 support S1:70.6603:70.6603:70.6603:1:51:Recently tested S2:49.6021:49.0036:50.1839:2:56:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:42.0519:42.0519:42.0519:1:49:Holding S5:37.1624:37.1624:37.1624:1:52:Holding | close-below -
+2026-05-26 w252 support S1:50.6933:50.1839:51.3072:2:54:Holding S2:48.3630:47.3554:49.6091:6:84:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:79:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-26 changes rsi: RSI moved from neutral to overbought (74.5).
+2026-05-27 w21 support S1:70.6603:70.6603:70.6603:1:93:Recently tested | close-below -
+2026-05-27 w63 support S1:70.6603:70.6603:70.6603:1:56:Recently tested S2:45.3617:45.2331:45.4518:3:71:Holding S3:42.0519:42.0519:42.0519:1:46:Holding S4:37.1624:37.1624:37.1624:1:48:Holding | close-below -
+2026-05-27 w126 support S1:70.6603:70.6603:70.6603:1:52:Recently tested S2:49.6021:49.0036:50.1839:2:59:Holding S3:45.7910:45.2331:46.7839:5:85:Holding S4:42.0519:42.0519:42.0519:1:50:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-27 w252 support S1:50.6933:50.1839:51.3072:2:55:Holding S2:48.3630:47.3554:49.6091:6:85:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-27 changes -
+2026-05-28 w21 support S1:70.6603:70.6603:70.6603:1:91:Recently tested | close-below -
+2026-05-28 w63 support S1:70.6603:70.6603:70.6603:1:56:Recently tested S2:45.3617:45.2331:45.4518:3:71:Holding S3:42.0519:42.0519:42.0519:1:46:Holding S4:37.1624:37.1624:37.1624:1:48:Holding | close-below -
+2026-05-28 w126 support S1:70.6603:70.6603:70.6603:1:52:Recently tested S2:49.6021:49.0036:50.1839:2:57:Holding S3:45.9667:45.2331:47.3804:6:84:Holding S4:42.0519:42.0519:42.0519:1:50:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-28 w252 support S1:50.6933:50.1839:51.3072:2:55:Holding S2:48.3630:47.3554:49.6091:6:85:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-05-28 changes macd: MACD turned bullish.
+2026-05-29 w21 support S1:70.6603:70.6603:70.6603:1:89:Recently tested | close-below -
+2026-05-29 w63 support S1:70.6603:70.6603:70.6603:1:56:Recently tested S2:45.3617:45.2331:45.4518:3:70:Holding S3:42.0519:42.0519:42.0519:1:45:Holding S4:37.1624:37.1624:37.1624:1:47:Holding | close-below -
+2026-05-29 w126 support S1:70.6603:70.6603:70.6603:1:53:Recently tested S2:49.6021:49.0036:50.1839:2:59:Holding S3:45.7910:45.2331:46.7839:5:84:Holding S4:42.0519:42.0519:42.0519:1:50:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-29 w252 support S1:50.2194:49.6091:51.3072:3:64:Holding S2:48.0479:47.3554:49.0036:5:77:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-05-29 changes -
+2026-06-01 w21 support S1:70.6603:70.6603:70.6603:1:88:Recently tested | close-below -
+2026-06-01 w63 support S1:70.6603:70.6603:70.6603:1:56:Recently tested S2:45.3617:45.2331:45.4518:3:70:Holding S3:42.0519:42.0519:42.0519:1:45:Holding S4:37.1624:37.1624:37.1624:1:47:Holding | close-below -
+2026-06-01 w126 support S1:70.6603:70.6603:70.6603:1:53:Recently tested S2:49.6021:49.0036:50.1839:2:58:Holding S3:45.7910:45.2331:46.7839:5:84:Holding S4:42.0519:42.0519:42.0519:1:50:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-06-01 w252 support S1:50.6933:50.1839:51.3072:2:55:Holding S2:48.3630:47.3554:49.6091:6:85:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-06-01 changes -
+2026-06-02 w21 support S1:70.6603:70.6603:70.6603:1:87:Recently tested | close-below -
+2026-06-02 w63 support S1:70.6603:70.6603:70.6603:1:62:Recently tested S2:45.3128:45.2331:45.4021:2:69:Holding S3:42.0519:42.0519:42.0519:1:52:Holding S4:37.1624:37.1624:37.1624:1:54:Holding | close-below -
+2026-06-02 w126 support S1:70.6603:70.6603:70.6603:1:53:Recently tested S2:49.6021:49.0036:50.1839:2:58:Holding S3:45.7910:45.2331:46.7839:5:84:Holding S4:42.0519:42.0519:42.0519:1:49:Holding S5:37.1624:37.1624:37.1624:1:52:Holding | close-below -
+2026-06-02 w252 support S1:50.2194:49.6091:51.3072:3:64:Holding S2:48.0479:47.3554:49.0036:5:77:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-06-02 changes -
+2026-06-03 w21 support S1:70.6603:70.6603:70.6603:1:85:Recently tested | close-below -
+2026-06-03 w63 support S1:70.6603:70.6603:70.6603:1:62:Recently tested S2:45.3128:45.2331:45.4021:2:69:Holding S3:42.0519:42.0519:42.0519:1:51:Holding S4:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-06-03 w126 support S1:70.6603:70.6603:70.6603:1:53:Recently tested S2:49.6021:49.0036:50.1839:2:58:Holding S3:45.7910:45.2331:46.7839:5:83:Holding S4:42.0519:42.0519:42.0519:1:49:Holding S5:37.1624:37.1624:37.1624:1:52:Holding | close-below -
+2026-06-03 w252 support S1:50.2194:49.6091:51.3072:3:64:Holding S2:48.0479:47.3554:49.0036:5:77:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-06-03 changes -
+2026-06-04 w21 support S1:70.6603:70.6603:70.6603:1:84:Holding | close-below -
+2026-06-04 w63 support S1:70.6603:70.6603:70.6603:1:62:Holding S2:45.3128:45.2331:45.4021:2:68:Holding S3:42.0519:42.0519:42.0519:1:51:Holding S4:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-06-04 w126 support S1:70.6603:70.6603:70.6603:1:53:Holding S2:49.6021:49.0036:50.1839:2:58:Holding S3:45.7910:45.2331:46.7839:5:83:Holding S4:42.0519:42.0519:42.0519:1:49:Holding S5:37.1624:37.1624:37.1624:1:52:Holding | close-below -
+2026-06-04 w252 support S1:50.6933:50.1839:51.3072:2:54:Holding S2:48.3630:47.3554:49.6091:6:84:Holding S3:45.6179:44.9043:46.7839:6:85:Holding S4:41.3508:40.5875:42.0519:5:80:Holding S5:37.1624:37.1624:37.1624:1:53:Holding | close-below -
+2026-06-04 changes -
+2026-06-05 w21 support S1:70.6603:70.6603:70.6603:1:82:Holding | close-below -
+2026-06-05 w63 support S1:70.6603:70.6603:70.6603:1:61:Holding S2:45.3128:45.2331:45.4021:2:71:Holding S3:42.0519:42.0519:42.0519:1:50:Holding S4:37.1624:37.1624:37.1624:1:52:Holding | close-below -
+2026-06-05 w126 support S1:70.6603:70.6603:70.6603:1:52:Holding S2:50.1071:49.0036:51.3072:3:61:Holding S3:45.9667:45.2331:47.3804:6:83:Holding S4:42.0519:42.0519:42.0519:1:49:Holding S5:37.1624:37.1624:37.1624:1:51:Holding | close-below -
+2026-06-05 w252 support S1:70.6603:70.6603:70.6603:1:53:Holding S2:48.9567:48.0557:50.1839:5:74:Holding S3:45.9790:44.9043:47.3804:8:87:Holding S4:41.3508:40.5875:42.0519:5:75:Holding S5:35.9142:35.3123:37.1624:3:68:Holding | close-below -
+2026-06-05 changes new: Support at $70.66 (1 touch) moved into the top 5. / new: Support at $35.91 (3 touches) moved into the top 5. / dropped: Support at $50.69 dropped out of the top list. / dropped: Support at $37.16 dropped out of the top list. / rsi: RSI moved from overbought to neutral (45.8). / macd: MACD turned bearish.
+2026-06-08 w21 support S1:70.6603:70.6603:70.6603:1:81:Holding | close-below -
+2026-06-08 w63 support S1:70.6603:70.6603:70.6603:1:81:Holding S2:45.4021:45.4021:45.4021:1:67:Holding S3:42.0519:42.0519:42.0519:1:71:Holding S4:37.1624:37.1624:37.1624:1:72:Holding | close-below -
+2026-06-08 w126 support S1:70.6603:70.6603:70.6603:1:52:Holding S2:50.1071:49.0036:51.3072:3:61:Holding S3:45.9667:45.2331:47.3804:6:83:Holding S4:42.0519:42.0519:42.0519:1:48:Holding S5:37.1624:37.1624:37.1624:1:51:Holding | close-below -
+2026-06-08 w252 support S1:70.6603:70.6603:70.6603:1:53:Holding S2:48.9567:48.0557:50.1839:5:74:Holding S3:45.9790:44.9043:47.3804:8:87:Holding S4:41.3508:40.5875:42.0519:5:75:Holding S5:35.9142:35.3123:37.1624:3:68:Holding | close-below -
+2026-06-08 changes -
+2026-06-09 w21 support S1:70.6603:70.6603:70.6603:1:100:Recently tested | close-below -
+2026-06-09 w63 support S1:70.6603:70.6603:70.6603:1:88:Recently tested S2:45.4021:45.4021:45.4021:1:70:Holding S3:42.0519:42.0519:42.0519:1:70:Holding S4:37.1624:37.1624:37.1624:1:72:Holding | close-below -
+2026-06-09 w126 support S1:70.6603:70.6603:70.6603:1:55:Recently tested S2:50.1071:49.0036:51.3072:3:61:Holding S3:45.9667:45.2331:47.3804:6:83:Holding S4:42.0519:42.0519:42.0519:1:48:Holding S5:37.1624:37.1624:37.1624:1:51:Holding | close-below -
+2026-06-09 w252 support S1:70.6603:70.6603:70.6603:1:53:Recently tested S2:49.9395:49.0036:51.3072:4:62:Holding S3:46.4988:44.9043:48.3882:10:88:Holding S4:41.3508:40.5875:42.0519:5:70:Holding S5:35.9142:35.3123:37.1624:3:65:Holding | close-below -
+2026-06-09 changes new: Support at $49.94 (4 touches) moved into the top 5. / dropped: Support at $48.96 dropped out of the top list.
+2026-06-10 w21 support - | close-below 70.6603
+2026-06-10 w63 support S1:45.4021:45.4021:45.4021:1:69:Holding S2:42.0519:42.0519:42.0519:1:70:Holding S3:37.1624:37.1624:37.1624:1:72:Holding | close-below 70.6603
+2026-06-10 w126 support S1:50.1071:49.0036:51.3072:3:61:Holding S2:45.9667:45.2331:47.3804:6:83:Holding S3:42.0519:42.0519:42.0519:1:48:Holding S4:37.1624:37.1624:37.1624:1:51:Holding | close-below 70.6603
+2026-06-10 w252 support S1:49.9395:49.0036:51.3072:4:62:Holding S2:46.4988:44.9043:48.3882:10:88:Holding S3:41.3508:40.5875:42.0519:5:70:Holding S4:35.9142:35.3123:37.1624:3:65:Holding | close-below 70.6603
+2026-06-10 changes broken: Support at $70.66 broke — price closed below the zone.
+2026-06-11 w21 support S1:70.6603:70.6603:70.6603:1:100:Recently tested | close-below -
+2026-06-11 w63 support S1:70.6603:70.6603:70.6603:1:88:Recently tested S2:45.4021:45.4021:45.4021:1:69:Holding S3:42.0519:42.0519:42.0519:1:69:Holding S4:37.1624:37.1624:37.1624:1:71:Holding | close-below -
+2026-06-11 w126 support S1:70.6603:70.6603:70.6603:1:55:Recently tested S2:50.1071:49.0036:51.3072:3:60:Holding S3:45.9667:45.2331:47.3804:6:82:Holding S4:42.0519:42.0519:42.0519:1:48:Holding S5:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-06-11 w252 support S1:70.6603:70.6603:70.6603:1:53:Recently tested S2:49.9395:49.0036:51.3072:4:62:Holding S3:46.4988:44.9043:48.3882:10:88:Holding S4:41.3508:40.5875:42.0519:5:70:Holding S5:35.9142:35.3123:37.1624:3:65:Holding | close-below -
+2026-06-11 changes reclaimed: Price climbed back above $70.66; that zone is acting as support again.
+2026-06-12 w21 support S1:70.6603:70.6603:70.6603:1:91:Recently tested S2:66.5080:66.5080:66.5080:1:93:Recently tested | close-below -
+2026-06-12 w63 support S1:70.6603:70.6603:70.6603:1:88:Recently tested S2:66.5080:66.5080:66.5080:1:92:Recently tested S3:42.0519:42.0519:42.0519:1:69:Holding S4:37.1624:37.1624:37.1624:1:71:Holding | close-below -
+2026-06-12 w126 support S1:70.6603:70.6603:70.6603:1:54:Recently tested S2:66.5080:66.5080:66.5080:1:59:Recently tested S3:50.1071:49.0036:51.3072:3:60:Holding S4:45.9667:45.2331:47.3804:6:82:Holding S5:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-06-12 w252 support S1:66.5080:66.5080:66.5080:1:56:Recently tested S2:49.9395:49.0036:51.3072:4:62:Holding S3:46.4988:44.9043:48.3882:10:87:Holding S4:41.3508:40.5875:42.0519:5:69:Holding S5:35.9142:35.3123:37.1624:3:65:Holding | close-below -
+2026-06-12 changes new: Support at $66.51 (1 touch) moved into the top 5. / dropped: Support at $70.66 dropped out of the top list. / trend: Trend changed from Uptrend to Mixed.
+2026-06-15 w21 support S1:70.6603:70.6603:70.6603:1:89:Recently tested S2:66.5080:66.5080:66.5080:1:94:Recently tested | close-below -
+2026-06-15 w63 support S1:70.6603:70.6603:70.6603:1:87:Recently tested S2:66.5080:66.5080:66.5080:1:94:Recently tested S3:42.0519:42.0519:42.0519:1:69:Holding S4:37.1624:37.1624:37.1624:1:71:Holding | close-below -
+2026-06-15 w126 support S1:70.6603:70.6603:70.6603:1:54:Recently tested S2:66.5080:66.5080:66.5080:1:61:Recently tested S3:50.1071:49.0036:51.3072:3:60:Holding S4:45.9667:45.2331:47.3804:6:82:Holding S5:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-06-15 w252 support S1:66.5080:66.5080:66.5080:1:59:Recently tested S2:49.9395:49.0036:51.3072:4:61:Holding S3:46.4988:44.9043:48.3882:10:87:Holding S4:41.3508:40.5875:42.0519:5:69:Holding S5:35.9142:35.3123:37.1624:3:64:Holding | close-below -
+2026-06-15 changes -
+2026-06-16 w21 support S1:70.6603:70.6603:70.6603:1:87:Recently tested S2:66.5080:66.5080:66.5080:1:93:Recently tested | close-below -
+2026-06-16 w63 support S1:70.6603:70.6603:70.6603:1:87:Recently tested S2:66.5080:66.5080:66.5080:1:93:Recently tested S3:42.0519:42.0519:42.0519:1:68:Holding S4:37.1624:37.1624:37.1624:1:70:Holding | close-below -
+2026-06-16 w126 support S1:70.6603:70.6603:70.6603:1:54:Recently tested S2:66.5080:66.5080:66.5080:1:61:Recently tested S3:50.1071:49.0036:51.3072:3:60:Holding S4:45.9667:45.2331:47.3804:6:82:Holding S5:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-06-16 w252 support S1:66.5080:66.5080:66.5080:1:58:Recently tested S2:49.9395:49.0036:51.3072:4:61:Holding S3:46.4988:44.9043:48.3882:10:86:Holding S4:41.3508:40.5875:42.0519:5:68:Holding S5:36.0513:35.3123:37.1624:2:58:Holding | close-below -
+2026-06-16 changes -
+2026-06-17 w21 support S1:70.6603:70.6603:70.6603:1:86:Recently tested S2:66.5080:66.5080:66.5080:1:91:Recently tested | close-below -
+2026-06-17 w63 support S1:70.6603:70.6603:70.6603:1:86:Recently tested S2:66.5080:66.5080:66.5080:1:93:Recently tested S3:42.0519:42.0519:42.0519:1:68:Holding S4:37.1624:37.1624:37.1624:1:70:Holding | close-below -
+2026-06-17 w126 support S1:70.6603:70.6603:70.6603:1:54:Recently tested S2:66.5080:66.5080:66.5080:1:61:Recently tested S3:50.1071:49.0036:51.3072:3:59:Holding S4:45.9667:45.2331:47.3804:6:81:Holding S5:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-06-17 w252 support S1:66.5080:66.5080:66.5080:1:57:Recently tested S2:49.9395:49.0036:51.3072:4:61:Holding S3:46.4988:44.9043:48.3882:10:86:Holding S4:41.3508:40.5875:42.0519:5:68:Holding S5:36.0513:35.3123:37.1624:2:58:Holding | close-below -
+2026-06-17 changes -
+2026-06-18 w21 support S1:66.5080:66.5080:66.5080:1:89:Recently tested | close-below -
+2026-06-18 w63 support S1:70.6603:70.6603:70.6603:1:86:Recently tested S2:66.5080:66.5080:66.5080:1:92:Recently tested S3:42.0519:42.0519:42.0519:1:67:Holding S4:37.1624:37.1624:37.1624:1:69:Holding | close-below -
+2026-06-18 w126 support S1:70.6603:70.6603:70.6603:1:53:Recently tested S2:66.5080:66.5080:66.5080:1:60:Recently tested S3:50.1071:49.0036:51.3072:3:59:Holding S4:45.9667:45.2331:47.3804:6:81:Holding S5:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-06-18 w252 support S1:66.5080:66.5080:66.5080:1:57:Recently tested S2:50.2194:49.6091:51.3072:3:56:Holding S3:46.6899:44.9043:49.0036:11:86:Holding S4:41.3508:40.5875:42.0519:5:66:Holding S5:36.0513:35.3123:37.1624:2:57:Holding | close-below -
+2026-06-18 changes -
+2026-06-22 w21 support S1:66.5080:66.5080:66.5080:1:88:Recently tested | close-below -
+2026-06-22 w63 support S1:70.6603:70.6603:70.6603:1:86:Recently tested S2:66.5080:66.5080:66.5080:1:92:Recently tested S3:37.1624:37.1624:37.1624:1:69:Holding | close-below -
+2026-06-22 w126 support S1:70.6603:70.6603:70.6603:1:53:Recently tested S2:66.5080:66.5080:66.5080:1:60:Recently tested S3:50.6933:50.1839:51.3072:2:52:Holding S4:45.9667:45.2331:47.3804:6:81:Holding S5:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-06-22 w252 support S1:66.5080:66.5080:66.5080:1:57:Recently tested S2:49.9395:49.0036:51.3072:4:60:Holding S3:46.4988:44.9043:48.3882:10:86:Holding S4:41.3508:40.5875:42.0519:5:68:Holding S5:36.0513:35.3123:37.1624:2:58:Holding | close-below -
+2026-06-22 changes -
+2026-06-23 w21 support S1:66.5080:66.5080:66.5080:1:87:Recently tested | close-below -
+2026-06-23 w63 support S1:70.6603:70.6603:70.6603:1:85:Recently tested S2:66.5080:66.5080:66.5080:1:92:Recently tested S3:37.1624:37.1624:37.1624:1:69:Holding | close-below -
+2026-06-23 w126 support S1:70.6603:70.6603:70.6603:1:53:Recently tested S2:66.5080:66.5080:66.5080:1:60:Recently tested S3:50.6933:50.1839:51.3072:2:52:Holding S4:45.9667:45.2331:47.3804:6:81:Holding S5:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-06-23 w252 support S1:66.5080:66.5080:66.5080:1:57:Recently tested S2:50.2194:49.6091:51.3072:3:56:Holding S3:46.6899:44.9043:49.0036:11:86:Holding S4:41.3508:40.5875:42.0519:5:66:Holding S5:36.0513:35.3123:37.1624:2:57:Holding | close-below -
+2026-06-23 changes -
+2026-06-24 w21 support S1:66.5080:66.5080:66.5080:1:85:Recently tested | close-below -
+2026-06-24 w63 support S1:70.6603:70.6603:70.6603:1:89:Recently tested S2:66.5080:66.5080:66.5080:1:92:Recently tested S3:37.1624:37.1624:37.1624:1:68:Holding | close-below -
+2026-06-24 w126 support S1:70.6603:70.6603:70.6603:1:55:Recently tested S2:66.5080:66.5080:66.5080:1:60:Recently tested S3:50.6933:50.1839:51.3072:2:51:Holding S4:45.9667:45.2331:47.3804:6:80:Holding S5:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-06-24 w252 support S1:66.5080:66.5080:66.5080:1:54:Recently tested S2:50.2194:49.6091:51.3072:3:54:Holding S3:46.6899:44.9043:49.0036:11:84:Holding S4:41.3508:40.5875:42.0519:5:65:Holding S5:37.1624:37.1624:37.1624:1:50:Holding | close-below -
+2026-06-24 changes new: Support at $37.16 (1 touch) moved into the top 5. / dropped: Support at $36.05 dropped out of the top list.
+2026-06-25 w21 support S1:66.5080:66.5080:66.5080:1:84:Holding | close-below -
+2026-06-25 w63 support S1:70.6603:70.6603:70.6603:1:89:Recently tested S2:66.5080:66.5080:66.5080:1:91:Holding S3:37.1624:37.1624:37.1624:1:68:Holding | close-below -
+2026-06-25 w126 support S1:70.6603:70.6603:70.6603:1:55:Recently tested S2:66.5080:66.5080:66.5080:1:59:Holding S3:50.6933:50.1839:51.3072:2:51:Holding S4:45.9667:45.2331:47.3804:6:80:Holding S5:37.1624:37.1624:37.1624:1:48:Holding | close-below -
+2026-06-25 w252 support S1:66.5080:66.5080:66.5080:1:54:Holding S2:50.2194:49.6091:51.3072:3:54:Holding S3:46.6899:44.9043:49.0036:11:84:Holding S4:41.3508:40.5875:42.0519:5:65:Holding S5:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-06-25 changes -
+2026-06-26 w21 support S1:66.5080:66.5080:66.5080:1:82:Holding | close-below -
+2026-06-26 w63 support S1:70.6603:70.6603:70.6603:1:89:In play S2:66.5080:66.5080:66.5080:1:91:Holding S3:37.1624:37.1624:37.1624:1:67:Holding | close-below -
+2026-06-26 w126 support S1:70.6603:70.6603:70.6603:1:55:In play S2:66.5080:66.5080:66.5080:1:59:Holding S3:50.6933:50.1839:51.3072:2:51:Holding S4:45.9667:45.2331:47.3804:6:80:Holding S5:37.1624:37.1624:37.1624:1:48:Holding | close-below -
+2026-06-26 w252 support S1:66.5080:66.5080:66.5080:1:54:Holding S2:50.2194:49.6091:51.3072:3:54:Holding S3:46.6899:44.9043:49.0036:11:84:Holding S4:41.3508:40.5875:42.0519:5:65:Holding S5:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-06-26 changes -
+2026-06-29 w21 support S1:66.5080:66.5080:66.5080:1:81:Holding | close-below -
+2026-06-29 w63 support S1:70.6603:70.6603:70.6603:1:89:Recently tested S2:66.5080:66.5080:66.5080:1:90:Holding S3:37.1624:37.1624:37.1624:1:67:Holding | close-below -
+2026-06-29 w126 support S1:70.6603:70.6603:70.6603:1:55:Recently tested S2:66.5080:66.5080:66.5080:1:59:Holding S3:50.6933:50.1839:51.3072:2:51:Holding S4:45.9667:45.2331:47.3804:6:80:Holding S5:37.1624:37.1624:37.1624:1:48:Holding | close-below -
+2026-06-29 w252 support S1:66.5080:66.5080:66.5080:1:54:Holding S2:50.2194:49.6091:51.3072:3:54:Holding S3:46.6899:44.9043:49.0036:11:84:Holding S4:41.3508:40.5875:42.0519:5:64:Holding S5:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-06-29 changes -
+2026-06-30 w21 support S1:66.5080:66.5080:66.5080:1:79:Holding | close-below -
+2026-06-30 w63 support S1:70.6603:70.6603:70.6603:1:91:Recently tested S2:66.5080:66.5080:66.5080:1:93:Holding | close-below -
+2026-06-30 w126 support S1:70.6603:70.6603:70.6603:1:54:Recently tested S2:66.5080:66.5080:66.5080:1:59:Holding S3:50.6933:50.1839:51.3072:2:50:Holding S4:45.9667:45.2331:47.3804:6:79:Holding S5:37.1624:37.1624:37.1624:1:48:Holding | close-below -
+2026-06-30 w252 support S1:66.5080:66.5080:66.5080:1:54:Holding S2:50.2194:49.6091:51.3072:3:54:Holding S3:46.6899:44.9043:49.0036:11:84:Holding S4:41.3508:40.5875:42.0519:5:64:Holding S5:37.1624:37.1624:37.1624:1:49:Holding | close-below -
+2026-06-30 changes -
+2026-07-01 w21 support S1:70.5835:70.5835:70.5835:1:83:Recently tested S2:66.5080:66.5080:66.5080:1:78:Holding | close-below -
+2026-07-01 w63 support S1:70.6257:70.5835:70.6603:2:88:Recently tested S2:66.5080:66.5080:66.5080:1:73:Holding | close-below -
+2026-07-01 w126 support S1:70.6257:70.5835:70.6603:2:59:Recently tested S2:66.5080:66.5080:66.5080:1:59:Holding S3:50.6933:50.1839:51.3072:2:50:Holding S4:45.9667:45.2331:47.3804:6:79:Holding S5:37.1624:37.1624:37.1624:1:47:Holding | close-below -
+2026-07-01 w252 support S1:70.6257:70.5835:70.6603:2:51:Recently tested S2:66.5080:66.5080:66.5080:1:54:Holding S3:50.2194:49.6091:51.3072:3:54:Holding S4:46.6899:44.9043:49.0036:11:84:Holding S5:41.3508:40.5875:42.0519:5:64:Holding | close-below -
+2026-07-01 changes new: Support at $70.63 (2 touches) moved into the top 5. / dropped: Support at $37.16 dropped out of the top list. / trend: Trend changed from Mixed to Uptrend.
+2026-07-02 w21 support S1:70.5835:70.5835:70.5835:1:86:Recently tested S2:66.5080:66.5080:66.5080:1:76:Holding | close-below -
+2026-07-02 w63 support S1:70.6257:70.5835:70.6603:2:89:Recently tested S2:66.5080:66.5080:66.5080:1:72:Holding | close-below -
+2026-07-02 w126 support S1:70.6257:70.5835:70.6603:2:59:Recently tested S2:66.5080:66.5080:66.5080:1:58:Holding S3:50.6933:50.1839:51.3072:2:50:Holding S4:45.9667:45.2331:47.3804:6:79:Holding S5:37.1624:37.1624:37.1624:1:47:Holding | close-below -
+2026-07-02 w252 support S1:70.6257:70.5835:70.6603:2:51:Recently tested S2:66.5080:66.5080:66.5080:1:54:Holding S3:50.2194:49.6091:51.3072:3:54:Holding S4:46.6899:44.9043:49.0036:11:84:Holding S5:41.3508:40.5875:42.0519:5:64:Holding | close-below -
+2026-07-02 changes trend: Trend changed from Uptrend to Mixed.
+2026-07-06 w21 support S1:70.5835:70.5835:70.5835:1:85:Recently tested S2:66.5080:66.5080:66.5080:1:75:Holding | close-below -
+2026-07-06 w63 support S1:70.6257:70.5835:70.6603:2:89:Recently tested S2:66.5080:66.5080:66.5080:1:72:Holding | close-below -
+2026-07-06 w126 support S1:70.6257:70.5835:70.6603:2:59:Recently tested S2:66.5080:66.5080:66.5080:1:58:Holding S3:50.6933:50.1839:51.3072:2:50:Holding S4:45.9667:45.2331:47.3804:6:79:Holding S5:37.1624:37.1624:37.1624:1:47:Holding | close-below -
+2026-07-06 w252 support S1:70.6257:70.5835:70.6603:2:51:Recently tested S2:66.5080:66.5080:66.5080:1:53:Holding S3:50.2194:49.6091:51.3072:3:54:Holding S4:46.6899:44.9043:49.0036:11:84:Holding S5:41.3508:40.5875:42.0519:5:64:Holding | close-below -
+2026-07-06 changes trend: Trend changed from Mixed to Uptrend.
+2026-07-07 w21 support S1:70.5835:70.5835:70.5835:1:86:Recently tested S2:66.5080:66.5080:66.5080:1:73:Holding | close-below -
+2026-07-07 w63 support S1:70.6257:70.5835:70.6603:2:89:Recently tested S2:66.5080:66.5080:66.5080:1:71:Holding | close-below -
+2026-07-07 w126 support S1:70.6257:70.5835:70.6603:2:59:Recently tested S2:66.5080:66.5080:66.5080:1:58:Holding S3:50.1839:50.1839:50.1839:1:45:Holding S4:45.9667:45.2331:47.3804:6:78:Holding S5:37.1624:37.1624:37.1624:1:47:Holding | close-below -
+2026-07-07 w252 support S1:70.6257:70.5835:70.6603:2:51:Recently tested S2:66.5080:66.5080:66.5080:1:53:Holding S3:50.2194:49.6091:51.3072:3:53:Holding S4:46.6899:44.9043:49.0036:11:83:Holding S5:41.3508:40.5875:42.0519:5:64:Holding | close-below -
+2026-07-07 changes trend: Trend changed from Uptrend to Mixed.
+2026-07-08 w21 support S1:70.5835:70.5835:70.5835:1:86:Recently tested S2:66.5080:66.5080:66.5080:1:72:Holding | close-below -
+2026-07-08 w63 support S1:70.6257:70.5835:70.6603:2:89:Recently tested S2:66.5080:66.5080:66.5080:1:71:Holding | close-below -
+2026-07-08 w126 support S1:70.6257:70.5835:70.6603:2:59:Recently tested S2:66.5080:66.5080:66.5080:1:58:Holding S3:50.1839:50.1839:50.1839:1:45:Holding S4:45.9667:45.2331:47.3804:6:78:Holding S5:37.1624:37.1624:37.1624:1:46:Holding | close-below -
+2026-07-08 w252 support S1:70.6257:70.5835:70.6603:2:51:Recently tested S2:66.5080:66.5080:66.5080:1:53:Holding S3:50.2194:49.6091:51.3072:3:53:Holding S4:46.6899:44.9043:49.0036:11:83:Holding S5:41.3508:40.5875:42.0519:5:64:Holding | close-below -
+2026-07-08 changes -
+2026-07-09 w21 support S1:70.5835:70.5835:70.5835:1:85:Recently tested S2:66.5080:66.5080:66.5080:1:70:Holding | close-below -
+2026-07-09 w63 support S1:70.6257:70.5835:70.6603:2:89:Recently tested S2:66.5080:66.5080:66.5080:1:70:Holding | close-below -
+2026-07-09 w126 support S1:70.6257:70.5835:70.6603:2:59:Recently tested S2:66.5080:66.5080:66.5080:1:57:Holding S3:50.1839:50.1839:50.1839:1:45:Holding S4:45.9667:45.2331:47.3804:6:78:Holding S5:37.1624:37.1624:37.1624:1:46:Holding | close-below -
+2026-07-09 w252 support S1:70.6257:70.5835:70.6603:2:52:Recently tested S2:66.5080:66.5080:66.5080:1:53:Holding S3:49.9395:49.0036:51.3072:4:58:Holding S4:46.4988:44.9043:48.3882:10:84:Holding S5:41.3508:40.5875:42.0519:5:65:Holding | close-below -
+2026-07-09 changes trend: Trend changed from Mixed to Uptrend.
+2026-07-10 w21 support S1:70.5835:70.5835:70.5835:1:96:Recently tested | close-below -
+2026-07-10 w63 support S1:70.6257:70.5835:70.6603:2:88:Recently tested S2:66.5080:66.5080:66.5080:1:70:Holding | close-below -
+2026-07-10 w126 support S1:70.6257:70.5835:70.6603:2:59:Recently tested S2:66.5080:66.5080:66.5080:1:57:Holding S3:50.1839:50.1839:50.1839:1:44:Holding S4:45.9667:45.2331:47.3804:6:78:Holding S5:37.1624:37.1624:37.1624:1:46:Holding | close-below -
+2026-07-10 w252 support S1:70.6257:70.5835:70.6603:2:51:Recently tested S2:66.5080:66.5080:66.5080:1:53:Holding S3:49.9395:49.0036:51.3072:4:58:Holding S4:46.4988:44.9043:48.3882:10:83:Holding S5:41.3508:40.5875:42.0519:5:65:Holding | close-below -
+2026-07-10 changes -
+2026-07-13 w21 support S1:70.0083:69.4357:70.5835:2:95:Recently tested | close-below -
+2026-07-13 w63 support S1:70.2551:69.4357:70.6603:3:86:Recently tested S2:66.5080:66.5080:66.5080:1:63:Holding | close-below -
+2026-07-13 w126 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:66.5080:66.5080:66.5080:1:57:Holding S3:50.1839:50.1839:50.1839:1:44:Holding S4:45.9667:45.2331:47.3804:6:78:Holding S5:37.1624:37.1624:37.1624:1:46:Holding | close-below -
+2026-07-13 w252 support S1:70.2551:69.4357:70.6603:3:54:Recently tested S2:66.5080:66.5080:66.5080:1:53:Holding S3:49.9395:49.0036:51.3072:4:58:Holding S4:46.4988:44.9043:48.3882:10:83:Holding S5:41.3508:40.5875:42.0519:5:65:Holding | close-below -
+2026-07-13 changes trend: Trend changed from Uptrend to Mixed.
+2026-07-14 w21 support S1:70.0083:69.4357:70.5835:2:94:Recently tested | close-below -
+2026-07-14 w63 support S1:70.2551:69.4357:70.6603:3:86:Recently tested S2:66.5080:66.5080:66.5080:1:62:Holding | close-below -
+2026-07-14 w126 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:66.5080:66.5080:66.5080:1:57:Holding S3:50.1839:50.1839:50.1839:1:44:Holding S4:45.9667:45.2331:47.3804:6:77:Holding S5:37.1624:37.1624:37.1624:1:45:Holding | close-below -
+2026-07-14 w252 support S1:70.2551:69.4357:70.6603:3:54:Recently tested S2:66.5080:66.5080:66.5080:1:53:Holding S3:49.9395:49.0036:51.3072:4:57:Holding S4:46.4988:44.9043:48.3882:10:83:Holding S5:41.3508:40.5875:42.0519:5:65:Holding | close-below -
+2026-07-14 changes -
+2026-07-15 w21 support S1:70.0083:69.4357:70.5835:2:93:Recently tested | close-below -
+2026-07-15 w63 support S1:70.2551:69.4357:70.6603:3:85:Recently tested S2:66.5080:66.5080:66.5080:1:62:Holding | close-below -
+2026-07-15 w126 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:66.5080:66.5080:66.5080:1:56:Holding S3:50.1839:50.1839:50.1839:1:44:Holding S4:45.9667:45.2331:47.3804:6:77:Holding S5:37.1624:37.1624:37.1624:1:45:Holding | close-below -
+2026-07-15 w252 support S1:70.2551:69.4357:70.6603:3:54:Recently tested S2:66.5080:66.5080:66.5080:1:53:Holding S3:49.9395:49.0036:51.3072:4:57:Holding S4:46.4988:44.9043:48.3882:10:83:Holding S5:41.3508:40.5875:42.0519:5:65:Holding | close-below -
+2026-07-15 changes -
+2026-07-16 w21 support S1:70.0083:69.4357:70.5835:2:100:In play | close-below -
+2026-07-16 w63 support S1:70.2551:69.4357:70.6603:3:88:In play S2:66.5080:66.5080:66.5080:1:61:Holding | close-below -
+2026-07-16 w126 support S1:70.2551:69.4357:70.6603:3:65:In play S2:66.5080:66.5080:66.5080:1:56:Holding S3:50.1839:50.1839:50.1839:1:43:Holding S4:45.9667:45.2331:47.3804:6:77:Holding S5:37.1624:37.1624:37.1624:1:45:Holding | close-below -
+2026-07-16 w252 support S1:70.2551:69.4357:70.6603:3:55:In play S2:66.5080:66.5080:66.5080:1:53:Holding S3:49.9395:49.0036:51.3072:4:57:Holding S4:46.4988:44.9043:48.3882:10:83:Holding S5:41.3508:40.5875:42.0519:5:65:Holding | close-below -
+2026-07-16 changes -
+2026-07-17 w21 support - | close-below 70.0083
+2026-07-17 w63 support S1:66.5080:66.5080:66.5080:1:73:In play | close-below 70.2551
+2026-07-17 w126 support S1:66.5080:66.5080:66.5080:1:62:In play S2:50.1839:50.1839:50.1839:1:43:Holding S3:45.9667:45.2331:47.3804:6:77:Holding S4:42.0519:42.0519:42.0519:1:42:Holding S5:37.1624:37.1624:37.1624:1:45:Holding | close-below 70.2551
+2026-07-17 w252 support S1:66.5080:66.5080:66.5080:1:56:In play S2:49.9395:49.0036:51.3072:4:57:Holding S3:46.4988:44.9043:48.3882:10:83:Holding S4:41.4657:40.5875:42.0519:4:61:Holding S5:37.1624:37.1624:37.1624:1:48:Holding | close-below 70.2551
+2026-07-17 changes new: Support at $37.16 (1 touch) moved into the top 5. / broken: Support at $70.26 broke — price closed below the zone.
+2026-07-20 w21 support - | close-below 70.0083
+2026-07-20 w63 support S1:66.5080:66.5080:66.5080:1:73:In play | close-below 70.2551
+2026-07-20 w126 support S1:66.5080:66.5080:66.5080:1:62:In play S2:50.1839:50.1839:50.1839:1:43:Holding S3:45.9667:45.2331:47.3804:6:76:Holding S4:42.0519:42.0519:42.0519:1:42:Holding S5:37.1624:37.1624:37.1624:1:44:Holding | close-below 70.2551
+2026-07-20 w252 support S1:66.5080:66.5080:66.5080:1:56:In play S2:49.9395:49.0036:51.3072:4:57:Holding S3:46.4988:44.9043:48.3882:10:83:Holding S4:41.4657:40.5875:42.0519:4:61:Holding S5:37.1624:37.1624:37.1624:1:48:Holding | close-below 70.2551
+2026-07-20 changes -
+2026-07-21 w21 support S1:70.0083:69.4357:70.5835:2:100:In play | close-below -
+2026-07-21 w63 support S1:70.2551:69.4357:70.6603:3:88:In play S2:66.5080:66.5080:66.5080:1:73:Recently tested | close-below -
+2026-07-21 w126 support S1:70.2551:69.4357:70.6603:3:65:In play S2:66.5080:66.5080:66.5080:1:62:Recently tested S3:50.1839:50.1839:50.1839:1:43:Holding S4:45.9667:45.2331:47.3804:6:76:Holding S5:37.1624:37.1624:37.1624:1:44:Holding | close-below -
+2026-07-21 w252 support S1:70.2551:69.4357:70.6603:3:55:In play S2:66.5080:66.5080:66.5080:1:56:Recently tested S3:49.9395:49.0036:51.3072:4:57:Holding S4:46.4988:44.9043:48.3882:10:82:Holding S5:41.4657:40.5875:42.0519:4:61:Holding | close-below -
+2026-07-21 changes reclaimed: Price climbed back above $70.26; that zone is acting as support again. / dropped: Support at $37.16 dropped out of the top list.
+2026-07-22 w21 support S1:70.0083:69.4357:70.5835:2:99:In play S2:64.7847:64.7847:64.7847:1:73:Recently tested | close-below -
+2026-07-22 w63 support S1:70.2551:69.4357:70.6603:3:93:In play S2:65.8826:64.7847:66.5080:2:86:Recently tested | close-below -
+2026-07-22 w126 support S1:70.2551:69.4357:70.6603:3:65:In play S2:65.8826:64.7847:66.5080:2:62:Recently tested S3:45.9667:45.2331:47.3804:6:76:Holding S4:42.0519:42.0519:42.0519:1:41:Holding S5:37.1624:37.1624:37.1624:1:44:Holding | close-below -
+2026-07-22 w252 support S1:70.2551:69.4357:70.6603:3:55:In play S2:65.8826:64.7847:66.5080:2:54:Recently tested S3:49.9395:49.0036:51.3072:4:57:Holding S4:46.4988:44.9043:48.3882:10:82:Holding S5:41.4657:40.5875:42.0519:4:60:Holding | close-below -
+2026-07-22 changes -
+2026-07-23 w21 support S1:64.7847:64.7847:64.7847:1:78:Recently tested | close-below 70.0083
+2026-07-23 w63 support S1:65.8826:64.7847:66.5080:2:87:In play | close-below 70.2551
+2026-07-23 w126 support S1:65.8826:64.7847:66.5080:2:63:In play S2:45.9667:45.2331:47.3804:6:76:Holding S3:42.0519:42.0519:42.0519:1:41:Holding S4:37.1624:37.1624:37.1624:1:44:Holding | close-below 70.2551
+2026-07-23 w252 support S1:65.8826:64.7847:66.5080:2:54:In play S2:49.9395:49.0036:51.3072:4:57:Holding S3:46.4988:44.9043:48.3882:10:82:Holding S4:41.4657:40.5875:42.0519:4:60:Holding S5:37.1624:37.1624:37.1624:1:48:Holding | close-below 70.2551
+2026-07-23 changes new: Support at $37.16 (1 touch) moved into the top 5. / broken: Support at $70.26 broke — price closed below the zone.
+2026-07-24 w21 support S1:64.7847:64.7847:64.7847:1:78:In play | close-below 70.0083
+2026-07-24 w63 support S1:65.8826:64.7847:66.5080:2:87:In play | close-below 70.2551
+2026-07-24 w126 support S1:65.8826:64.7847:66.5080:2:63:In play S2:45.9667:45.2331:47.3804:6:75:Holding S3:42.0519:42.0519:42.0519:1:41:Holding S4:37.1624:37.1624:37.1624:1:44:Holding | close-below 70.2551
+2026-07-24 w252 support S1:65.8826:64.7847:66.5080:2:54:In play S2:49.9395:49.0036:51.3072:4:56:Holding S3:46.4988:44.9043:48.3882:10:82:Holding S4:41.4657:40.5875:42.0519:4:60:Holding S5:37.1624:37.1624:37.1624:1:47:Holding | close-below 70.2551
+2026-07-24 changes -
+2026-07-27 w21 support - | close-below 64.7847 70.0083
+2026-07-27 w63 support - | close-below 65.8826 70.2551
+2026-07-27 w126 support S1:45.9667:45.2331:47.3804:6:75:Holding S2:42.0519:42.0519:42.0519:1:40:Holding S3:37.1624:37.1624:37.1624:1:43:Holding | close-below 65.8826 70.2551
+2026-07-27 w252 support S1:49.9395:49.0036:51.3072:4:56:Holding S2:46.4988:44.9043:48.3882:10:82:Holding S3:41.4657:40.5875:42.0519:4:60:Holding S4:37.1624:37.1624:37.1624:1:47:Holding | close-below 65.8826 70.2551
+2026-07-27 changes broken: Support at $65.88 broke — price closed below the zone.
+2026-07-28 w21 support - | close-below 64.7847 69.4357
+2026-07-28 w63 support - | close-below 65.8826 70.2551
+2026-07-28 w126 support S1:45.9667:45.2331:47.3804:6:75:Holding S2:42.0519:42.0519:42.0519:1:40:Holding S3:37.1624:37.1624:37.1624:1:43:Holding | close-below 65.8826 70.2551
+2026-07-28 w252 support S1:49.9395:49.0036:51.3072:4:56:Holding S2:46.4988:44.9043:48.3882:10:82:Holding S3:41.4657:40.5875:42.0519:4:60:Holding S4:37.1624:37.1624:37.1624:1:47:Holding | close-below 65.8826 70.2551
+2026-07-28 changes -
+2026-07-29 w21 support - | close-below 64.7847 69.4357
+2026-07-29 w63 support - | close-below 65.8826 70.2551
+2026-07-29 w126 support S1:45.9667:45.2331:47.3804:6:75:Holding S2:42.0519:42.0519:42.0519:1:40:Holding S3:37.1624:37.1624:37.1624:1:43:Holding | close-below 65.8826 70.2551
+2026-07-29 w252 support S1:49.9395:49.0036:51.3072:4:56:Holding S2:46.4988:44.9043:48.3882:10:82:Holding S3:41.4657:40.5875:42.0519:4:60:Holding S4:37.1624:37.1624:37.1624:1:47:Holding | close-below 65.8826 70.2551
+2026-07-29 changes -
+2026-07-30 w21 support - | close-below 64.7847 69.4357
+2026-07-30 w63 support - | close-below 65.8826 70.2551
+2026-07-30 w126 support S1:45.9667:45.2331:47.3804:6:74:Holding S2:42.0519:42.0519:42.0519:1:40:Holding S3:37.1624:37.1624:37.1624:1:43:Holding | close-below 65.8826 70.2551
+2026-07-30 w252 support S1:49.9395:49.0036:51.3072:4:56:Holding S2:46.4988:44.9043:48.3882:10:82:Holding S3:41.4657:40.5875:42.0519:4:60:Holding S4:37.1624:37.1624:37.1624:1:47:Holding | close-below 65.8826 70.2551
+2026-07-30 changes -
+2026-07-31 w21 support S1:64.7847:64.7847:64.7847:1:99:In play | close-below 69.4357
+2026-07-31 w63 support S1:65.8826:64.7847:66.5080:2:87:In play | close-below 70.2551
+2026-07-31 w126 support S1:65.8826:64.7847:66.5080:2:63:In play S2:45.9667:45.2331:47.3804:6:74:Holding S3:42.0519:42.0519:42.0519:1:39:Holding S4:37.1624:37.1624:37.1624:1:42:Holding | close-below 70.2551
+2026-07-31 w252 support S1:65.8826:64.7847:66.5080:2:54:In play S2:49.9395:49.0036:51.3072:4:56:Holding S3:46.4988:44.9043:48.3882:10:81:Holding S4:41.4657:40.5875:42.0519:4:60:Holding S5:37.1624:37.1624:37.1624:1:47:Holding | close-below 70.2551
+2026-07-31 changes reclaimed: Price climbed back above $65.88; that zone is acting as support again.
+2026-08-03 w21 support S1:64.7847:64.7847:64.7847:1:90:Recently tested S2:57.4789:57.4789:57.4789:1:96:Recently tested | close-below 69.4357
+2026-08-03 w63 support S1:65.8826:64.7847:66.5080:2:87:Recently tested S2:57.4789:57.4789:57.4789:1:72:Recently tested | close-below 70.2551
+2026-08-03 w126 support S1:65.8826:64.7847:66.5080:2:63:Recently tested S2:57.4789:57.4789:57.4789:1:55:Recently tested S3:45.9667:45.2331:47.3804:6:74:Holding S4:42.0519:42.0519:42.0519:1:39:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below 70.2551
+2026-08-03 w252 support S1:65.8826:64.7847:66.5080:2:54:Recently tested S2:57.4789:57.4789:57.4789:1:50:Recently tested S3:49.9395:49.0036:51.3072:4:56:Holding S4:46.4988:44.9043:48.3882:10:81:Holding S5:41.4657:40.5875:42.0519:4:60:Holding | close-below 70.2551
+2026-08-03 changes new: Support at $57.48 (1 touch) moved into the top 5. / dropped: Support at $37.16 dropped out of the top list.
+2026-08-04 w21 support S1:69.4357:69.4357:69.4357:1:87:Recently tested S2:64.7847:64.7847:64.7847:1:86:Recently tested S3:57.4789:57.4789:57.4789:1:94:Recently tested | close-below -
+2026-08-04 w63 support S1:70.2551:69.4357:70.6603:3:90:Recently tested S2:65.8826:64.7847:66.5080:2:82:Recently tested S3:57.4789:57.4789:57.4789:1:71:Recently tested | close-below -
+2026-08-04 w126 support S1:70.2551:69.4357:70.6603:3:65:Recently tested S2:65.8826:64.7847:66.5080:2:62:Recently tested S3:57.4789:57.4789:57.4789:1:58:Recently tested S4:45.9667:45.2331:47.3804:6:74:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-08-04 w252 support S1:70.2551:69.4357:70.6603:3:56:Recently tested S2:65.8826:64.7847:66.5080:2:56:Recently tested S3:49.9395:49.0036:51.3072:4:57:Holding S4:46.4988:44.9043:48.3882:10:83:Holding S5:41.8773:41.7725:42.0519:3:55:Holding | close-below -
+2026-08-04 changes reclaimed: Price climbed back above $70.26; that zone is acting as support again. / dropped: Support at $57.48 dropped out of the top list. / macd: MACD turned bullish.
+2026-08-05 w21 support S1:69.4357:69.4357:69.4357:1:86:Recently tested S2:64.7847:64.7847:64.7847:1:85:Recently tested S3:57.4789:57.4789:57.4789:1:93:Recently tested | close-below -
+2026-08-05 w63 support S1:70.2551:69.4357:70.6603:3:89:Recently tested S2:65.8826:64.7847:66.5080:2:82:Recently tested S3:57.4789:57.4789:57.4789:1:71:Recently tested | close-below -
+2026-08-05 w126 support S1:70.2551:69.4357:70.6603:3:65:Recently tested S2:65.8826:64.7847:66.5080:2:62:Recently tested S3:57.4789:57.4789:57.4789:1:58:Recently tested S4:45.9667:45.2331:47.3804:6:73:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-08-05 w252 support S1:70.2551:69.4357:70.6603:3:55:Recently tested S2:65.8826:64.7847:66.5080:2:55:Recently tested S3:49.9395:49.0036:51.3072:4:57:Holding S4:46.4988:44.9043:48.3882:10:83:Holding S5:41.8773:41.7725:42.0519:3:55:Holding | close-below -
+2026-08-05 changes -
+2026-08-06 w21 support S1:64.7847:64.7847:64.7847:1:83:Recently tested S2:57.4789:57.4789:57.4789:1:91:Recently tested | close-below -
+2026-08-06 w63 support S1:70.2551:69.4357:70.6603:3:90:Recently tested S2:65.8826:64.7847:66.5080:2:81:Recently tested S3:57.4789:57.4789:57.4789:1:70:Recently tested | close-below -
+2026-08-06 w126 support S1:70.2551:69.4357:70.6603:3:65:Recently tested S2:65.8826:64.7847:66.5080:2:62:Recently tested S3:57.4789:57.4789:57.4789:1:58:Recently tested S4:45.9667:45.2331:47.3804:6:73:Holding S5:37.1624:37.1624:37.1624:1:41:Holding | close-below -
+2026-08-06 w252 support S1:70.2551:69.4357:70.6603:3:56:Recently tested S2:65.8826:64.7847:66.5080:2:55:Recently tested S3:49.9395:49.0036:51.3072:4:57:Holding S4:46.4988:44.9043:48.3882:10:83:Holding S5:41.8773:41.7725:42.0519:3:55:Holding | close-below -
+2026-08-06 changes -
+2026-08-07 w21 support S1:64.7847:64.7847:64.7847:1:82:Recently tested S2:57.4789:57.4789:57.4789:1:89:Recently tested | close-below -
+2026-08-07 w63 support S1:70.2551:69.4357:70.6603:3:89:Recently tested S2:65.8826:64.7847:66.5080:2:81:Recently tested S3:57.4789:57.4789:57.4789:1:70:Recently tested | close-below -
+2026-08-07 w126 support S1:70.2551:69.4357:70.6603:3:69:Recently tested S2:65.8826:64.7847:66.5080:2:65:Recently tested S3:57.4789:57.4789:57.4789:1:59:Recently tested S4:45.7740:45.2331:47.3804:5:72:Holding S5:37.1624:37.1624:37.1624:1:43:Holding | close-below -
+2026-08-07 w252 support S1:70.2551:69.4357:70.6603:3:55:Recently tested S2:65.8826:64.7847:66.5080:2:55:Recently tested S3:49.9395:49.0036:51.3072:4:57:Holding S4:46.4988:44.9043:48.3882:10:83:Holding S5:41.8773:41.7725:42.0519:3:55:Holding | close-below -
+2026-08-07 changes -
+2026-08-10 w21 support S1:64.7847:64.7847:64.7847:1:80:Recently tested S2:57.4789:57.4789:57.4789:1:88:Recently tested | close-below -
+2026-08-10 w63 support S1:70.2551:69.4357:70.6603:3:89:Recently tested S2:65.8826:64.7847:66.5080:2:80:Recently tested S3:57.4789:57.4789:57.4789:1:69:Recently tested | close-below -
+2026-08-10 w126 support S1:70.2551:69.4357:70.6603:3:68:Recently tested S2:65.8826:64.7847:66.5080:2:64:Recently tested S3:57.4789:57.4789:57.4789:1:59:Recently tested S4:45.7740:45.2331:47.3804:5:72:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-08-10 w252 support S1:70.2551:69.4357:70.6603:3:55:Recently tested S2:65.8826:64.7847:66.5080:2:55:Recently tested S3:49.9395:49.0036:51.3072:4:57:Holding S4:46.4988:44.9043:48.3882:10:83:Holding S5:41.8773:41.7725:42.0519:3:55:Holding | close-below -
+2026-08-10 changes -
+2026-08-11 w21 support S1:64.7847:64.7847:64.7847:1:79:Recently tested S2:57.4789:57.4789:57.4789:1:87:Recently tested | close-below -
+2026-08-11 w63 support S1:70.2551:69.4357:70.6603:3:88:Recently tested S2:65.8826:64.7847:66.5080:2:80:Recently tested S3:57.4789:57.4789:57.4789:1:69:Recently tested | close-below -
+2026-08-11 w126 support S1:70.2551:69.4357:70.6603:3:68:Recently tested S2:65.8826:64.7847:66.5080:2:64:Recently tested S3:57.4789:57.4789:57.4789:1:58:Recently tested S4:45.7740:45.2331:47.3804:5:72:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-08-11 w252 support S1:70.2551:69.4357:70.6603:3:58:Recently tested S2:65.8826:64.7847:66.5080:2:57:Recently tested S3:48.9567:48.0557:50.1839:5:68:Holding S4:45.9790:44.9043:47.3804:8:81:Holding S5:41.8773:41.7725:42.0519:3:57:Holding | close-below -
+2026-08-11 changes new: Support at $48.96 (5 touches) moved into the top 5. / dropped: Support at $49.94 dropped out of the top list.
+2026-08-12 w21 support S1:64.7847:64.7847:64.7847:1:77:Recently tested S2:57.4789:57.4789:57.4789:1:85:Recently tested | close-below -
+2026-08-12 w63 support S1:70.2551:69.4357:70.6603:3:88:Recently tested S2:65.8826:64.7847:66.5080:2:79:Recently tested S3:57.4789:57.4789:57.4789:1:68:Recently tested | close-below -
+2026-08-12 w126 support S1:70.2551:69.4357:70.6603:3:68:Recently tested S2:65.8826:64.7847:66.5080:2:64:Recently tested S3:57.4789:57.4789:57.4789:1:58:Recently tested S4:45.7740:45.2331:47.3804:5:72:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-08-12 w252 support S1:70.2551:69.4357:70.6603:3:58:Recently tested S2:65.8826:64.7847:66.5080:2:57:Recently tested S3:48.9567:48.0557:50.1839:5:68:Holding S4:45.9790:44.9043:47.3804:8:81:Holding S5:41.8773:41.7725:42.0519:3:57:Holding | close-below -
+2026-08-12 changes -
+2026-08-13 w21 support S1:64.7847:64.7847:64.7847:1:76:Recently tested S2:57.4789:57.4789:57.4789:1:84:Holding | close-below -
+2026-08-13 w63 support S1:70.2551:69.4357:70.6603:3:87:Recently tested S2:65.8826:64.7847:66.5080:2:79:Recently tested S3:57.4789:57.4789:57.4789:1:68:Holding | close-below -
+2026-08-13 w126 support S1:70.2551:69.4357:70.6603:3:68:Recently tested S2:65.8826:64.7847:66.5080:2:64:Recently tested S3:57.4789:57.4789:57.4789:1:58:Holding S4:45.7740:45.2331:47.3804:5:71:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-08-13 w252 support S1:70.2551:69.4357:70.6603:3:58:Recently tested S2:65.8826:64.7847:66.5080:2:56:Recently tested S3:48.9567:48.0557:50.1839:5:68:Holding S4:45.9790:44.9043:47.3804:8:81:Holding S5:41.8773:41.7725:42.0519:3:57:Holding | close-below -
+2026-08-13 changes -
+2026-08-14 w21 support S1:64.7847:64.7847:64.7847:1:74:Recently tested S2:57.4789:57.4789:57.4789:1:82:Holding | close-below -
+2026-08-14 w63 support S1:70.2551:69.4357:70.6603:3:87:Recently tested S2:65.8826:64.7847:66.5080:2:78:Recently tested S3:57.4789:57.4789:57.4789:1:67:Holding | close-below -
+2026-08-14 w126 support S1:70.2551:69.4357:70.6603:3:67:Recently tested S2:65.8826:64.7847:66.5080:2:63:Recently tested S3:57.4789:57.4789:57.4789:1:58:Holding S4:45.7740:45.2331:47.3804:5:71:Holding S5:37.1624:37.1624:37.1624:1:41:Holding | close-below -
+2026-08-14 w252 support S1:70.2551:69.4357:70.6603:3:58:Recently tested S2:65.8826:64.7847:66.5080:2:56:Recently tested S3:48.9567:48.0557:50.1839:5:68:Holding S4:45.9790:44.9043:47.3804:8:81:Holding S5:41.8773:41.7725:42.0519:3:57:Holding | close-below -
+2026-08-14 changes -
+2026-08-17 w21 support S1:57.4789:57.4789:57.4789:1:81:Holding | close-below -
+2026-08-17 w63 support S1:70.2551:69.4357:70.6603:3:86:Recently tested S2:65.8826:64.7847:66.5080:2:78:Recently tested S3:57.4789:57.4789:57.4789:1:67:Holding | close-below -
+2026-08-17 w126 support S1:70.2551:69.4357:70.6603:3:73:Recently tested S2:65.8826:64.7847:66.5080:2:66:Recently tested S3:57.4789:57.4789:57.4789:1:59:Holding S4:45.5200:45.2331:46.1477:4:71:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-08-17 w252 support S1:70.2551:69.4357:70.6603:3:58:Recently tested S2:65.8826:64.7847:66.5080:2:56:Recently tested S3:48.9567:48.0557:50.1839:5:68:Holding S4:45.9790:44.9043:47.3804:8:81:Holding S5:41.8773:41.7725:42.0519:3:57:Holding | close-below -
+2026-08-17 changes -
+2026-08-18 w21 support S1:57.4789:57.4789:57.4789:1:79:Holding | close-below -
+2026-08-18 w63 support S1:70.2551:69.4357:70.6603:3:86:Recently tested S2:65.8826:64.7847:66.5080:2:77:Holding S3:57.4789:57.4789:57.4789:1:66:Holding | close-below -
+2026-08-18 w126 support S1:70.2551:69.4357:70.6603:3:82:Recently tested S2:65.8826:64.7847:66.5080:2:72:Holding S3:57.4789:57.4789:57.4789:1:61:Holding S4:45.3617:45.2331:45.4518:3:70:Holding S5:37.1624:37.1624:37.1624:1:44:Holding | close-below -
+2026-08-18 w252 support S1:70.2551:69.4357:70.6603:3:57:Recently tested S2:65.8826:64.7847:66.5080:2:56:Holding S3:48.9567:48.0557:50.1839:5:68:Holding S4:45.9790:44.9043:47.3804:8:80:Holding S5:41.8773:41.7725:42.0519:3:56:Holding | close-below -
+2026-08-18 changes -
+2026-08-19 w21 support S1:57.4789:57.4789:57.4789:1:78:Holding | close-below -
+2026-08-19 w63 support S1:70.0083:69.4357:70.5835:2:88:Recently tested S2:65.8826:64.7847:66.5080:2:90:Holding S3:57.4789:57.4789:57.4789:1:73:Holding | close-below -
+2026-08-19 w126 support S1:70.2551:69.4357:70.6603:3:84:Recently tested S2:65.8826:64.7847:66.5080:2:72:Holding S3:57.4789:57.4789:57.4789:1:61:Holding S4:45.3617:45.2331:45.4518:3:70:Holding S5:37.1624:37.1624:37.1624:1:44:Holding | close-below -
+2026-08-19 w252 support S1:70.2551:69.4357:70.6603:3:58:Recently tested S2:65.8826:64.7847:66.5080:2:56:Holding S3:48.9567:48.0557:50.1839:5:68:Holding S4:45.9790:44.9043:47.3804:8:80:Holding S5:41.8773:41.7725:42.0519:3:56:Holding | close-below -
+2026-08-19 changes -
+2026-08-20 w21 support S1:57.4789:57.4789:57.4789:1:76:Holding | close-below -
+2026-08-20 w63 support S1:70.0083:69.4357:70.5835:2:88:In play S2:65.8826:64.7847:66.5080:2:90:Holding S3:57.4789:57.4789:57.4789:1:72:Holding | close-below -
+2026-08-20 w126 support S1:70.2551:69.4357:70.6603:3:84:In play S2:65.8826:64.7847:66.5080:2:71:Holding S3:57.4789:57.4789:57.4789:1:60:Holding S4:45.3617:45.2331:45.4518:3:69:Holding S5:37.1624:37.1624:37.1624:1:44:Holding | close-below -
+2026-08-20 w252 support S1:70.2551:69.4357:70.6603:3:58:In play S2:65.8826:64.7847:66.5080:2:56:Holding S3:48.9567:48.0557:50.1839:5:67:Holding S4:45.9790:44.9043:47.3804:8:80:Holding S5:41.8773:41.7725:42.0519:3:56:Holding | close-below -
+2026-08-20 changes -
+2026-08-21 w21 support S1:57.4789:57.4789:57.4789:1:75:Holding | close-below -
+2026-08-21 w63 support S1:70.0083:69.4357:70.5835:2:85:In play S2:66.5080:66.5080:66.5080:1:72:Holding S3:64.7847:64.7847:64.7847:1:58:Holding S4:57.4789:57.4789:57.4789:1:67:Holding | close-below -
+2026-08-21 w126 support S1:70.2551:69.4357:70.6603:3:84:In play S2:66.5080:66.5080:66.5080:1:63:Holding S3:64.7847:64.7847:64.7847:1:52:Holding S4:57.4789:57.4789:57.4789:1:60:Holding S5:45.3617:45.2331:45.4518:3:69:Holding | close-below -
+2026-08-21 w252 support S1:70.2551:69.4357:70.6603:3:64:In play S2:66.5080:66.5080:66.5080:1:59:Holding S3:57.4789:57.4789:57.4789:1:56:Holding S4:48.3630:47.3554:49.6091:6:82:Holding S5:45.6179:44.9043:46.7839:6:82:Holding | close-below -
+2026-08-21 changes new: Support at $57.48 (1 touch) moved into the top 5. / dropped: Support at $41.88 dropped out of the top list.
+2026-08-24 w21 support S1:57.4789:57.4789:57.4789:1:73:Holding | close-below -
+2026-08-24 w63 support S1:70.0083:69.4357:70.5835:2:85:In play S2:66.5080:66.5080:66.5080:1:71:Holding S3:64.7847:64.7847:64.7847:1:57:Holding S4:57.4789:57.4789:57.4789:1:67:Holding | close-below -
+2026-08-24 w126 support S1:70.2551:69.4357:70.6603:3:84:In play S2:66.5080:66.5080:66.5080:1:63:Holding S3:64.7847:64.7847:64.7847:1:52:Holding S4:57.4789:57.4789:57.4789:1:60:Holding S5:45.3617:45.2331:45.4518:3:69:Holding | close-below -
+2026-08-24 w252 support S1:70.2551:69.4357:70.6603:3:64:In play S2:66.5080:66.5080:66.5080:1:59:Holding S3:57.4789:57.4789:57.4789:1:56:Holding S4:48.3630:47.3554:49.6091:6:82:Holding S5:45.6179:44.9043:46.7839:6:82:Holding | close-below -
+2026-08-24 changes macd: MACD turned bearish.
+2026-08-25 w21 support S1:57.4789:57.4789:57.4789:1:72:Holding | close-below -
+2026-08-25 w63 support S1:70.0083:69.4357:70.5835:2:85:In play S2:66.5080:66.5080:66.5080:1:71:Holding S3:64.7847:64.7847:64.7847:1:57:Holding S4:57.4789:57.4789:57.4789:1:66:Holding | close-below -
+2026-08-25 w126 support S1:70.2551:69.4357:70.6603:3:84:In play S2:66.5080:66.5080:66.5080:1:63:Holding S3:64.7847:64.7847:64.7847:1:52:Holding S4:57.4789:57.4789:57.4789:1:60:Holding S5:45.3617:45.2331:45.4518:3:67:Holding | close-below -
+2026-08-25 w252 support S1:70.2551:69.4357:70.6603:3:64:In play S2:66.5080:66.5080:66.5080:1:58:Holding S3:48.3630:47.3554:49.6091:6:81:Holding S4:45.6179:44.9043:46.7839:6:82:Holding S5:41.8990:41.7725:42.0519:2:55:Holding | close-below -
+2026-08-25 changes new: Support at $41.90 (2 touches) moved into the top 5. / dropped: Support at $57.48 dropped out of the top list.
+2026-08-26 w21 support S1:57.4789:57.4789:57.4789:1:70:Holding | close-below -
+2026-08-26 w63 support S1:70.0083:69.4357:70.5835:2:85:In play S2:66.5080:66.5080:66.5080:1:70:Holding S3:64.7847:64.7847:64.7847:1:56:Holding S4:57.4789:57.4789:57.4789:1:66:Holding | close-below -
+2026-08-26 w126 support S1:70.2551:69.4357:70.6603:3:84:In play S2:66.5080:66.5080:66.5080:1:63:Holding S3:64.7847:64.7847:64.7847:1:51:Holding S4:57.4789:57.4789:57.4789:1:59:Holding S5:45.3617:45.2331:45.4518:3:67:Holding | close-below -
+2026-08-26 w252 support S1:70.2551:69.4357:70.6603:3:64:In play S2:66.5080:66.5080:66.5080:1:58:Holding S3:48.3630:47.3554:49.6091:6:81:Holding S4:45.6179:44.9043:46.7839:6:82:Holding S5:41.8990:41.7725:42.0519:2:55:Holding | close-below -
+2026-08-26 changes -
+2026-08-27 w21 support S1:67.7989:67.7989:67.7989:1:93:Recently tested | close-below -
+2026-08-27 w63 support S1:70.0083:69.4357:70.5835:2:88:Recently tested S2:66.8442:66.5080:67.7989:2:91:Recently tested S3:64.7847:64.7847:64.7847:1:59:Holding S4:57.4789:57.4789:57.4789:1:70:Holding | close-below -
+2026-08-27 w126 support S1:70.2551:69.4357:70.6603:3:84:Recently tested S2:66.8442:66.5080:67.7989:2:72:Recently tested S3:64.7847:64.7847:64.7847:1:51:Holding S4:57.4789:57.4789:57.4789:1:59:Holding S5:45.3617:45.2331:45.4518:3:67:Holding | close-below -
+2026-08-27 w252 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:66.8442:66.5080:67.7989:2:59:Recently tested S3:48.3630:47.3554:49.6091:6:81:Holding S4:45.6179:44.9043:46.7839:6:81:Holding S5:41.8990:41.7725:42.0519:2:55:Holding | close-below -
+2026-08-27 changes -
+2026-08-28 w21 support S1:67.7989:67.7989:67.7989:1:92:Recently tested | close-below -
+2026-08-28 w63 support S1:70.0083:69.4357:70.5835:2:88:Recently tested S2:66.8442:66.5080:67.7989:2:91:Recently tested S3:64.7847:64.7847:64.7847:1:59:Holding S4:57.4789:57.4789:57.4789:1:69:Holding | close-below -
+2026-08-28 w126 support S1:70.2551:69.4357:70.6603:3:84:Recently tested S2:66.8442:66.5080:67.7989:2:72:Recently tested S3:64.7847:64.7847:64.7847:1:51:Holding S4:57.4789:57.4789:57.4789:1:59:Holding S5:45.3617:45.2331:45.4518:3:66:Holding | close-below -
+2026-08-28 w252 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:66.8442:66.5080:67.7989:2:59:Recently tested S3:50.2194:49.6091:51.3072:3:60:Holding S4:48.0479:47.3554:49.0036:5:74:Holding S5:45.6179:44.9043:46.7839:6:81:Holding | close-below -
+2026-08-28 changes new: Support at $50.22 (3 touches) moved into the top 5. / dropped: Support at $41.90 dropped out of the top list.
+2026-08-31 w21 support S1:67.7989:67.7989:67.7989:1:91:Recently tested | close-below -
+2026-08-31 w63 support S1:70.0083:69.4357:70.5835:2:88:Recently tested S2:66.8442:66.5080:67.7989:2:91:Recently tested S3:64.7847:64.7847:64.7847:1:58:Holding S4:57.4789:57.4789:57.4789:1:69:Holding | close-below -
+2026-08-31 w126 support S1:70.2551:69.4357:70.6603:3:84:Recently tested S2:66.8442:66.5080:67.7989:2:71:Recently tested S3:64.7847:64.7847:64.7847:1:51:Holding S4:57.4789:57.4789:57.4789:1:59:Holding S5:45.3617:45.2331:45.4518:3:66:Holding | close-below -
+2026-08-31 w252 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:66.8442:66.5080:67.7989:2:59:Recently tested S3:50.2194:49.6091:51.3072:3:60:Holding S4:48.0479:47.3554:49.0036:5:73:Holding S5:45.6179:44.9043:46.7839:6:81:Holding | close-below -
+2026-08-31 changes -
+2026-09-01 w21 support S1:67.7989:67.7989:67.7989:1:98:Recently tested | close-below -
+2026-09-01 w63 support S1:70.0083:69.4357:70.5835:2:88:In play S2:66.8442:66.5080:67.7989:2:93:Recently tested S3:64.7847:64.7847:64.7847:1:58:Holding S4:57.4789:57.4789:57.4789:1:68:Holding | close-below -
+2026-09-01 w126 support S1:70.2551:69.4357:70.6603:3:84:In play S2:66.8442:66.5080:67.7989:2:73:Recently tested S3:64.7847:64.7847:64.7847:1:51:Holding S4:57.4789:57.4789:57.4789:1:59:Holding S5:45.3128:45.2331:45.4021:2:52:Holding | close-below -
+2026-09-01 w252 support S1:70.2551:69.4357:70.6603:3:64:In play S2:66.8442:66.5080:67.7989:2:59:Recently tested S3:50.2194:49.6091:51.3072:3:60:Holding S4:48.0479:47.3554:49.0036:5:73:Holding S5:45.6179:44.9043:46.7839:6:81:Holding | close-below -
+2026-09-01 changes -
+2026-09-02 w21 support S1:67.7989:67.7989:67.7989:1:99:Recently tested | close-below -
+2026-09-02 w63 support S1:70.0083:69.4357:70.5835:2:88:In play S2:66.8442:66.5080:67.7989:2:93:Recently tested S3:64.7847:64.7847:64.7847:1:57:Holding S4:57.4789:57.4789:57.4789:1:68:Holding | close-below -
+2026-09-02 w126 support S1:70.2551:69.4357:70.6603:3:84:In play S2:66.8442:66.5080:67.7989:2:73:Recently tested S3:64.7847:64.7847:64.7847:1:51:Holding S4:57.4789:57.4789:57.4789:1:59:Holding S5:45.3128:45.2331:45.4021:2:52:Holding | close-below -
+2026-09-02 w252 support S1:70.2551:69.4357:70.6603:3:64:In play S2:66.8442:66.5080:67.7989:2:59:Recently tested S3:49.8465:49.6091:50.1839:2:55:Holding S4:48.0479:47.3554:49.0036:5:73:Holding S5:45.6179:44.9043:46.7839:6:81:Holding | close-below -
+2026-09-02 changes -
+2026-09-03 w21 support S1:67.7989:67.7989:67.7989:1:98:Recently tested | close-below -
+2026-09-03 w63 support S1:70.0083:69.4357:70.5835:2:88:Recently tested S2:66.8442:66.5080:67.7989:2:92:Recently tested S3:64.7847:64.7847:64.7847:1:57:Holding S4:57.4789:57.4789:57.4789:1:67:Holding | close-below -
+2026-09-03 w126 support S1:70.2551:69.4357:70.6603:3:84:Recently tested S2:66.8442:66.5080:67.7989:2:73:Recently tested S3:64.7847:64.7847:64.7847:1:50:Holding S4:57.4789:57.4789:57.4789:1:58:Holding S5:45.3128:45.2331:45.4021:2:52:Holding | close-below -
+2026-09-03 w252 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:66.8442:66.5080:67.7989:2:59:Recently tested S3:49.8465:49.6091:50.1839:2:55:Holding S4:48.0479:47.3554:49.0036:5:73:Holding S5:45.6179:44.9043:46.7839:6:80:Holding | close-below -
+2026-09-03 changes -
+2026-09-04 w21 support S1:67.9750:67.7989:68.1183:2:97:Recently tested | close-below -
+2026-09-04 w63 support S1:70.0083:69.4357:70.5835:2:74:Recently tested S2:67.1531:66.5080:68.1183:3:89:Recently tested S3:64.7847:64.7847:64.7847:1:50:Holding S4:57.4789:57.4789:57.4789:1:60:Holding | close-below -
+2026-09-04 w126 support S1:70.2551:69.4357:70.6603:3:84:Recently tested S2:67.1531:66.5080:68.1183:3:83:Recently tested S3:64.7847:64.7847:64.7847:1:50:Holding S4:57.4789:57.4789:57.4789:1:58:Holding S5:45.3128:45.2331:45.4021:2:52:Holding | close-below -
+2026-09-04 w252 support S1:70.2551:69.4357:70.6603:3:63:Recently tested S2:67.1531:66.5080:68.1183:3:63:Recently tested S3:49.8465:49.6091:50.1839:2:55:Holding S4:47.8212:46.7839:49.0036:6:80:Holding S5:45.3747:44.9043:46.1477:5:73:Holding | close-below -
+2026-09-04 changes -
+2026-09-08 w21 support S1:67.9750:67.7989:68.1183:2:96:Recently tested | close-below -
+2026-09-08 w63 support S1:70.0083:69.4357:70.5835:2:74:Recently tested S2:67.1531:66.5080:68.1183:3:88:Recently tested S3:64.7847:64.7847:64.7847:1:49:Holding S4:57.4789:57.4789:57.4789:1:60:Holding | close-below -
+2026-09-08 w126 support S1:70.2551:69.4357:70.6603:3:85:Recently tested S2:67.1531:66.5080:68.1183:3:84:Recently tested S3:64.7847:64.7847:64.7847:1:50:Holding S4:57.4789:57.4789:57.4789:1:59:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-09-08 w252 support S1:70.2551:69.4357:70.6603:3:68:Recently tested S2:67.1531:66.5080:68.1183:3:67:Recently tested S3:49.6050:49.0036:50.1839:3:64:Holding S4:47.6256:46.7839:48.3882:5:80:Holding S5:45.3747:44.9043:46.1477:5:80:Holding | close-below -
+2026-09-08 changes macd: MACD turned bullish.
+2026-09-09 w21 support S1:67.9750:67.7989:68.1183:2:94:Recently tested | close-below -
+2026-09-09 w63 support S1:70.0083:69.4357:70.5835:2:88:Recently tested S2:67.9750:67.7989:68.1183:2:81:Recently tested S3:64.7847:64.7847:64.7847:1:55:Holding S4:57.4789:57.4789:57.4789:1:66:Holding | close-below -
+2026-09-09 w126 support S1:70.2551:69.4357:70.6603:3:85:Recently tested S2:67.1531:66.5080:68.1183:3:84:Recently tested S3:64.7847:64.7847:64.7847:1:50:Holding S4:57.4789:57.4789:57.4789:1:59:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-09-09 w252 support S1:70.2551:69.4357:70.6603:3:68:Recently tested S2:67.1531:66.5080:68.1183:3:67:Recently tested S3:49.6050:49.0036:50.1839:3:64:Holding S4:47.6256:46.7839:48.3882:5:80:Holding S5:45.3747:44.9043:46.1477:5:80:Holding | close-below -
+2026-09-09 changes -
+2026-09-10 w21 support S1:67.9750:67.7989:68.1183:2:100:Recently tested | close-below -
+2026-09-10 w63 support S1:70.0083:69.4357:70.5835:2:88:In play S2:67.9750:67.7989:68.1183:2:83:Recently tested S3:64.7847:64.7847:64.7847:1:55:Holding S4:57.4789:57.4789:57.4789:1:65:Holding | close-below -
+2026-09-10 w126 support S1:70.2551:69.4357:70.6603:3:85:In play S2:67.1531:66.5080:68.1183:3:84:Recently tested S3:64.7847:64.7847:64.7847:1:50:Holding S4:57.4789:57.4789:57.4789:1:58:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-09-10 w252 support S1:70.2551:69.4357:70.6603:3:68:In play S2:67.1531:66.5080:68.1183:3:68:Recently tested S3:49.6050:49.0036:50.1839:3:64:Holding S4:47.6256:46.7839:48.3882:5:80:Holding S5:45.3747:44.9043:46.1477:5:80:Holding | close-below -
+2026-09-10 changes macd: MACD turned bearish.
+2026-09-11 w21 support S1:67.9750:67.7989:68.1183:2:99:Recently tested | close-below -
+2026-09-11 w63 support S1:70.0083:69.4357:70.5835:2:88:In play S2:67.9750:67.7989:68.1183:2:82:Recently tested S3:64.7847:64.7847:64.7847:1:54:Holding S4:57.4789:57.4789:57.4789:1:65:Holding | close-below -
+2026-09-11 w126 support S1:70.2551:69.4357:70.6603:3:85:In play S2:67.1531:66.5080:68.1183:3:84:Recently tested S3:64.7847:64.7847:64.7847:1:50:Holding S4:57.4789:57.4789:57.4789:1:58:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-09-11 w252 support S1:70.2551:69.4357:70.6603:3:68:In play S2:67.1531:66.5080:68.1183:3:68:Recently tested S3:49.6050:49.0036:50.1839:3:64:Holding S4:47.6256:46.7839:48.3882:5:80:Holding S5:45.3747:44.9043:46.1477:5:80:Holding | close-below -
+2026-09-11 changes -
+2026-09-14 w21 support S1:67.9750:67.7989:68.1183:2:100:Recently tested | close-below -
+2026-09-14 w63 support S1:70.0083:69.4357:70.5835:2:88:In play S2:67.9750:67.7989:68.1183:2:83:Recently tested S3:64.7847:64.7847:64.7847:1:54:Holding S4:57.4789:57.4789:57.4789:1:65:Holding | close-below -
+2026-09-14 w126 support S1:70.2551:69.4357:70.6603:3:85:In play S2:67.1531:66.5080:68.1183:3:85:Recently tested S3:64.7847:64.7847:64.7847:1:50:Holding S4:57.4789:57.4789:57.4789:1:58:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below -
+2026-09-14 w252 support S1:70.2551:69.4357:70.6603:3:68:In play S2:67.1531:66.5080:68.1183:3:68:Recently tested S3:49.6050:49.0036:50.1839:3:64:Holding S4:47.6256:46.7839:48.3882:5:80:Holding S5:45.3747:44.9043:46.1477:5:80:Holding | close-below -
+2026-09-14 changes -
+2026-09-15 w21 support S1:67.9750:67.7989:68.1183:2:100:In play | close-below -
+2026-09-15 w63 support S1:67.9750:67.7989:68.1183:2:83:In play S2:64.7847:64.7847:64.7847:1:53:Holding S3:57.4789:57.4789:57.4789:1:64:Holding | close-below 70.0083
+2026-09-15 w126 support S1:67.1531:66.5080:68.1183:3:85:In play S2:64.7847:64.7847:64.7847:1:50:Holding S3:57.4789:57.4789:57.4789:1:58:Holding S4:42.0519:42.0519:42.0519:1:39:Holding S5:37.1624:37.1624:37.1624:1:42:Holding | close-below 70.2551
+2026-09-15 w252 support S1:67.1531:66.5080:68.1183:3:68:In play S2:57.4789:57.4789:57.4789:1:55:Holding S3:49.6050:49.0036:50.1839:3:64:Holding S4:47.6256:46.7839:48.3882:5:80:Holding S5:45.3747:44.9043:46.1477:5:80:Holding | close-below 70.2551
+2026-09-15 changes new: Support at $57.48 (1 touch) moved into the top 5. / broken: Support at $70.26 broke — price closed below the zone.
+2026-09-16 w21 support S1:67.9750:67.7989:68.1183:2:100:In play | close-below -
+2026-09-16 w63 support S1:67.9750:67.7989:68.1183:2:83:In play S2:64.7847:64.7847:64.7847:1:53:Holding S3:57.4789:57.4789:57.4789:1:64:Holding | close-below 70.0083
+2026-09-16 w126 support S1:67.1531:66.5080:68.1183:3:85:In play S2:64.7847:64.7847:64.7847:1:49:Holding S3:57.4789:57.4789:57.4789:1:58:Holding S4:42.0519:42.0519:42.0519:1:39:Holding S5:37.1624:37.1624:37.1624:1:41:Holding | close-below 70.2551
+2026-09-16 w252 support S1:67.1531:66.5080:68.1183:3:68:In play S2:57.4789:57.4789:57.4789:1:55:Holding S3:49.6050:49.0036:50.1839:3:64:Holding S4:47.6256:46.7839:48.3882:5:80:Holding S5:45.3747:44.9043:46.1477:5:80:Holding | close-below 70.2551
+2026-09-16 changes -
+2026-09-17 w21 support S1:67.9750:67.7989:68.1183:2:99:Recently tested | close-below -
+2026-09-17 w63 support S1:70.0083:69.4357:70.5835:2:88:In play S2:67.9750:67.7989:68.1183:2:82:Recently tested S3:64.7847:64.7847:64.7847:1:52:Holding S4:57.4789:57.4789:57.4789:1:63:Holding | close-below -
+2026-09-17 w126 support S1:70.2551:69.4357:70.6603:3:85:In play S2:67.1531:66.5080:68.1183:3:85:Recently tested S3:64.7847:64.7847:64.7847:1:49:Holding S4:57.4789:57.4789:57.4789:1:57:Holding S5:37.1624:37.1624:37.1624:1:41:Holding | close-below -
+2026-09-17 w252 support S1:70.2551:69.4357:70.6603:3:64:In play S2:67.1531:66.5080:68.1183:3:63:Recently tested S3:49.8465:49.6091:50.1839:2:54:Holding S4:47.8212:46.7839:49.0036:6:79:Holding S5:45.3747:44.9043:46.1477:5:72:Holding | close-below -
+2026-09-17 changes reclaimed: Price climbed back above $70.26; that zone is acting as support again. / dropped: Support at $57.48 dropped out of the top list.
+2026-09-18 w21 support S1:67.9750:67.7989:68.1183:2:97:Recently tested | close-below -
+2026-09-18 w63 support S1:70.0083:69.4357:70.5835:2:88:Recently tested S2:67.9750:67.7989:68.1183:2:82:Recently tested S3:64.7847:64.7847:64.7847:1:52:Holding S4:57.4789:57.4789:57.4789:1:63:Holding | close-below -
+2026-09-18 w126 support S1:70.2551:69.4357:70.6603:3:85:Recently tested S2:67.1531:66.5080:68.1183:3:84:Recently tested S3:64.7847:64.7847:64.7847:1:49:Holding S4:57.4789:57.4789:57.4789:1:57:Holding S5:37.1624:37.1624:37.1624:1:41:Holding | close-below -
+2026-09-18 w252 support S1:70.2551:69.4357:70.6603:3:68:Recently tested S2:67.1531:66.5080:68.1183:3:67:Recently tested S3:49.8465:49.6091:50.1839:2:56:Holding S4:47.9145:46.7839:49.0036:5:79:Holding S5:45.3747:44.9043:46.1477:5:79:Holding | close-below -
+2026-09-18 changes macd: MACD turned bullish.
+2026-09-21 w21 support S1:67.3964:66.4216:68.1183:3:96:Recently tested | close-below -
+2026-09-21 w63 support S1:70.0083:69.4357:70.5835:2:74:Recently tested S2:67.3964:66.4216:68.1183:3:83:Recently tested S3:64.7847:64.7847:64.7847:1:45:Holding S4:57.4789:57.4789:57.4789:1:55:Holding | close-below -
+2026-09-21 w126 support S1:70.2551:69.4357:70.6603:3:77:Recently tested S2:67.0017:66.4216:68.1183:4:86:Recently tested S3:64.7847:64.7847:64.7847:1:48:Holding S4:57.4789:57.4789:57.4789:1:57:Holding S5:37.1624:37.1624:37.1624:1:41:Holding | close-below -
+2026-09-21 w252 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:67.0017:66.4216:68.1183:4:70:Recently tested S3:57.4789:57.4789:57.4789:1:53:Holding S4:48.5583:47.3804:49.6091:5:73:Holding S5:45.6179:44.9043:46.7839:6:80:Holding | close-below -
+2026-09-21 changes new: Support at $57.48 (1 touch) moved into the top 5. / dropped: Support at $49.85 dropped out of the top list.
+2026-09-22 w21 support S1:67.3964:66.4216:68.1183:3:94:Recently tested | close-below -
+2026-09-22 w63 support S1:70.0083:69.4357:70.5835:2:73:Recently tested S2:67.3964:66.4216:68.1183:3:83:Recently tested S3:64.7847:64.7847:64.7847:1:44:Holding S4:57.4789:57.4789:57.4789:1:55:Holding | close-below -
+2026-09-22 w126 support S1:70.2551:69.4357:70.6603:3:77:Recently tested S2:67.0017:66.4216:68.1183:4:86:Recently tested S3:64.7847:64.7847:64.7847:1:48:Holding S4:57.4789:57.4789:57.4789:1:57:Holding S5:37.1624:37.1624:37.1624:1:41:Holding | close-below -
+2026-09-22 w252 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:67.0017:66.4216:68.1183:4:70:Recently tested S3:57.4789:57.4789:57.4789:1:53:Holding S4:48.5583:47.3804:49.6091:5:73:Holding S5:45.6179:44.9043:46.7839:6:79:Holding | close-below -
+2026-09-22 changes -
+2026-09-23 w21 support S1:68.1183:68.1183:68.1183:1:84:Recently tested S2:66.4216:66.4216:66.4216:1:93:Recently tested | close-below -
+2026-09-23 w63 support S1:70.0083:69.4357:70.5835:2:73:Recently tested S2:67.3964:66.4216:68.1183:3:82:Recently tested S3:64.7847:64.7847:64.7847:1:44:Holding S4:57.4789:57.4789:57.4789:1:54:Holding | close-below -
+2026-09-23 w126 support S1:70.2551:69.4357:70.6603:3:77:Recently tested S2:67.0017:66.4216:68.1183:4:86:Recently tested S3:64.7847:64.7847:64.7847:1:47:Holding S4:57.4789:57.4789:57.4789:1:57:Holding S5:37.1624:37.1624:37.1624:1:41:Holding | close-below -
+2026-09-23 w252 support S1:70.2551:69.4357:70.6603:3:63:Recently tested S2:67.0017:66.4216:68.1183:4:70:Recently tested S3:57.4789:57.4789:57.4789:1:53:Holding S4:48.5583:47.3804:49.6091:5:73:Holding S5:45.6179:44.9043:46.7839:6:79:Holding | close-below -
+2026-09-23 changes -
+2026-09-24 w21 support S1:68.1183:68.1183:68.1183:1:83:Recently tested S2:66.4216:66.4216:66.4216:1:91:Recently tested | close-below -
+2026-09-24 w63 support S1:70.0083:69.4357:70.5835:2:72:Recently tested S2:67.3964:66.4216:68.1183:3:82:Recently tested S3:64.7847:64.7847:64.7847:1:43:Holding S4:57.4789:57.4789:57.4789:1:54:Holding | close-below -
+2026-09-24 w126 support S1:70.2551:69.4357:70.6603:3:77:Recently tested S2:67.0017:66.4216:68.1183:4:86:Recently tested S3:64.7847:64.7847:64.7847:1:47:Holding S4:57.4789:57.4789:57.4789:1:57:Holding S5:37.1624:37.1624:37.1624:1:40:Holding | close-below -
+2026-09-24 w252 support S1:70.2551:69.4357:70.6603:3:63:Recently tested S2:67.0017:66.4216:68.1183:4:69:Recently tested S3:57.4789:57.4789:57.4789:1:53:Holding S4:48.5583:47.3804:49.6091:5:72:Holding S5:45.6179:44.9043:46.7839:6:79:Holding | close-below -
+2026-09-24 changes -
+2026-09-25 w21 support S1:68.1183:68.1183:68.1183:1:81:Recently tested S2:66.4216:66.4216:66.4216:1:89:Recently tested | close-below -
+2026-09-25 w63 support S1:69.4357:69.4357:69.4357:1:57:Recently tested S2:67.3964:66.4216:68.1183:3:81:Recently tested S3:64.7847:64.7847:64.7847:1:43:Holding S4:57.4789:57.4789:57.4789:1:53:Holding | close-below -
+2026-09-25 w126 support S1:70.2551:69.4357:70.6603:3:76:Recently tested S2:67.0017:66.4216:68.1183:4:86:Recently tested S3:64.7847:64.7847:64.7847:1:47:Holding S4:57.4789:57.4789:57.4789:1:56:Holding S5:37.1624:37.1624:37.1624:1:40:Holding | close-below -
+2026-09-25 w252 support S1:70.2551:69.4357:70.6603:3:63:Recently tested S2:67.0017:66.4216:68.1183:4:69:Recently tested S3:57.4789:57.4789:57.4789:1:53:Holding S4:48.5583:47.3804:49.6091:5:72:Holding S5:45.6179:44.9043:46.7839:6:79:Holding | close-below -
+2026-09-25 changes -
+2026-09-28 w21 support S1:68.1183:68.1183:68.1183:1:80:Recently tested S2:66.4216:66.4216:66.4216:1:88:Recently tested | close-below -
+2026-09-28 w63 support S1:69.4357:69.4357:69.4357:1:57:Recently tested S2:67.3964:66.4216:68.1183:3:81:Recently tested S3:64.7847:64.7847:64.7847:1:42:Holding S4:57.4789:57.4789:57.4789:1:53:Holding | close-below -
+2026-09-28 w126 support S1:70.2551:69.4357:70.6603:3:76:Recently tested S2:67.0017:66.4216:68.1183:4:85:Recently tested S3:64.7847:64.7847:64.7847:1:47:Holding S4:57.4789:57.4789:57.4789:1:56:Holding S5:37.1624:37.1624:37.1624:1:40:Holding | close-below -
+2026-09-28 w252 support S1:70.2551:69.4357:70.6603:3:63:Recently tested S2:67.0017:66.4216:68.1183:4:69:Recently tested S3:57.4789:57.4789:57.4789:1:52:Holding S4:48.5910:47.3804:49.6091:4:66:Holding S5:45.6179:44.9043:46.7839:6:78:Holding | close-below -
+2026-09-28 changes -
+2026-09-29 w21 support S1:68.1183:68.1183:68.1183:1:78:Recently tested S2:66.4216:66.4216:66.4216:1:87:Recently tested | close-below -
+2026-09-29 w63 support S1:69.4357:69.4357:69.4357:1:56:Recently tested S2:67.3964:66.4216:68.1183:3:80:Recently tested S3:64.7847:64.7847:64.7847:1:42:Holding S4:57.4789:57.4789:57.4789:1:53:Holding | close-below -
+2026-09-29 w126 support S1:70.2551:69.4357:70.6603:3:78:Recently tested S2:67.0017:66.4216:68.1183:4:87:Recently tested S3:64.7847:64.7847:64.7847:1:48:Holding S4:57.4789:57.4789:57.4789:1:60:Holding | close-below -
+2026-09-29 w252 support S1:70.2551:69.4357:70.6603:3:63:Recently tested S2:67.0017:66.4216:68.1183:4:69:Recently tested S3:57.4789:57.4789:57.4789:1:52:Holding S4:48.5910:47.3804:49.6091:4:66:Holding S5:45.6179:44.9043:46.7839:6:78:Holding | close-below -
+2026-09-29 changes -
+2026-09-30 w21 support S1:68.1183:68.1183:68.1183:1:77:Recently tested S2:66.4216:66.4216:66.4216:1:85:Recently tested | close-below -
+2026-09-30 w63 support S1:69.4357:69.4357:69.4357:1:56:Recently tested S2:67.3964:66.4216:68.1183:3:80:Recently tested S3:64.7847:64.7847:64.7847:1:41:Holding S4:57.4789:57.4789:57.4789:1:52:Holding | close-below -
+2026-09-30 w126 support S1:70.2551:69.4357:70.6603:3:78:Recently tested S2:67.0017:66.4216:68.1183:4:87:Recently tested S3:64.7847:64.7847:64.7847:1:48:Holding S4:57.4789:57.4789:57.4789:1:59:Holding | close-below -
+2026-09-30 w252 support S1:70.2551:69.4357:70.6603:3:63:Recently tested S2:67.0017:66.4216:68.1183:4:69:Recently tested S3:49.8465:49.6091:50.1839:2:53:Holding S4:48.1807:47.3804:49.0036:3:58:Holding S5:45.6179:44.9043:46.7839:6:78:Holding | close-below -
+2026-09-30 changes new: Support at $49.85 (2 touches) moved into the top 5. / dropped: Support at $57.48 dropped out of the top list.
+2026-10-01 w21 support S1:75.4700:75.4700:75.4700:1:87:Recently tested S2:66.4216:66.4216:66.4216:1:84:Holding | close-below -
+2026-10-01 w63 support S1:75.4700:75.4700:75.4700:1:55:Recently tested S2:69.4357:69.4357:69.4357:1:55:Holding S3:67.3964:66.4216:68.1183:3:79:Holding S4:64.7847:64.7847:64.7847:1:41:Holding S5:57.4789:57.4789:57.4789:1:52:Holding | close-below -
+2026-10-01 w126 support S1:75.4700:75.4700:75.4700:1:52:Recently tested S2:70.2551:69.4357:70.6603:3:78:Recently tested S3:67.0017:66.4216:68.1183:4:87:Holding S4:64.7847:64.7847:64.7847:1:48:Holding S5:57.4789:57.4789:57.4789:1:59:Holding | close-below -
+2026-10-01 w252 support S1:70.2551:69.4357:70.6603:3:63:Recently tested S2:67.0017:66.4216:68.1183:4:69:Holding S3:49.8465:49.6091:50.1839:2:52:Holding S4:48.1807:47.3804:49.0036:3:58:Holding S5:45.6179:44.9043:46.7839:6:78:Holding | close-below -
+2026-10-01 changes trend: Trend changed from Mixed to Uptrend.
+2026-10-02 w21 support S1:75.4700:75.4700:75.4700:1:87:Recently tested S2:66.4216:66.4216:66.4216:1:82:Holding | close-below -
+2026-10-02 w63 support S1:75.4700:75.4700:75.4700:1:56:Recently tested S2:69.4357:69.4357:69.4357:1:55:Holding S3:67.3964:66.4216:68.1183:3:79:Holding S4:64.7847:64.7847:64.7847:1:40:Holding S5:57.4789:57.4789:57.4789:1:51:Holding | close-below -
+2026-10-02 w126 support S1:75.4700:75.4700:75.4700:1:53:Recently tested S2:70.2551:69.4357:70.6603:3:77:Recently tested S3:67.0017:66.4216:68.1183:4:87:Holding S4:64.7847:64.7847:64.7847:1:47:Holding S5:57.4789:57.4789:57.4789:1:59:Holding | close-below -
+2026-10-02 w252 support S1:70.2551:69.4357:70.6603:3:62:Recently tested S2:67.0017:66.4216:68.1183:4:68:Holding S3:57.4789:57.4789:57.4789:1:52:Holding S4:48.5910:47.3804:49.6091:4:65:Holding S5:45.6179:44.9043:46.7839:6:78:Holding | close-below -
+2026-10-02 changes new: Support at $57.48 (1 touch) moved into the top 5. / dropped: Support at $49.85 dropped out of the top list.
+2026-10-05 w21 support S1:75.4700:75.4700:75.4700:1:86:Recently tested S2:66.4216:66.4216:66.4216:1:81:Holding | close-below -
+2026-10-05 w63 support S1:75.4700:75.4700:75.4700:1:55:Recently tested S2:69.4357:69.4357:69.4357:1:54:Holding S3:67.3964:66.4216:68.1183:3:78:Holding S4:64.7847:64.7847:64.7847:1:40:Holding S5:57.4789:57.4789:57.4789:1:51:Holding | close-below -
+2026-10-05 w126 support S1:75.4700:75.4700:75.4700:1:53:Recently tested S2:70.2551:69.4357:70.6603:3:77:Holding S3:67.0017:66.4216:68.1183:4:86:Holding S4:64.7847:64.7847:64.7847:1:47:Holding S5:57.4789:57.4789:57.4789:1:59:Holding | close-below -
+2026-10-05 w252 support S1:70.2551:69.4357:70.6603:3:62:Holding S2:67.0017:66.4216:68.1183:4:68:Holding S3:57.4789:57.4789:57.4789:1:52:Holding S4:48.5910:47.3804:49.6091:4:65:Holding S5:45.6179:44.9043:46.7839:6:78:Holding | close-below -
+2026-10-05 changes -
+2026-10-06 w21 support S1:75.4700:75.4700:75.4700:1:86:Recently tested S2:66.4216:66.4216:66.4216:1:79:Holding | close-below -
+2026-10-06 w63 support S1:75.4700:75.4700:75.4700:1:56:Recently tested S2:67.3964:66.4216:68.1183:3:78:Holding S3:64.7847:64.7847:64.7847:1:39:Holding S4:57.4789:57.4789:57.4789:1:50:Holding | close-below -
+2026-10-06 w126 support S1:75.4700:75.4700:75.4700:1:54:Recently tested S2:70.2551:69.4357:70.6603:3:77:Holding S3:67.0017:66.4216:68.1183:4:86:Holding S4:64.7847:64.7847:64.7847:1:47:Holding S5:57.4789:57.4789:57.4789:1:58:Holding | close-below -
+2026-10-06 w252 support S1:70.2551:69.4357:70.6603:3:62:Holding S2:67.0017:66.4216:68.1183:4:68:Holding S3:49.8465:49.6091:50.1839:2:52:Holding S4:48.1807:47.3804:49.0036:3:58:Holding S5:45.6179:44.9043:46.7839:6:78:Holding | close-below -
+2026-10-06 changes new: Support at $49.85 (2 touches) moved into the top 5. / dropped: Support at $57.48 dropped out of the top list.
+2026-10-07 w21 support S1:75.4700:75.4700:75.4700:1:84:Recently tested S2:66.4216:66.4216:66.4216:1:78:Holding | close-below -
+2026-10-07 w63 support S1:75.4700:75.4700:75.4700:1:55:Recently tested S2:67.3964:66.4216:68.1183:3:77:Holding S3:64.7847:64.7847:64.7847:1:39:Holding S4:57.4789:57.4789:57.4789:1:50:Holding | close-below -
+2026-10-07 w126 support S1:75.4700:75.4700:75.4700:1:54:Recently tested S2:70.2551:69.4357:70.6603:3:77:Holding S3:67.0017:66.4216:68.1183:4:86:Holding S4:64.7847:64.7847:64.7847:1:47:Holding S5:57.4789:57.4789:57.4789:1:58:Holding | close-below -
+2026-10-07 w252 support S1:70.2551:69.4357:70.6603:3:66:Holding S2:67.0017:66.4216:68.1183:4:73:Holding S3:49.6050:49.0036:50.1839:3:60:Holding S4:47.5156:46.7839:48.0557:3:62:Holding S5:45.3747:44.9043:46.1477:5:77:Holding | close-below -
+2026-10-07 changes -
+2026-10-08 w21 support S1:75.4700:75.4700:75.4700:1:83:Recently tested S2:66.4216:66.4216:66.4216:1:76:Holding | close-below -
+2026-10-08 w63 support S1:75.4700:75.4700:75.4700:1:55:Recently tested S2:67.3964:66.4216:68.1183:3:77:Holding S3:64.7847:64.7847:64.7847:1:38:Holding S4:57.4789:57.4789:57.4789:1:49:Holding | close-below -
+2026-10-08 w126 support S1:75.4700:75.4700:75.4700:1:53:Recently tested S2:70.2551:69.4357:70.6603:3:76:Holding S3:67.0017:66.4216:68.1183:4:86:Holding S4:64.7847:64.7847:64.7847:1:47:Holding S5:57.4789:57.4789:57.4789:1:58:Holding | close-below -
+2026-10-08 w252 support S1:70.2551:69.4357:70.6603:3:62:Holding S2:67.0017:66.4216:68.1183:4:68:Holding S3:57.4789:57.4789:57.4789:1:51:Holding S4:48.5910:47.3804:49.6091:4:65:Holding S5:45.6179:44.9043:46.7839:6:77:Holding | close-below -
+2026-10-08 changes new: Support at $57.48 (1 touch) moved into the top 5. / new: Support at $48.59 (4 touches) moved into the top 5. / dropped: Support at $49.61 dropped out of the top list. / dropped: Support at $47.52 dropped out of the top list.
+2026-10-09 w21 support S1:75.4700:75.4700:75.4700:1:81:Recently tested S2:66.4216:66.4216:66.4216:1:75:Holding | close-below -
+2026-10-09 w63 support S1:75.4700:75.4700:75.4700:1:54:Recently tested S2:67.3964:66.4216:68.1183:3:76:Holding S3:64.7847:64.7847:64.7847:1:38:Holding S4:57.4789:57.4789:57.4789:1:49:Holding | close-below -
+2026-10-09 w126 support S1:75.4700:75.4700:75.4700:1:53:Recently tested S2:70.2551:69.4357:70.6603:3:76:Holding S3:67.0017:66.4216:68.1183:4:85:Holding S4:64.7847:64.7847:64.7847:1:46:Holding S5:57.4789:57.4789:57.4789:1:58:Holding | close-below -
+2026-10-09 w252 support S1:70.2551:69.4357:70.6603:3:62:Holding S2:67.0017:66.4216:68.1183:4:68:Holding S3:49.8465:49.6091:50.1839:2:52:Holding S4:48.1807:47.3804:49.0036:3:57:Holding S5:45.6179:44.9043:46.7839:6:77:Holding | close-below -
+2026-10-09 changes new: Support at $49.85 (2 touches) moved into the top 5. / dropped: Support at $57.48 dropped out of the top list.
+2026-10-12 w21 support S1:75.4700:75.4700:75.4700:1:80:Recently tested S2:66.4216:66.4216:66.4216:1:73:Holding | close-below -
+2026-10-12 w63 support S1:75.4700:75.4700:75.4700:1:54:Recently tested S2:67.3964:66.4216:68.1183:3:76:Holding S3:64.7847:64.7847:64.7847:1:37:Holding S4:57.4789:57.4789:57.4789:1:48:Holding | close-below -
+2026-10-12 w126 support S1:75.4700:75.4700:75.4700:1:53:Recently tested S2:70.2551:69.4357:70.6603:3:76:Holding S3:67.0017:66.4216:68.1183:4:85:Holding S4:64.7847:64.7847:64.7847:1:46:Holding S5:57.4789:57.4789:57.4789:1:58:Holding | close-below -
+2026-10-12 w252 support S1:70.2551:69.4357:70.6603:3:65:Holding S2:67.0017:66.4216:68.1183:4:73:Holding S3:49.6050:49.0036:50.1839:3:60:Holding S4:47.5156:46.7839:48.0557:3:62:Holding S5:45.3747:44.9043:46.1477:5:76:Holding | close-below -
+2026-10-12 changes -
+2026-10-13 w21 support S1:75.4700:75.4700:75.4700:1:78:Holding S2:66.4216:66.4216:66.4216:1:72:Holding | close-below -
+2026-10-13 w63 support S1:75.4700:75.4700:75.4700:1:53:Holding S2:67.3964:66.4216:68.1183:3:75:Holding S3:64.7847:64.7847:64.7847:1:37:Holding S4:57.4789:57.4789:57.4789:1:48:Holding | close-below -
+2026-10-13 w126 support S1:75.4700:75.4700:75.4700:1:53:Holding S2:70.2551:69.4357:70.6603:3:76:Holding S3:67.0017:66.4216:68.1183:4:85:Holding S4:64.7847:64.7847:64.7847:1:46:Holding S5:57.4789:57.4789:57.4789:1:57:Holding | close-below -
+2026-10-13 w252 support S1:70.2551:69.4357:70.6603:3:66:Holding S2:67.0017:66.4216:68.1183:4:73:Holding S3:57.4789:57.4789:57.4789:1:53:Holding S4:49.6050:49.0036:50.1839:3:61:Holding S5:45.3747:44.9043:46.1477:5:77:Holding | close-below -
+2026-10-13 changes new: Support at $57.48 (1 touch) moved into the top 5. / dropped: Support at $47.52 dropped out of the top list. / macd: MACD turned bearish.
+2026-10-14 w21 support S1:66.4216:66.4216:66.4216:1:70:Holding | close-below 75.4700
+2026-10-14 w63 support S1:67.3964:66.4216:68.1183:3:75:Holding S2:64.7847:64.7847:64.7847:1:36:Holding S3:57.4789:57.4789:57.4789:1:47:Holding | close-below 75.4700
+2026-10-14 w126 support S1:70.2551:69.4357:70.6603:3:75:Holding S2:67.0017:66.4216:68.1183:4:85:Holding S3:64.7847:64.7847:64.7847:1:46:Holding S4:57.4789:57.4789:57.4789:1:57:Holding | close-below 75.4700
+2026-10-14 w252 support S1:70.2551:69.4357:70.6603:3:62:Holding S2:67.0017:66.4216:68.1183:4:68:Holding S3:57.4789:57.4789:57.4789:1:51:Holding S4:49.6050:49.0036:50.1839:3:57:Holding S5:45.6179:44.9043:46.7839:6:78:Holding | close-below 75.4700
+2026-10-14 changes trend: Trend changed from Uptrend to Mixed.
+2026-10-15 w21 support - | close-below 75.4700
+2026-10-15 w63 support S1:67.3964:66.4216:68.1183:3:74:Holding S2:57.4789:57.4789:57.4789:1:47:Holding | close-below 75.4700
+2026-10-15 w126 support S1:70.2551:69.4357:70.6603:3:80:Recently tested S2:67.0017:66.4216:68.1183:4:84:Holding S3:64.7847:64.7847:64.7847:1:45:Holding S4:57.4789:57.4789:57.4789:1:57:Holding | close-below 75.4700
+2026-10-15 w252 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:67.0017:66.4216:68.1183:4:68:Holding S3:57.4789:57.4789:57.4789:1:51:Holding S4:49.6050:49.0036:50.1839:3:57:Holding S5:45.6179:44.9043:46.7839:6:77:Holding | close-below 75.4700
+2026-10-15 changes -
+2026-10-16 w21 support - | close-below 75.4700
+2026-10-16 w63 support S1:67.3964:66.4216:68.1183:3:85:In play S2:57.4789:57.4789:57.4789:1:46:Holding | close-below 75.4700
+2026-10-16 w126 support S1:68.5664:67.7989:69.4357:3:84:In play S2:66.0060:64.7847:66.5080:3:88:Holding S3:57.4789:57.4789:57.4789:1:60:Holding | close-below 70.6257 75.4700
+2026-10-16 w252 support S1:68.5664:67.7989:69.4357:3:60:In play S2:66.0060:64.7847:66.5080:3:64:Holding S3:57.4789:57.4789:57.4789:1:51:Holding S4:49.2193:47.3804:50.1839:4:61:Holding S5:45.6179:44.9043:46.7839:6:77:Holding | close-below 70.6257 75.4700
+2026-10-16 changes new: Support at $68.57 (3 touches) moved into the top 5. / broken: Support at $70.26 broke — price closed below the zone.
+2026-10-19 w21 support - | close-below 75.4700
+2026-10-19 w63 support S1:67.3964:66.4216:68.1183:3:84:Recently tested S2:57.4789:57.4789:57.4789:1:46:Holding | close-below 75.4700
+2026-10-19 w126 support S1:70.6257:70.5835:70.6603:2:78:In play S2:68.5664:67.7989:69.4357:3:84:Recently tested S3:66.0060:64.7847:66.5080:3:88:Holding S4:57.4789:57.4789:57.4789:1:60:Holding | close-below 75.4700
+2026-10-19 w252 support S1:70.6257:70.5835:70.6603:2:58:In play S2:68.5664:67.7989:69.4357:3:60:Recently tested S3:66.0060:64.7847:66.5080:3:64:Holding S4:49.2193:47.3804:50.1839:4:61:Holding S5:45.6179:44.9043:46.7839:6:77:Holding | close-below 75.4700
+2026-10-19 changes reclaimed: Price climbed back above $70.63; that zone is acting as support again. / dropped: Support at $57.48 dropped out of the top list.
+2026-10-20 w21 support - | close-below 75.4700
+2026-10-20 w63 support S1:67.3964:66.4216:68.1183:3:85:Recently tested S2:57.4789:57.4789:57.4789:1:45:Holding | close-below 75.4700
+2026-10-20 w126 support S1:70.6257:70.5835:70.6603:2:78:In play S2:68.5664:67.7989:69.4357:3:84:Recently tested S3:66.0060:64.7847:66.5080:3:88:Holding S4:57.4789:57.4789:57.4789:1:59:Holding | close-below 75.4700
+2026-10-20 w252 support S1:70.6257:70.5835:70.6603:2:58:In play S2:68.5664:67.7989:69.4357:3:60:Recently tested S3:66.0060:64.7847:66.5080:3:63:Holding S4:49.2193:47.3804:50.1839:4:61:Holding S5:45.6179:44.9043:46.7839:6:77:Holding | close-below 75.4700
+2026-10-20 changes -
+2026-10-21 w21 support S1:67.4300:67.4300:67.4300:1:92:Recently tested | close-below 75.4700
+2026-10-21 w63 support S1:67.4081:66.4216:68.1183:4:85:Recently tested S2:57.4789:57.4789:57.4789:1:41:Holding | close-below 75.4700
+2026-10-21 w126 support S1:70.2551:69.4357:70.6603:3:70:Recently tested S2:66.7221:64.7847:68.1183:6:89:Recently tested S3:57.4789:57.4789:57.4789:1:53:Holding | close-below 75.4700
+2026-10-21 w252 support S1:70.2551:69.4357:70.6603:3:64:Recently tested S2:66.7221:64.7847:68.1183:6:83:Recently tested S3:57.4789:57.4789:57.4789:1:51:Holding S4:49.2193:47.3804:50.1839:4:61:Holding S5:45.6179:44.9043:46.7839:6:77:Holding | close-below 75.4700
+2026-10-21 changes new: Support at $57.48 (1 touch) moved into the top 5. / dropped: Support at $68.57 dropped out of the top list.
+2026-10-22 w21 support - | close-below 67.4300 75.4700
+2026-10-22 w63 support S1:67.4081:66.4216:68.1183:4:86:In play S2:57.4789:57.4789:57.4789:1:41:Holding | close-below 75.4700
+2026-10-22 w126 support S1:66.7221:64.7847:68.1183:6:89:In play S2:57.4789:57.4789:57.4789:1:52:Holding | close-below 70.2551 75.4700
+2026-10-22 w252 support S1:66.7221:64.7847:68.1183:6:78:In play S2:57.4789:57.4789:57.4789:1:50:Holding S3:49.9395:49.0036:51.3072:4:59:Holding S4:45.7781:44.9043:47.3804:7:77:Holding S5:37.1624:37.1624:37.1624:1:44:Holding | close-below 70.2551 75.4700
+2026-10-22 changes new: Support at $37.16 (1 touch) moved into the top 5. / broken: Support at $70.26 broke — price closed below the zone.
+2026-10-23 w21 support - | close-below 67.4300 75.4700
+2026-10-23 w63 support S1:67.4081:66.4216:68.1183:4:86:In play S2:57.4789:57.4789:57.4789:1:40:Holding | close-below 75.4700
+2026-10-23 w126 support S1:66.7221:64.7847:68.1183:6:89:In play S2:57.4789:57.4789:57.4789:1:52:Holding | close-below 70.2551 75.4700
+2026-10-23 w252 support S1:66.7221:64.7847:68.1183:6:83:In play S2:57.4789:57.4789:57.4789:1:50:Holding S3:49.2193:47.3804:50.1839:4:61:Holding S4:45.6179:44.9043:46.7839:6:77:Holding S5:37.1624:37.1624:37.1624:1:44:Holding | close-below 70.2551 75.4700
+2026-10-23 changes -
