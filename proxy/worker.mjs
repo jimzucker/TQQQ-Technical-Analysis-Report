@@ -11,7 +11,7 @@
  * Every answer that is not a success says why, in plain words, in `message`.
  *
  * Settings (see proxy/README.md): GITHUB_TOKEN (secret), GITHUB_REPO ("owner/name"),
- * GITHUB_REF (branch, default "main"), SITE (the report's address, to read its ticker list),
+ * GITHUB_REF (branch, default "main"), DATA_BRANCH (where the ticker list is, default "market-data"),
  * ALLOW_ORIGIN (default "*"), MAX_TICKERS (default 50), ADDS_PER_DAY (default 5),
  * and a KV namespace bound as LIMITS for the per-visitor limit.
  */
@@ -47,10 +47,11 @@ export async function handle(request, env = {}, fetchImpl = fetch, now = new Dat
   }
 
   if (url.pathname === "/add" && request.method === "POST") {
-    if (!env.GITHUB_TOKEN || !env.GITHUB_REPO || !env.LIMITS || !env.SITE) {
+    if (!env.GITHUB_TOKEN || !env.GITHUB_REPO || !env.LIMITS) {
       return reply(503, { status: "not-set-up", message: "Adding tickers to the daily list is not switched on yet. You can still view any ticker live." });
     }
-    const listing = await fetchImpl(`${env.SITE.replace(/\/$/, "")}/data/tickers.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    // the ticker list lives on the data branch, with the daily data (pipeline/data_branch.sh)
+    const listing = await fetchImpl(`https://raw.githubusercontent.com/${env.GITHUB_REPO}/${env.DATA_BRANCH || "market-data"}/data/tickers.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
     if (!listing) return reply(502, { status: "error", message: "Could not read the report's ticker list. Please try again later." });
     if (listing.tickers.some((t) => t.symbol === symbol)) return reply(200, { status: "listed", message: `${symbol} is already on the daily list.` });
     const max = Number(env.MAX_TICKERS || 50);

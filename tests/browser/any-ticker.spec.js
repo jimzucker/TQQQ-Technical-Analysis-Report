@@ -7,7 +7,7 @@ const fs = require("fs");
 const { openPage, renderingProblems } = require("./helpers");
 
 const PROXY = "https://proxy.test";
-const listing = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "..", "docs", "data", "tickers.json"), "utf8"));
+const listing = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "fixtures", "tickers.json"), "utf8"));
 const REF = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "fixtures", "indicators-reference.json"), "utf8"));
 
 function livePayload() {

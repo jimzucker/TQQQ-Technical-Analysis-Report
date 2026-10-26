@@ -1,4 +1,5 @@
-"""Add a ticker to docs/data/tickers.json if it passes the nightly refresh's checks.
+"""Add a ticker to the list (docs/data/tickers.json, linked to the market-data branch by
+pipeline/data_branch.sh) if it passes the nightly refresh's checks.
 
 Usage:
   python pipeline/add_ticker.py DIA
@@ -54,9 +55,9 @@ def new_entry(symbol: str, listing: dict, name: str) -> dict:
             "dir": f"data/{symbol.lower()}"}
 
 
-def check(symbol: str, tickers_path: Path = build.TICKERS, describe_fn=describe, fetch_fn=fetch) -> tuple[dict, dict]:
+def check(symbol: str, tickers_path: Path | None = None, describe_fn=describe, fetch_fn=fetch) -> tuple[dict, dict]:
     """Every check, nothing written. Returns (the list with the new entry, the entry)."""
-    listing = build.load_tickers(tickers_path)
+    listing = build.load_tickers(tickers_path)  # None: the list the pipeline uses (build.TICKERS)
     entry = new_entry(symbol, listing, name=symbol)  # format, duplicate and size checks first
     entry["name"] = describe_fn(symbol)["name"]
     try:
@@ -67,9 +68,10 @@ def check(symbol: str, tickers_path: Path = build.TICKERS, describe_fn=describe,
     return listing, entry
 
 
-def add(symbol: str, tickers_path: Path = build.TICKERS, build_fn=None, **checks) -> dict:
+def add(symbol: str, tickers_path: Path | None = None, build_fn=None, **checks) -> dict:
     """Check, build the data file, and only then add the entry to the list, so the list never
     names a ticker whose data file is missing."""
+    tickers_path = Path(tickers_path or build.TICKERS)
     listing, entry = check(symbol, tickers_path, **checks)
     staged = Path(tickers_path).with_suffix(".staged.json")
     staged.write_text(json.dumps(listing, indent=2) + "\n")

@@ -1,7 +1,9 @@
 __pycache__/
 *.pyc
 .pytest_cache/
-docs/data/*.tmp
+# the daily data is on the market-data branch: `npm run data` links it here (pipeline/data_branch.sh)
+docs/data
+.market-data/
 .DS_Store
 node_modules/
 test-results/

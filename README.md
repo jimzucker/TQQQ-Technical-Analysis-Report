@@ -273,14 +273,19 @@ GitHub Actions — every 30 min from 16:15 New York, first to find new data wins
        = 16:15 - 18:45 New York in summer, 15:15 - 17:45 in winter
   11:30 UTC Tue-Sat  (7:30am New York, backstop before the next open)
   │
-  ├─ pipeline/build.py     download TQQQ + QQQ daily prices
+  ├─ pipeline/data_branch.sh get   check out the market-data branch; docs/data points at it
+  │
+  ├─ pipeline/build.py     download each ticker's and its benchmark's daily prices
   │                        (yfinance → Yahoo chart API → Tiingo → Alpha Vantage)
-  │                        validate, compute indicators, write docs/data/tqqq.json
+  │                        validate, compute indicators, write data/tqqq.json
   │
-  ├─ pipeline/snapshot.js  save today's levels to docs/data/history/YYYY-MM-DD.json
-  │                        and write docs/data/changes.json (the daily diff)
+  ├─ pipeline/snapshot.js  save today's levels to data/history/YYYY-MM-DD.json
+  │                        and write data/changes.json (the daily diff)
   │
-  └─ commit to main  →  GitHub Pages serves /docs
+  └─ pipeline/data_branch.sh put   commit to the market-data branch (not main)
+
+GitHub Pages serves the page from main's /docs; the page reads its data from the
+market-data branch through GitHub's raw-file address (raw.githubusercontent.com).
 ```
 
 - Prices are **adjusted for splits and dividends**. About two years of history are loaded so the 200-day average is available across the full 12-month view.
@@ -307,6 +312,8 @@ GitHub Actions — every 30 min from 16:15 New York, first to find new data wins
 
 ## Repository layout
 
+The daily data is not on `main`: it is on the **`market-data` branch**, which holds only the `data/` folder and shares no history with `main`, so `main`'s history is code only. The nightly refresh and the add-ticker job commit there, and the page reads it from `https://raw.githubusercontent.com/<owner>/<repo>/market-data/` when it is served from GitHub Pages; anywhere else it reads its own `data/` folder. GitHub caches those addresses for 5 minutes. To download only the code, `git clone --single-branch`.
+
 | Path | Purpose |
 |---|---|
 | `docs/index.html` | The page structure and all explanatory copy |
@@ -315,15 +322,16 @@ GitHub Actions — every 30 min from 16:15 New York, first to find new data wins
 | `docs/js/charts.js` | Dependency-free canvas charts: stacked panes with pan/zoom, and the window-comparison dot chart |
 | `docs/js/app.js` | Page controller: loads data, runs the method, renders every section |
 | `docs/js/indicators.js` | The indicators in JavaScript, for a ticker shown live (the nightly job uses `pipeline/indicators.py`) |
-| `docs/data/tickers.json` | The tickers the report covers, and the lookup service's address (`proxy`) |
+| `data/tickers.json` (market-data branch) | The tickers the report covers, and the lookup service's address (`proxy`) |
+| `pipeline/data_branch.sh` | Checks out the `market-data` branch and links it at `docs/data`; commits to it |
 | `pipeline/add_ticker.py` | Adds a ticker to the list if it passes the nightly checks (run by `.github/workflows/add-ticker.yml`) |
 | `proxy/` | The lookup service for any ticker (a Cloudflare Worker), and how to set it up |
-| `docs/data/tqqq.json` | Latest prices and indicators, rewritten by each run |
-| `docs/data/history/` | One dated snapshot of the levels per session (about 18 months kept) |
-| `docs/data/changes.json` | The diff between the last two snapshots |
+| `data/tqqq.json` (market-data branch) | Latest prices and indicators, rewritten by each run |
+| `data/history/` (market-data branch) | One dated snapshot of the levels per session (about 18 months kept) |
+| `data/changes.json` (market-data branch) | The diff between the last two snapshots |
 | `pipeline/fetch.py` | Downloads and validates prices, with three backup sources |
 | `pipeline/indicators.py` | Moving averages, RSI, MACD, Bollinger Bands, ATR, drawdown |
-| `pipeline/build.py` | Builds `docs/data/tqqq.json` |
+| `pipeline/build.py` | Builds a ticker's data file, such as `data/tqqq.json` |
 | `pipeline/snapshot.js` | Daily level snapshots and the "what changed" feed |
 | `pipeline/tests/` | pytest checks on the saved price data |
 | `tests/support.test.js` | Node unit tests for the support method |
@@ -351,19 +359,20 @@ GitHub Pages is free for public repositories; private repositories need a paid p
 
 ### Tickers
 
-The report covers every ticker on [`docs/data/tickers.json`](docs/data/tickers.json) — today TQQQ, QQQ and SPY. Pick one in the **Ticker** field at the top, or link to it with `?ticker=QQQ`; the choice is remembered. Each entry gives the name, the index it follows, its leverage, the benchmark it is compared with, and its folder:
+The report covers every ticker on the list, `data/tickers.json` on the `market-data` branch — today TQQQ, QQQ and SPY. Pick one in the **Ticker** field at the top, or link to it with `?ticker=QQQ`; the choice is remembered. Each entry gives the name, the index it follows, its leverage, the benchmark it is compared with, and its folder:
 
 ```json
 { "symbol": "QQQ", "name": "Invesco QQQ Trust", "index": "Nasdaq-100", "leverage": 1, "benchmark": "SPY", "dir": "data/qqq" }
 ```
 
-Each ticker's data is `docs/<dir>/<symbol>.json`, with its own `history/` and `changes.json`. TQQQ's files stay at `docs/data/` where they have always been. The nightly refresh builds every ticker on the list; if one fails to download, the others are still published and the run is marked failed.
+Each ticker's data is `<dir>/<symbol>.json` on the `market-data` branch, with its own `history/` and `changes.json`; TQQQ's files are directly in `data/`. The nightly refresh builds every ticker on the list; if one fails to download, the others are still published and the run is marked failed.
 
-**To add a ticker:** add its entry (its benchmark must be on the list too), then build its first data and history:
+**To add a ticker by hand:** run `npm run data`, add its entry to `docs/data/tickers.json` (its benchmark must be on the list too), build its first data and history, and commit to the data branch:
 
 ```bash
 python pipeline/build.py --symbol DIA
 node pipeline/snapshot.js --symbol DIA --backfill 70
+pipeline/data_branch.sh put "Add ticker: DIA"
 ```
 
 All wording — the headline, findings, benchmark panel and disclaimer — comes from the entry. Leverage wording ("three times as much…", "daily resetting cost") appears only for leveraged funds.
@@ -374,7 +383,7 @@ The **Ticker** field at the top suggests the tickers on the daily list; type any
 
 **Add to the daily list** asks the lookup service to start the **Add a ticker** workflow. It adds the ticker only if it passes the same checks as the nightly refresh, builds its data and 70 sessions of history, and commits. Anyone can ask; the list stops at 50 tickers, and each visitor can ask for 5 a day. A ticker added this way gets plain (unleveraged) wording; its entry can be edited afterwards.
 
-The lookup service is not switched on until it is deployed and its address is put in `docs/data/tickers.json` as `"proxy"` — see [`proxy/README.md`](proxy/README.md). Until then the page says so, and everything else works as before.
+The lookup service is not switched on until it is deployed and its address is put in `data/tickers.json` on the `market-data` branch as `"proxy"` — see [`proxy/README.md`](proxy/README.md). Until then the page says so, and everything else works as before.
 
 ---
 
@@ -383,16 +392,20 @@ The lookup service is not switched on until it is deployed and its address is pu
 ```bash
 pip install -r pipeline/requirements.txt
 
+npm run data                            # check out the market-data branch at docs/data
 python pipeline/build.py --force        # download prices and build the data file
 node pipeline/snapshot.js               # levels snapshot + "what changed"
 
 python -m pytest -q pipeline/tests      # Python tests (data download and checks)
 node --test tests/*.test.js             # JavaScript tests (the method and the snapshot job)
-npm ci && npx playwright install chromium
-npx playwright test                     # browser tests (the page itself)
+npm ci && npx playwright install chromium webkit
+npx playwright test                     # browser tests (the page itself, in Chrome and Safari's engine)
 
 python -m http.server -d docs 8000      # then open http://localhost:8000
+pipeline/data_branch.sh put "message"   # only to publish data you built: commits to market-data
 ```
+
+The tests need neither the data branch nor a network: they use frozen copies in `tests/fixtures/`.
 
 Useful variations:
 
@@ -455,6 +468,7 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-10-25 | **The daily data has its own branch.** The nightly refresh and the add-ticker job commit to a `market-data` branch instead of `main`, so `main`'s history is code only (46 of its last 64 commits were data). The page reads the data from that branch through GitHub's raw-file address; the folder layout is unchanged. The branch is created from `main`'s last copy of the data on the first run, which starts when this change is merged. For a local preview, run `npm run data` first. |
 | 2026-10-25 | **Safari.** The browser tests also run in Safari's engine, on a Mac and an iPhone. They found two problems, now fixed: pressing Enter in the Ticker field did nothing in Safari, and moving a Method slider quickly made Safari stop the page updating (it allows at most 100 changes of the page's address in 10 seconds; the page now changes it at most once every 250 ms). |
 | 2026-10-25 | **Order of the page.** The chart now sits directly under its toolbar; its description, legend and switches moved below it. The key numbers come first, then the bottom line, whose last row is now **Since the previous session** (what changed), moved up from a card at the bottom of the page. The chart starts 111 pixels higher on a desktop and 466 higher on a phone. "What changed" now compares the levels the page opens on (every level from the last 200 sessions) instead of the 5 strongest over 12 months, so it no longer names levels that are not on the page. On wide screens the bottom line's rows sit in two columns instead of leaving the right half of the card empty. Also restored the gap between the top bar and the first section. |
 | 2026-10-25 | **Any ticker.** One **Ticker** field at the top replaces the menu in the title: it suggests the tickers on the daily list, and takes any other symbol. Type any stock or fund: if it is not on the daily list, the page shows it live, working out its indicators in the browser (tested to match the Python on every day), and offers to add it. Adding runs the nightly checks first. Anyone can ask; at most 50 tickers and 5 requests per visitor per day. Needs the lookup service (`proxy/`) deployed; until then the page says so. |

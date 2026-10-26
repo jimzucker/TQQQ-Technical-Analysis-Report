@@ -31,7 +31,7 @@
 
   /* ------------------------------------------------------------ URL <-> settings */
   const SETTING_KEYS = ["window", "period", "cluster", "touches"];
-  // used only if docs/data/tickers.json cannot be read
+  // used only if the ticker list (data/tickers.json) cannot be read
   const FALLBACK_LIST = { default: "TQQQ", tickers: [{ symbol: "TQQQ", name: "ProShares UltraPro QQQ", index: "Nasdaq-100", leverage: 3, benchmark: "QQQ", dir: "data" }] };
 
   function readUrl() {
@@ -912,7 +912,8 @@
     bindControls();
     try {
       const bust = "?v=" + Math.floor(Date.now() / 3.6e6); // refresh at least hourly past the CDN cache
-      state.listing = (await fetch("data/tickers.json" + bust).then((r) => (r.ok ? r.json() : null)).catch(() => null)) || FALLBACK_LIST;
+      const base = SR.dataBase(location); // the market-data branch on GitHub Pages, else data/ here
+      state.listing = (await fetch(base + "data/tickers.json" + bust).then((r) => (r.ok ? r.json() : null)).catch(() => null)) || FALLBACK_LIST;
       const want = state.requestedTicker || state.listing.default;
       state.ticker = state.listing.tickers.find((t) => t.symbol === want);
       let payload = null, changes = null;
@@ -927,7 +928,7 @@
       }
       renderTickerField();
       if (!payload) {
-        const dir = state.ticker.dir, file = `${dir}/${state.ticker.symbol.toLowerCase()}.json`;
+        const dir = base + state.ticker.dir, file = `${dir}/${state.ticker.symbol.toLowerCase()}.json`;
         [payload, changes] = await Promise.all([
           fetch(file + bust).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
           fetch(`${dir}/changes.json` + bust).then((r) => (r.ok ? r.json() : null)).catch(() => null),

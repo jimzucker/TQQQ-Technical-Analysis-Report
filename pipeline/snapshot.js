@@ -5,6 +5,7 @@
  *   node pipeline/snapshot.js --backfill 30   -> also (re)build the last 30 sessions
  *   node pipeline/snapshot.js --symbol QQQ    -> another ticker on docs/data/tickers.json (default: TQQQ)
  *   node pipeline/snapshot.js --data DIR      -> read and write DIR instead of the ticker's folder (used by the tests)
+ *   node pipeline/snapshot.js --tickers FILE  -> another ticker list (used by the tests)
  * Outputs, in the ticker's folder (docs/data for TQQQ, docs/data/qqq for QQQ, ...):
  *   history/YYYY-MM-DD.json   one per session, with the page's opening settings (SR.PAGE_SETTINGS)
  *   history/index.json        list of snapshot dates
@@ -22,10 +23,12 @@ const args = process.argv.slice(2);
 const bi = args.indexOf("--backfill");
 const backfill = bi >= 0 ? parseInt(args[bi + 1], 10) || 20 : 0;
 const si = args.indexOf("--symbol");
-const listing = JSON.parse(fs.readFileSync(path.join(ROOT, "docs", "data", "tickers.json"), "utf8"));
+const ti = args.indexOf("--tickers");
+const LIST = ti >= 0 ? path.resolve(args[ti + 1]) : path.join(ROOT, "docs", "data", "tickers.json");
+const listing = JSON.parse(fs.readFileSync(LIST, "utf8"));
 const SYMBOL = (si >= 0 ? args[si + 1] : listing.default).toUpperCase();
 const ticker = listing.tickers.find((t) => t.symbol === SYMBOL);
-if (!ticker) { console.error(`${SYMBOL} is not on docs/data/tickers.json`); process.exit(1); }
+if (!ticker) { console.error(`${SYMBOL} is not on ${path.relative(ROOT, LIST)}`); process.exit(1); }
 const di = args.indexOf("--data");
 const DATA = di >= 0 ? path.resolve(args[di + 1]) : path.join(ROOT, "docs", ticker.dir);
 const HIST = path.join(DATA, "history");

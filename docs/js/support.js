@@ -590,6 +590,17 @@
     return { headline, rows };
   }
 
+  /**
+   * Where the page reads its data. On GitHub Pages (owner.github.io/repo/) that is the
+   * market-data branch, through GitHub's raw-file address, so the daily data needs no commit
+   * on main; anywhere else (a local preview, the tests) it is the site's own data/ folder.
+   */
+  function dataBase(loc, branch = "market-data") {
+    const owner = /^([a-z0-9-]+)\.github\.io$/i.exec(loc.hostname || "");
+    const repo = (loc.pathname || "/").split("/")[1] || "";
+    return owner && /^[\w-]+$/.test(repo) ? `https://raw.githubusercontent.com/${owner[1]}/${repo}/${branch}/` : "";
+  }
+
   /** Compact snapshot used for the daily history files and "what changed". */
   function snapshot(data, opts) {
     const res = analyze(data, opts);
@@ -787,7 +798,7 @@
   return {
     DEFAULTS, LIMITS, WINDOW_PRESETS, LEVEL_SESSIONS, PAGE_SETTINGS, WEIGHTS, TIERS,
     normalize, strengthTier, tickerInfo, findPivots, rollingLow, cluster, analyze, labels, trendCall, benchmark,
-    volumeProfile, compareWindows, findings, bottomLine, snapshot, diffSnapshots, truncate, fromPayload,
+    volumeProfile, compareWindows, findings, bottomLine, dataBase, snapshot, diffSnapshots, truncate, fromPayload,
     lastCompletedSession, sessionsBetween, freshness,
     weekStart, resampleWeekly, chartModel,
   };

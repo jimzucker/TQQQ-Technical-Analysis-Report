@@ -4,10 +4,10 @@ main = "worker.mjs"
 compatibility_date = "2025-06-01"
 
 [vars]
-# the report's GitHub repository and branch, and its public address
+# the report's GitHub repository, the branch its workflows run from, and the branch with its data
 GITHUB_REPO = "mpromisel002/TQQQ-Technical-Analysis-Report"
 GITHUB_REF = "main"
-SITE = "https://mpromisel002.github.io/TQQQ-Technical-Analysis-Report"
+DATA_BRANCH = "market-data"
 # only the report's own pages may call the Worker
 ALLOW_ORIGIN = "https://mpromisel002.github.io"
 MAX_TICKERS = "50"
