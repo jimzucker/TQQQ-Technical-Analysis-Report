@@ -58,3 +58,33 @@ test("support levels match the recorded copy for every session in the fixture", 
   }
   assert.equal(diffs.length, 0, "support output changed:\n" + diffs.join("\n"));
 });
+
+test("every level found is shown or counted, over the last 200 sessions and every window", () => {
+  // A zone is either listed (S below or at the price, A above it) or counted in the
+  // table's "not listed" line. None may be dropped silently or listed twice.
+  const data = SR.fromPayload(JSON.parse(fs.readFileSync(FIXTURE, "utf8")));
+  const last = data.close.length - 1;
+  let checked = 0;
+  for (let end = last - 199; end <= last; end++) {
+    const t = SR.truncate(data, end);
+    for (const w of [21, 63, 126, 189, 252]) {
+      const r = SR.analyze(t, { window: w });
+      const at = `${data.dates[end]}, ${w} sessions`;
+      const listed = [...r.supports, ...r.above];
+      assert.equal(new Set(listed).size, listed.length, `a level is listed twice on ${at}`);
+      // count the levels left out on each side directly from every zone found, and check
+      // the page is told exactly that many
+      const below = r.zones.filter((z) => !z.broken), above = r.zones.filter((z) => z.broken);
+      assert.equal(r.unlisted.below, below.filter((z) => !r.supports.includes(z)).length, `a level below the price went missing on ${at}`);
+      assert.equal(r.unlisted.above, above.filter((z) => !r.above.includes(z)).length, `a level above the price went missing on ${at}`);
+      // each list holds the strongest of its side, so nothing unlisted outscores a listed level
+      for (const [shown, all] of [[r.supports, below], [r.above, above]]) {
+        const weakestShown = Math.min(...shown.map((z) => z.score));
+        for (const z of all) if (!shown.includes(z)) assert.ok(z.score <= weakestShown, `a stronger level was left out on ${at}`);
+      }
+      assert.ok(r.supports.every((z) => !z.broken) && r.above.every((z) => z.broken), `a level is on the wrong side on ${at}`);
+      checked++;
+    }
+  }
+  assert.equal(checked, 1000);
+});
