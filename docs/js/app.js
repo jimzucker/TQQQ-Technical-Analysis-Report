@@ -12,12 +12,15 @@
   const WIN_NAMES = { 21: "1 month", 63: "3 months", 126: "6 months", 189: "9 months", 252: "12 months" };
   const winName = (w) => WIN_NAMES[w] || `${w} sessions`;
   // which optional chart panels are visible; remembered per browser
-  const PANE_DEFAULTS = { vol: true, rsi: true, macd: false, dd: false, rolling: true, profile: false, above: true, bb: true };
+  const PANE_DEFAULTS = { vol: true, rsi: true, macd: false, dd: false, rolling: true, profile: false, above: true, bb: true,
+    zones: true, sma20: true, sma50: true, sma200: true, swings: true };
+  // "Simple view": candles, the support below the price and the 50 and 200-day averages
+  const SIMPLE_VIEW = { ...Object.fromEntries(Object.keys(PANE_DEFAULTS).map((k) => [k, false])), zones: true, sma50: true, sma200: true };
   // The page finds levels over at least this many sessions, whatever the window, and
   // lists every level it finds rather than the strongest five on each side.
   const LEVEL_SESSIONS = 200;
   const analyze = () => SR.analyze(state.data, { ...state.opts, minLookback: LEVEL_SESSIONS, topN: Infinity, topAbove: Infinity });
-  const OVERLAYS = new Set(["rolling", "profile", "above", "bb"]); // drawn inside the price pane, no rebuild needed
+  const OVERLAYS = new Set(["rolling", "profile", "above", "bb", "zones", "sma20", "sma50", "sma200", "swings"]); // drawn inside the price pane, no rebuild needed
 
   // the window the page opens on. The nightly snapshot and "What changed" keep the
   // method's own 12-month default (SR.DEFAULTS), so their history stays comparable.
@@ -43,6 +46,12 @@
       if (SR.WINDOW_PRESETS[k]) { o.window = SR.WINDOW_PRESETS[k]; state.windowKey = k; }
       else { o.window = parseInt(k, 10); state.windowKey = null; }
     }
+    // ?show=zones,sma50,... names exactly the chart layers to show (written when they differ from the defaults)
+    if (q.has("show")) {
+      const on = new Set(q.get("show").split(",").filter((k) => k in PANE_DEFAULTS));
+      state.panes = Object.fromEntries(Object.keys(PANE_DEFAULTS).map((k) => [k, on.has(k)]));
+      state.panesFromLink = true;
+    }
     if (q.get("period")) o.period = q.get("period");
     if (q.get("cluster")) o.clusterMult = q.get("cluster");
     if (q.get("touches")) o.minTouches = q.get("touches");
@@ -53,7 +62,7 @@
     }
     try {
       const saved = JSON.parse(localStorage.getItem("panes") || "null");
-      if (saved) state.panes = { ...PANE_DEFAULTS, ...saved };
+      if (saved && !state.panesFromLink) state.panes = { ...PANE_DEFAULTS, ...saved };
       if (localStorage.getItem("cadence") === "weekly") state.cadence = "weekly";
     } catch (e) { /* storage unavailable */ }
   }
@@ -65,6 +74,8 @@
     if (o.period !== d.period) q.set("period", o.period);
     if (o.clusterMult !== d.clusterMult) q.set("cluster", o.clusterMult);
     if (o.minTouches !== d.minTouches) q.set("touches", o.minTouches);
+    const shown = Object.keys(PANE_DEFAULTS).filter((k) => state.panes[k]);
+    if (Object.keys(PANE_DEFAULTS).some((k) => !!state.panes[k] !== PANE_DEFAULTS[k])) q.set("show", shown.join(",") || "none");
     history.replaceState(null, "", "?" + q.toString());
     try { localStorage.setItem("settings", q.toString()); } catch (e) { /* storage unavailable */ }
   }
@@ -125,15 +136,20 @@
     det.addEventListener("toggle", () => {
       try { localStorage.setItem("findingsOpen", det.open ? "1" : "0"); } catch (e) { /* storage unavailable */ }
     });
+    const applyPanes = (next) => {
+      const panelsChanged = Object.keys(PANE_DEFAULTS).some((k) => !OVERLAYS.has(k) && !!next[k] !== !!state.panes[k]);
+      state.panes = { ...next };
+      try { localStorage.setItem("panes", JSON.stringify(state.panes)); } catch (e) { /* storage unavailable */ }
+      $$(".chips input[data-pane]").forEach((cb) => (cb.checked = !!state.panes[cb.dataset.pane]));
+      writeUrl();
+      if (panelsChanged) rebuildMainChart(); else { renderLegends(); renderCharts({ keepView: true }); }
+    };
     $$(".chips input[data-pane]").forEach((cb) => {
       cb.checked = !!state.panes[cb.dataset.pane];
-      cb.addEventListener("change", () => {
-        state.panes[cb.dataset.pane] = cb.checked;
-        try { localStorage.setItem("panes", JSON.stringify(state.panes)); } catch (e) { /* storage unavailable */ }
-        if (OVERLAYS.has(cb.dataset.pane)) { renderLegends(); renderCharts({ keepView: true }); }
-        else rebuildMainChart();
-      });
+      cb.addEventListener("change", () => applyPanes({ ...state.panes, [cb.dataset.pane]: cb.checked }));
     });
+    $("#simpleView").addEventListener("click", () => applyPanes(SIMPLE_VIEW));
+    $("#showAll").addEventListener("click", () => applyPanes(Object.fromEntries(Object.keys(PANE_DEFAULTS).map((k) => [k, true]))));
     document.addEventListener("click", (e) => {
       const s = $("#settings");
       if (s.open && !s.contains(e.target)) s.open = false;
@@ -322,7 +338,8 @@
     const tags = [];
     if (v.lows.includes(i)) tags.push(v.weekly ? "Swing low this week" : "Swing low");
     if (v.pendingLows.includes(i)) tags.push("Pending swing low");
-    const zone = [...state.res.supports, ...(state.panes.above ? state.res.above : [])]
+    const lv = shownLevels();
+    const zone = [...lv.below, ...lv.above]
       .find((z) => d.low[i] <= z.high + state.res.tol / 2 && d.high[i] >= z.low - state.res.tol / 2);
     const row = (k, v) => `<tr><td>${k}</td><td>${v}</td></tr>`;
     return `<div class="d">${fmtDate(d.dates[i])}${tags.length ? ` · ${tags.join(", ")}` : ""}</div><table>
@@ -423,11 +440,21 @@
   // half, so a far-off floor cannot squash the candles; then the edge tag names it instead.
   const NEXT_FLOOR_STRETCH = 0.5;
   function withNextFloor([lo, hi]) {
-    const next = state.res.supports[1];
+    const next = shownLevels().below[1]; // the next floor, when more than S1 is shown
     if (!next) return [lo, hi];
     const want = next.low - state.res.tol / 2;
     if (want >= lo || hi - want > (hi - lo) * (1 + NEXT_FLOOR_STRETCH)) return [lo, hi];
     return [want, hi];
+  }
+
+  // The nearest level below or at the price (S1, the zone the price is in when it is in one)
+  // and the nearest above (A1) are always on the chart; the two switches add the rest.
+  function shownLevels() {
+    const r = state.res;
+    return {
+      below: state.panes.zones ? r.supports : r.supports.slice(0, 1),
+      above: state.panes.above ? r.above : r.above.slice(0, 1),
+    };
   }
 
   const TAG_FONT = '600 10px system-ui, -apple-system, "Segoe UI", sans-serif'; // as draw.tag
@@ -461,7 +488,9 @@
     //    strong ones read at a glance instead of blending into each other
     let labels = [];
     const alphaFor = { Strong: 0.22, Moderate: 0.13, Weak: 0.07 };
-    for (const z of r.supports) {
+    const lv = shownLevels();
+    state.shownLevels = lv; // read by the browser tests
+    for (const z of lv.below) {
       const y1 = S.y(z.high + half), y2 = S.y(z.low - half);
       const h = Math.max(4, y2 - y1);
       ctx.fillStyle = withAlpha(sup, alphaFor[z.strength]);
@@ -474,9 +503,9 @@
       labels.push({ y: S.y(z.price), text: `${z.id} ${money(z.price)}`, col: sup, z });
     }
     // levels above price: a muted band with a dashed centre line, so they never read as support
-    if (state.panes.above) {
+    {
       const ab = css("--above");
-      for (const z of r.above) {
+      for (const z of lv.above) {
         const y1 = S.y(z.high + half), y2 = S.y(z.low - half);
         ctx.fillStyle = withAlpha(ab, 0.10);
         ctx.fillRect(S.left, y1, S.right - S.left, Math.max(4, y2 - y1));
@@ -498,9 +527,9 @@
       draw.line(ctx, S, d.bb_lower, withAlpha(bb, 0.6), 1, [4, 3]);
     }
     // 3. moving averages & rolling low (the 20-day is thinner: it is context, not a level)
-    draw.line(ctx, S, d.sma200, css("--sma200"), 2);
-    draw.line(ctx, S, d.sma50, css("--sma50"), 2);
-    draw.line(ctx, S, d.sma20, css("--sma20"), 1.25);
+    if (state.panes.sma200) draw.line(ctx, S, d.sma200, css("--sma200"), 2);
+    if (state.panes.sma50) draw.line(ctx, S, d.sma50, css("--sma50"), 2);
+    if (state.panes.sma20) draw.line(ctx, S, d.sma20, css("--sma20"), 1.25);
     if (state.panes.rolling) {
       draw.step(ctx, S, v.rollingLow.map((x, i) => (i >= v.start ? x : null)), withAlpha(css("--rolling"), 0.75), 1.25);
     }
@@ -510,9 +539,9 @@
     const off = Math.max(8, S.barW * 0.3 + 6);
     const size = S.mobile ? 4 : 4.5;
     const used = new Set(v.used); // bars carrying a low that built one of S1…S5
-    v.lows.forEach((i) => draw.triangle(ctx, S.x(i), S.y(d.low[i]) + off, "up",
+    if (state.panes.swings) v.lows.forEach((i) => draw.triangle(ctx, S.x(i), S.y(d.low[i]) + off, "up",
       used.has(i) ? sup : withAlpha(sup, 0.34), false, used.has(i) ? size : size - 1));
-    v.pendingLows.forEach((i) => draw.triangle(ctx, S.x(i), S.y(d.low[i]) + off, "up", sup, true, size));
+    if (state.panes.swings) v.pendingLows.forEach((i) => draw.triangle(ctx, S.x(i), S.y(d.low[i]) + off, "up", sup, true, size));
     // 6. window start marker
     if (v.start > S.i0) {
       const x = Math.round(S.x(v.start) - S.barW / 2) + 0.5;
@@ -673,15 +702,17 @@
 
   function renderLegends() {
     legend($("#legend"), [
-      ["box strong", `background:${withAlpha(css("--support"), 0.30)};border:1px solid ${css("--support")}`, "Support zone (darker = stronger)"],
-      ...(state.panes.above ? [["box", `background:${withAlpha(css("--above"), 0.18)};border:1px dashed ${css("--above")}`, "Level above price (was support)"]] : []),
-      ["tri", `border-bottom-color:${css("--support")}`, "Swing low that built a level"],
-      ["tri faint", `border-bottom-color:${css("--support")}`, "Other swing low"],
-      ["tri hollow", `border-bottom-color:${css("--support")}`, "Pending (not yet confirmed)"],
+      ...(state.res.supports.length ? [["box strong", `background:${withAlpha(css("--support"), 0.30)};border:1px solid ${css("--support")}`, "Support zone (darker = stronger)"]] : []),
+      ...(state.res.above.length ? [["box", `background:${withAlpha(css("--above"), 0.18)};border:1px dashed ${css("--above")}`, "Level above price (was support)"]] : []),
+      ...(state.panes.swings ? [
+        ["tri", `border-bottom-color:${css("--support")}`, "Swing low that built a level"],
+        ["tri faint", `border-bottom-color:${css("--support")}`, "Other swing low"],
+        ["tri hollow", `border-bottom-color:${css("--support")}`, "Pending (not yet confirmed)"]] : []),
       ["candle", "", "Up day"], ["candle fill", "", "Down day"],
       ...(state.panes.rolling ? [["", `border-color:${css("--rolling")}`, `${state.opts.period}-day rolling low`]] : []),
-      ["", `border-color:${css("--sma20")}`, "20-day avg"], ["", `border-color:${css("--sma50")}`, "50-day avg"],
-      ["", `border-color:${css("--sma200")}`, "200-day avg"],
+      ...(state.panes.sma20 ? [["", `border-color:${css("--sma20")}`, "20-day avg"]] : []),
+      ...(state.panes.sma50 ? [["", `border-color:${css("--sma50")}`, "50-day avg"]] : []),
+      ...(state.panes.sma200 ? [["", `border-color:${css("--sma200")}`, "200-day avg"]] : []),
       ...(state.panes.bb ? [["box", `background:${withAlpha(css("--sma20"), 0.10)};border:1px dashed ${css("--sma20")}`, "Bollinger Bands (normal range around the 20-day avg)"]] : []),
     ]);
     legend($("#cmpLegend"), [

@@ -167,7 +167,9 @@ main { padding-top: 16px; padding-bottom: 40px; }
 .key.candle.fill { background: var(--candle); }
 
 .chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 2px; }
-.chips-label { font-size: 12px; color: var(--text-muted); margin-right: 2px; }
+.chips-label { font-size: 12px; color: var(--text-muted); margin-right: 2px; min-width: 120px; }
+.chips-actions { display: inline-flex; gap: 6px; margin-left: auto; }
+@media (max-width: 640px) { .chips-label { min-width: 0; flex-basis: 100%; } .chips-actions { margin-left: 0; } }
 .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text-secondary); cursor: pointer; user-select: none; }
 .chip:hover { border-color: var(--axis); }
 .chip input { accent-color: var(--accent); margin: 0; }

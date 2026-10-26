@@ -93,16 +93,28 @@
     </div>
     <p class="help lede">Each green band is a price area where TQQQ has stopped falling and turned back up. The darker the band, the more reliable the level has been. <b>S1</b> is the closest support below today's price, <b>S2</b> the next one down, and so on. Grey bands with a dashed line, <b>A1</b>, <b>A2</b> and so on, are <b>levels above the price</b>: old floors the price has since closed below. Rises often stall there.</p>
     <ul class="legend" id="legend"></ul>
-    <div class="chips" role="group" aria-label="Chart panels">
-      <span class="chips-label">Show:</span>
+    <div class="chips" role="group" aria-label="On the price chart">
+      <span class="chips-label">On the price chart:</span>
+      <label class="chip" title="The nearest level below or at the price is always shown"><input type="checkbox" data-pane="zones" checked> More support below</label>
+      <label class="chip" title="The nearest level above the price is always shown"><input type="checkbox" data-pane="above" checked> More levels above</label>
+      <label class="chip"><input type="checkbox" data-pane="sma20" checked> 20-day avg</label>
+      <label class="chip"><input type="checkbox" data-pane="sma50" checked> 50-day avg</label>
+      <label class="chip"><input type="checkbox" data-pane="sma200" checked> 200-day avg</label>
+      <label class="chip"><input type="checkbox" data-pane="bb" checked> Bollinger Bands</label>
+      <label class="chip"><input type="checkbox" data-pane="swings" checked> Swing lows</label>
+      <label class="chip"><input type="checkbox" data-pane="rolling" checked> <span><span class="pv-label">3</span>-day low</span></label>
+      <label class="chip"><input type="checkbox" data-pane="profile"> Volume by price</label>
+    </div>
+    <div class="chips" role="group" aria-label="Panels below the chart">
+      <span class="chips-label">Panels below:</span>
       <label class="chip"><input type="checkbox" data-pane="vol" checked> Volume</label>
       <label class="chip"><input type="checkbox" data-pane="rsi" checked> RSI</label>
       <label class="chip"><input type="checkbox" data-pane="macd"> MACD</label>
       <label class="chip"><input type="checkbox" data-pane="dd"> % below 12-month high</label>
-      <label class="chip"><input type="checkbox" data-pane="rolling" checked> <span><span class="pv-label">3</span>-day low</span></label>
-      <label class="chip"><input type="checkbox" data-pane="profile"> Volume by price</label>
-      <label class="chip"><input type="checkbox" data-pane="above" checked> Levels above price</label>
-      <label class="chip"><input type="checkbox" data-pane="bb" checked> Bollinger Bands</label>
+      <span class="chips-actions">
+        <button type="button" class="btn small" id="simpleView">Simple view</button>
+        <button type="button" class="btn small" id="showAll">Show all</button>
+      </span>
     </div>
     <div id="mainChart" class="main-chart" aria-describedby="chartHelp"></div>
     <dl id="chartHelp" class="chart-help">

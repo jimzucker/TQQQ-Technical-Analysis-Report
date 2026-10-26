@@ -117,7 +117,7 @@ Two design choices worth naming. Findings are **grouped rather than ranked**, be
 | <img src="assets/readme/zone-strength.svg" alt="" width="52"> | **Darker green = stronger** | Opacity is stepped by the strength tier, so Strong zones are visibly darker than Weak ones. |
 | <img src="assets/readme/tag-level.svg" alt="" width="74"> | **Green tag, right edge** | The zone's ID and its centre price. **S1** is nearest today's price, **S5** is furthest below. |
 | | **Light blue band with dashed edges** | Bollinger Bands, when switched on: the normal range around the 20-day average, two standard deviations either side. A close outside it is unusual. On by default; turn off with the **Bollinger Bands** switch, and that choice is remembered. |
-| | **Grey band, dashed line, A-tag** | A level above the price: an old support zone the price has since closed below. Turn it off with the **Levels above price** switch. |
+| | **Grey band, dashed line, A-tag** | A level above the price: an old support zone the price has since closed below. The nearest one (A1) is always shown; the **More levels above** switch shows or hides the rest. |
 | <img src="assets/readme/tag-close.svg" alt="" width="52"> | **Dark tag, right edge** | The last closing price. |
 | <img src="assets/readme/swing-used.svg" alt="" width="22"> | **Solid green triangle** | A swing low that helped build one of the five levels shown. |
 | <img src="assets/readme/swing-other.svg" alt="" width="22"> | **Faded green triangle** | A swing low that did not make the top five. |
@@ -161,7 +161,14 @@ Every setting is written into the page address, so any view can be bookmarked or
 ?window=100                custom 100-session window
 ?window=6m&period=5        six months, 5-day swings
 ?window=12m&cluster=0.75&touches=2   wider zones, only levels held twice or more
+?show=zones,sma50,sma200   only these chart layers (Simple view); ?show=none hides them all
 ```
+
+`show` is added only when the chart layers differ from the defaults, and a link that carries it wins over the layers a reader has saved.
+
+### Chart layers
+
+Every layer of the main chart has a switch, in two rows. **On the price chart:** more support below the price, more levels above it, the 20, 50 and 200-day averages, Bollinger Bands, swing lows, the 3-day low and volume by price. **Panels below:** volume, RSI, MACD and % below the 12-month high. The nearest level below or at the price (S1 — the zone the price is in, when it is in one) and the nearest above (A1) are always on the chart; the two level switches add the rest. **Simple view** shows only the candles, the support below the price and the 50 and 200-day averages; **Show all** turns everything on. The legend lists only what is shown, and the choice is remembered in the browser.
 
 ---
 
@@ -385,8 +392,9 @@ All tests run on every pull request (`.github/workflows/tests.yml`), and the cov
 | `tests/golden.test.js` | Runs the method over every session in the frozen data, at 1, 3, 6 and 12 months, and compares every support level and "what changed" item with `tests/golden/levels.txt`. Any change that moves a level fails here and names the line. A second test checks, over the last 200 sessions at every window, that every level found is either listed (S below the price, A above it) or counted in the table's "not listed" line — none dropped, none listed twice, and none left out while a weaker one is shown |
 | `tests/snapshot.test.js` | Runs the nightly snapshot job on a temporary folder: the files it writes, backfilling, and keeping at most 400 snapshots |
 | `.github/workflows/security.yml` | Looks up every Python and npm package in the public vulnerability databases, on every pull request and every Monday, and checks the audit still catches a known vulnerable version |
-| `tests/browser/rendering.spec.js` | Draws the main chart at every time frame (1–12 months and custom lengths), Daily and Mondays, light and dark, with the chart switches in 18 settings (all off, all on, each alone, each off alone), the method settings at their limits, and clicking each switch — on desktop and phone. Each drawing is checked: no tag over another tag or a candle, the last-price tag exactly on its price, any moved tag joined to its level, every level tagged or counted in an edge tag, no date labels colliding or cut off, no candle cut off, panels and legend matching the switches. A self-check proves the checker catches a hidden candle |
-| `.github/workflows/rendering-matrix.yml` | Every Monday and on demand: the same checks for all 256 settings of the switches — 10,240 drawings |
+| `tests/browser/rendering.spec.js` | Draws the main chart at every time frame (1–12 months and custom lengths), Daily and Mondays, light and dark, with the 13 chart switches in 28 settings (all off, all on, each alone, each off alone), the method settings at their limits, and clicking each switch — on desktop and phone. Each drawing is checked: no tag over another tag or a candle, the last-price tag exactly on its price, any moved tag joined to its level, every level tagged or counted in an edge tag, no date labels colliding or cut off, no candle cut off, panels and legend matching the switches. A self-check proves the checker catches a hidden candle |
+| `.github/workflows/rendering-matrix.yml` | Every Monday and on demand: the same checks for every combination of the 7 switches that change where things are drawn (the four panels, Bollinger Bands and the two kinds of level), each with the other 6 all on and all off — 256 settings, 10,240 drawings |
+| `tests/browser/show-hide.spec.js` | Each switch hides its layer and legend entry; Simple view and Show all; the page address carries the layers and a shared link wins |
 | `tests/browser/security.spec.js` | Puts HTML and script into every text field of the data files and checks none of it reaches the page as HTML |
 | `tests/browser/` | Opens the real page in Chrome, on a desktop and a phone screen size: every section appears, every control works, the chart responds to keyboard, mouse and trackpad (page scroll, sideways swipe, zoom), levels above price appear and can be hidden, the downloads work, and nothing makes the page scroll sideways |
 
@@ -414,6 +422,7 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-10-25 | **Show or hide every chart layer.** The nearest level below (S1) and above (A1) always stay on the chart; "More support below" and "More levels above" add the rest. New switches for the support below the price, the 20, 50 and 200-day averages and the swing lows, in two labelled rows; Simple view and Show all buttons; the legend lists only what is shown; the page address carries the layers when they differ from the defaults. The every-combination tests cover all 13 switches. |
 | 2026-10-25 | **Tests for every chart combination.** Every pull request draws the chart at every time frame, Daily and Mondays, light and dark, with the switches in 18 settings, and checks each drawing for collisions, misplaced tags and cut-off candles or dates. A weekly run checks all 256 switch settings: 10,240 drawings. No change to the app. |
 | 2026-10-25 | **Chart fits every window.** The space kept right of the newest candle is now exactly the width of the price tags, so tags no longer hide the latest candles at 12 months or leave a wide gap at 1 month. When levels sit close together the last-price tag stays on its price, the other tags move aside with a short line back to their level, and tags that do not fit are folded into the edge tag (which moves to the left corner if the price tag is in its way). A date label that would be cut off at the chart's edge is left out. The page now uses up to 1600 pixels of a wide screen (it stopped at 1180), with a 48-pixel margin each side on a desktop (16 on a phone); text keeps its own line length. The help under the chart is six short labelled items in columns instead of one long paragraph. |
 | 2026-10-25 | **Every level from at least the last 200 sessions.** Levels are found over at least 200 sessions, or the window if longer, and every one is listed instead of the strongest five on each side; on 2026-10-23 that is 6 below the price and 2 above, for any window up to 9 months. The chart reaches down to the next floor below the current one (stretching the price scale by at most half), and levels still out of view get one edge tag naming the nearest ("▼ S3 $50.18 · 3 more below") instead of tags pushed beside the wrong price. |
