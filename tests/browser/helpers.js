@@ -45,3 +45,75 @@ async function overChart(page) {
 }
 
 module.exports = { openPage, view, overChart, DATA };
+
+/**
+ * Checks the main chart as drawn and returns a list of problems in plain words (empty = fine):
+ * tags overlapping each other or a candle, the last-price tag off its price, a tag moved off
+ * its line without a line back to it, date labels colliding,
+ * candles cut off at the top or bottom, panels or legend not matching the switches, and the
+ * count of levels out of view not matching the levels.
+ */
+async function renderingProblems(page) {
+  return page.evaluate(() => {
+    const st = window.__dashboard, c = st.charts.main, L = c.L, P = L.panes[0], S = P.S;
+    const d = st.view.data, out = [];
+    const boxes = st.tagBoxes || [];
+    const hit = (a, b) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+    // 1. tags overlapping each other
+    for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++)
+      if (hit(boxes[i], boxes[j])) out.push(`tags "${boxes[i].text}" and "${boxes[j].text}" overlap`);
+    // 2. a tag covering a candle (body or wick) in view
+    const cw = Math.max(1, Math.min(12, S.barW * 0.7));
+    for (let i = S.i0; i <= S.i1; i++) {
+      if (d.high[i] == null) continue;
+      const candle = { left: S.x(i) - cw / 2, right: S.x(i) + cw / 2, top: S.y(d.high[i]), bottom: S.y(d.low[i]) };
+      for (const b of boxes) if (hit(b, candle)) out.push(`tag "${b.text}" covers the ${d.dates[i]} candle`);
+    }
+    // 3. the last-price tag sits on its price; any other tag moved off its line has a line back to it
+    for (const b of boxes) {
+      if (b.target == null) continue;
+      const off = Math.abs(b.y - b.target);
+      if (/^\$/.test(b.text) && off > 1) out.push(`the last-price tag "${b.text}" is ${off.toFixed(0)}px off its price`);
+      else if (off > 2 && !b.leader) out.push(`tag "${b.text}" is ${off.toFixed(0)}px from its line with nothing joining them`);
+    }
+    // 4. tags outside the price panel
+    for (const b of boxes) if (b.top < S.top - 1 || b.bottom > S.bottom + 1) out.push(`tag "${b.text}" is outside the price panel`);
+    // 5. candles cut off at the top or bottom of the price panel
+    for (let i = Math.ceil(c.view.from); i <= Math.floor(c.view.to); i++) {
+      if (d.high[i] == null) continue;
+      if (d.high[i] > S.hi + 1e-9 || d.low[i] < S.lo - 1e-9) { out.push(`the ${d.dates[i]} candle is cut off`); break; }
+    }
+    // 6. date labels colliding or running off the chart
+    const ctx = document.createElement("canvas").getContext("2d");
+    const ticks = (c.ticks || []).map((t) => {
+      ctx.font = t.strong ? '600 12px system-ui, -apple-system, "Segoe UI", sans-serif' : '12px system-ui, -apple-system, "Segoe UI", sans-serif';
+      const w = ctx.measureText(t.label).width;
+      return { ...t, left: t.x - w / 2, right: t.x + w / 2 };
+    });
+    for (let k = 1; k < ticks.length; k++) if (ticks[k].left < ticks[k - 1].right) out.push(`dates "${ticks[k - 1].label}" and "${ticks[k].label}" overlap`);
+    for (const t of ticks) if (t.left < 0 || t.right > L.w) out.push(`date "${t.label}" runs off the chart`);
+    // 7. panels and legend match the switches
+    const want = ["price", ...["vol", "rsi", "macd", "dd"].filter((k) => st.panes[k])];
+    const have = L.panes.map((p) => p.id);
+    if (JSON.stringify(have) !== JSON.stringify(want)) out.push(`panels ${have.join(",")} but switches say ${want.join(",")}`);
+    const legend = document.querySelector("#legend").textContent;
+    for (const [k, text] of [["bb", "Bollinger"], ["above", "Level above price"], ["rolling", "rolling low"]])
+      if (!!st.panes[k] !== legend.includes(text)) out.push(`legend ${legend.includes(text) ? "shows" : "is missing"} "${text}" with the switch ${st.panes[k] ? "on" : "off"}`);
+    // 8. every level has its own tag or is counted in the edge tag on its side, never both or neither
+    const levels = [...st.res.supports, ...(st.panes.above ? st.res.above : [])];
+    const money = (v) => "$" + v.toFixed(2);
+    const tagged = new Set(boxes.filter((b) => !b.edge).map((b) => b.text));
+    const untagged = levels.filter((z) => !tagged.has(`${z.id} ${money(z.price)}`));
+    const priceY = S.y(st.res.price);
+    const below = untagged.filter((z) => S.y(z.price) > priceY).length, above = untagged.length - below;
+    const off = st.offChart || { above: 0, below: 0 };
+    if (off.below !== below || off.above !== above) out.push(`edge tags count ${off.above} above / ${off.below} below, but ${above} / ${below} levels have no tag`);
+    for (const [dir, n] of [["▲", above], ["▼", below]]) {
+      const has = boxes.some((b) => b.edge && b.text.startsWith(dir));
+      if (has !== n > 0) out.push(n ? `${n} levels have no tag and no ${dir} edge tag` : `a ${dir} edge tag with no level behind it`);
+    }
+    return out;
+  });
+}
+
+module.exports.renderingProblems = renderingProblems;
