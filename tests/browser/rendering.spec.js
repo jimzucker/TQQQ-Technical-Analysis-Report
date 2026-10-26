@@ -107,3 +107,16 @@ test("the checker itself notices a candle hidden behind a tag", async ({ page })
   const problems = await renderingProblems(page);
   expect(problems.some((p) => /covers the .* candle/.test(p))).toBe(true);
 });
+
+test("every ticker draws correctly at every time frame, Daily and Mondays", async ({ page }) => {
+  // QQQ and SPY trade near $700, ten times TQQQ, so their price tags are wider
+  const errors = await openPage(page);
+  const problems = [];
+  for (const ticker of ["TQQQ", "QQQ", "SPY"]) for (const w of ["1m", "3m", "6m", "9m", "12m"]) for (const cadence of ["daily", "weekly"]) {
+    await page.evaluate((c) => { localStorage.setItem("cadence", c); localStorage.removeItem("settings"); }, cadence);
+    await page.goto(`index.html?ticker=${ticker}&window=${w}`); await page.waitForFunction(() => window.__dashboard && window.__dashboard.res);
+    for (const p of await renderingProblems(page)) problems.push(`[${ticker} ${w} ${cadence}] ${p}`);
+  }
+  expect(problems, problems.slice(0, 10).join("\n")).toEqual([]);
+  expect(errors).toEqual([]);
+});

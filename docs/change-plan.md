@@ -2,7 +2,7 @@
 
 Written 2026-10-25. This file records what was asked for, what the review found, and the plan agreed. It is meant to be shared with the original owner of the app. The [README change log](../README.md#change-log) records each phase as it lands.
 
-**Status:** test automation, the security checks, phase 3 (chart scrolling), phase 1 (levels above price), remembered settings with readable dates, phase 4 (Bollinger Bands), levels from at least 200 sessions, the every-combination tests, and phase 5 (show or hide every layer) are done. Phase 2 is not started.
+**Status:** test automation, the security checks, phase 3 (chart scrolling), phase 1 (levels above price), remembered settings with readable dates, phase 4 (Bollinger Bands), levels from at least 200 sessions, the every-combination tests, and phase 5 (show or hide every layer) are done. Phase 2 is under way: part 1 (several tickers from a list) is done; parts 2 and 3 are not started.
 
 **Pull requests, each built on the one before:**
 
@@ -16,6 +16,7 @@ Written 2026-10-25. This file records what was asked for, what the review found,
 | 6 | `levels-min-200-sessions` | Every level from at least the last 200 sessions; the chart fits every time frame (section 12) |
 | 7 | `test-every-combination` | Tests only: the chart checked in every combination of options (section 13) |
 | 8 | `show-hide-indicators` | Phase 5: show or hide every chart layer, with its tests (section 8) |
+| 9 | `multi-ticker` | Phase 2, part 1: several tickers from a list (section 5) |
 
 ---
 
@@ -143,6 +144,20 @@ The requests, copied word for word:
 
 > support below price removes the current support it should not either show the support level we are in or the one closestst above and below even when unchecked
 
+> status ?
+
+> send PR 8
+
+> anyone
+
+> yes start PR 9
+
+> the time tiles moved they should be near the graph
+
+> 3 month view not correct showing one lower support just current support and higher
+
+> never mind my review was wrong its oK
+
 ## 2. Decisions made
 
 | Question | Decision |
@@ -150,7 +165,7 @@ The requests, copied word for word:
 | Levels above price: shown by default? | **Yes**, in a muted colour, with a switch to hide them |
 | Other tickers: fixed list, or any ticker? | **Any ticker.** A requested ticker is checked; if it passes, it is added to the daily list and kept up to date from then on |
 | Starting list | TQQQ, QQQ, SPY |
-| Who may add tickers, and how many | **Not decided yet.** Proposed: anyone, at most 50 tickers on the list, at most 5 additions per visitor per day. The other choice is only the owner, using a passphrase |
+| Who may add tickers, and how many | **Anyone**, at most 50 tickers on the list and at most 5 additions per visitor per day (decided 2026-10-25) |
 
 ## 3. How the app works today
 
@@ -234,6 +249,20 @@ The 1-month view says no support was found, even though two well-scored levels s
 - A GitHub fine-grained token for this repository only, with **Actions: write** and nothing else, saved as a secret in the Worker.
 
 ---
+
+**Split into three pull requests**, each on the one before:
+
+| PR | What | Status |
+|---|---|---|
+| 9 | Several tickers from `docs/data/tickers.json` (TQQQ, QQQ, SPY): a menu and `?ticker=` links, per-ticker data folders, wording from each ticker's entry, the nightly refresh building every ticker | Done |
+| 10 | The indicator maths in JavaScript, so the page can analyse a ticker not yet on the list | Not started |
+| 11 | Request any ticker: a Cloudflare Worker fetches it and starts an "add ticker" job, within the limits above | Not started; needs the owner's Cloudflare account and a GitHub token |
+
+**Decisions made while building PR 9.**
+- TQQQ's files stay at `docs/data/` (no move, so its history and anything linking to `docs/data/tqqq.json` are untouched); other tickers get `docs/data/<symbol>/`.
+- SPY's benchmark is QQQ rather than none: it compares the S&P 500 with the Nasdaq-100 and avoids a special "no benchmark" case throughout the page.
+- The benchmark series is now `bench_close`; files written before the change (`qqq_close`) are still read.
+- The time buttons (1M–12M) had always been in the bar at the top of the page. Since levels now come from at least 200 sessions, they mainly set how much of the chart is shown, so they moved into a toolbar directly above the chart, with Daily/Mondays and the zoom buttons (asked for while reviewing this pull request).
 
 ## 6. Phase 3 — standard chart navigation
 

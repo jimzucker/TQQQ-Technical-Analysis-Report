@@ -106,7 +106,10 @@ h3 { font-size: 14px; margin: 16px 0 6px; }
 
 main { padding-top: 16px; padding-bottom: 40px; }
 .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow); min-width: 0; }
-.card-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.card-head { display: flex; justify-content: space-between; align-items: center; gap: 8px 16px; flex-wrap: wrap; }
+/* toolbar directly above the main chart: time shown on the left, view controls on the right */
+.chart-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 8px 16px; flex-wrap: wrap; margin: 12px 0 6px; }
+.time-pick { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .card-head h2 { margin: 0; }
 .zoom { display: flex; gap: 8px; align-items: center; }
 .seg.small { padding: 2px; }
@@ -169,6 +172,7 @@ main { padding-top: 16px; padding-bottom: 40px; }
 .chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 2px; }
 .chips-label { font-size: 12px; color: var(--text-muted); margin-right: 2px; min-width: 120px; }
 .chips-actions { display: inline-flex; gap: 6px; margin-left: auto; }
+.ticker-pick { font: inherit; font-weight: 700; color: inherit; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 0 6px; margin-right: 6px; cursor: pointer; }
 @media (max-width: 640px) { .chips-label { min-width: 0; flex-basis: 100%; } .chips-actions { margin-left: 0; } }
 .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text-secondary); cursor: pointer; user-select: none; }
 .chip:hover { border-color: var(--axis); }
@@ -262,6 +266,6 @@ tr.foot-row td { white-space: normal; border-bottom: 0; font-size: 12.5px; }
   .defs > div, .defs.wide > div { grid-template-columns: 1fr; gap: 0; }
 }
 @media print {
-  .controls, .zoom, .chips, .skip { display: none; }
+  .controls, .zoom, .time-pick, .chips, .skip { display: none; }
   .card { break-inside: avoid; box-shadow: none; }
 }

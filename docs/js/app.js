@@ -1,4 +1,4 @@
-/* TQQQ dashboard — page controller: loads data, runs the method, renders the report. */
+/* Support levels dashboard — page controller: loads a ticker's data, runs the method, renders the report. */
 (function () {
   "use strict";
   const { StackChart, LevelDotChart, draw, withAlpha, css } = window.Charts;
@@ -32,13 +32,18 @@
 
   /* ------------------------------------------------------------ URL <-> settings */
   const SETTING_KEYS = ["window", "period", "cluster", "touches"];
+  // used only if docs/data/tickers.json cannot be read
+  const FALLBACK_LIST = { default: "TQQQ", tickers: [{ symbol: "TQQQ", name: "ProShares UltraPro QQQ", index: "Nasdaq-100", leverage: 3, benchmark: "QQQ", dir: "data" }] };
 
   function readUrl() {
-    // a link that carries settings wins; otherwise reopen with this browser's last ones
-    let q = new URLSearchParams(location.search);
-    if (!SETTING_KEYS.some((k) => q.has(k))) {
+    // a link that carries settings wins; otherwise reopen with this browser's last ones.
+    // The ticker and the chart layers in a link always win, even when it carries nothing else.
+    const url = new URLSearchParams(location.search);
+    let q = url;
+    if (!SETTING_KEYS.some((k) => url.has(k))) {
       try { q = new URLSearchParams(localStorage.getItem("settings") || ""); } catch (e) { /* storage unavailable */ }
     }
+    const pick = (k) => (url.has(k) ? url.get(k) : q.get(k));
     const o = { window: SR.WINDOW_PRESETS[PAGE_WINDOW] };
     const w = q.get("window");
     if (w) {
@@ -47,11 +52,12 @@
       else { o.window = parseInt(k, 10); state.windowKey = null; }
     }
     // ?show=zones,sma50,... names exactly the chart layers to show (written when they differ from the defaults)
-    if (q.has("show")) {
-      const on = new Set(q.get("show").split(",").filter((k) => k in PANE_DEFAULTS));
+    if (pick("show") != null) {
+      const on = new Set(pick("show").split(",").filter((k) => k in PANE_DEFAULTS));
       state.panes = Object.fromEntries(Object.keys(PANE_DEFAULTS).map((k) => [k, on.has(k)]));
       state.panesFromLink = true;
     }
+    state.requestedTicker = (pick("ticker") || "").trim().toUpperCase() || null;
     if (q.get("period")) o.period = q.get("period");
     if (q.get("cluster")) o.clusterMult = q.get("cluster");
     if (q.get("touches")) o.minTouches = q.get("touches");
@@ -70,6 +76,7 @@
   function writeUrl() {
     const o = state.opts, d = SR.DEFAULTS;
     const q = new URLSearchParams();
+    if (state.ticker && state.listing && state.ticker.symbol !== state.listing.default) q.set("ticker", state.ticker.symbol);
     q.set("window", state.windowKey || String(o.window));
     if (o.period !== d.period) q.set("period", o.period);
     if (o.clusterMult !== d.clusterMult) q.set("cluster", o.clusterMult);
@@ -177,8 +184,8 @@
     $("#dlCsv").addEventListener("click", downloadCsv);
     $("#dlPng").addEventListener("click", () => {
       const a = document.createElement("a");
-      a.href = state.charts.main.toPNG(`TQQQ support levels — ${winName(state.opts.window)} window — data as of ${state.data.meta.as_of}`);
-      a.download = `tqqq-support-${state.data.meta.as_of}-${state.opts.window}d.png`;
+      a.href = state.charts.main.toPNG(`${tk().symbol} support levels — ${winName(state.opts.window)} window — data as of ${state.data.meta.as_of}`);
+      a.download = `${tk().symbol.toLowerCase()}-support-${state.data.meta.as_of}-${state.opts.window}d.png`;
       a.click();
     });
   }
@@ -419,7 +426,7 @@
       panes, dates: v.dates, tooltip: mainTooltip, rightPad: 0.5, rightPadPx: tagRoom,
       dimBefore: () => state.view.levelStart, // history older than the level search
     });
-    c.canvas.setAttribute("aria-label", `Candlestick chart of TQQQ, ${v.weekly ? "one bar per Monday" : "one bar per trading day"}, with shaded support zones and optional volume, RSI, MACD and drawdown panels. The levels table below lists the same zones.`);
+    c.canvas.setAttribute("aria-label", `Candlestick chart of ${tk().symbol}, ${v.weekly ? "one bar per Monday" : "one bar per trading day"}, with shaded support zones and optional volume, RSI, MACD and drawdown panels. The levels table below lists the same zones.`);
     return c;
   }
 
@@ -616,7 +623,7 @@
     const recompute = () => {
       const s = state.res.start;
       idx.t = d.close.map((v, i) => (i >= s ? (v / d.close[s]) * 100 : null));
-      idx.q = d.qqq_close.map((v, i) => (i >= s ? (v / d.qqq_close[s]) * 100 : null));
+      idx.q = d.bench_close.map((v, i) => (i >= s ? (v / d.bench_close[s]) * 100 : null));
     };
     const c = new StackChart($("#benchChart"), {
       dates: d.dates, rightPad: 1, minBars: 10,
@@ -638,10 +645,10 @@
         },
       }],
       tooltip: (i) => `<div class="d">${fmtDate(d.dates[i])}</div><table>
-        <tr><td><span class="sw" style="background:${css("--accent")}"></span>TQQQ</td><td>${idx.t[i] != null ? "$" + idx.t[i].toFixed(1) : "–"}</td></tr>
-        <tr><td><span class="sw" style="background:${css("--qqq")}"></span>QQQ</td><td>${idx.q[i] != null ? "$" + idx.q[i].toFixed(1) : "–"}</td></tr></table>`,
+        <tr><td><span class="sw" style="background:${css("--accent")}"></span>${esc(tk().symbol)}</td><td>${idx.t[i] != null ? "$" + idx.t[i].toFixed(1) : "–"}</td></tr>
+        <tr><td><span class="sw" style="background:${css("--qqq")}"></span>${esc(tk().benchmark)}</td><td>${idx.q[i] != null ? "$" + idx.q[i].toFixed(1) : "–"}</td></tr></table>`,
     });
-    c.canvas.setAttribute("aria-label", "Line chart comparing growth of $100 in TQQQ and QQQ over the selected window.");
+    c.canvas.setAttribute("aria-label", `Line chart comparing growth of $100 in ${tk().symbol} and ${tk().benchmark} over the selected window.`);
     c.recompute = recompute;
     return c;
   }
@@ -649,10 +656,10 @@
   function renderBenchStats() {
     const b = SR.benchmark(state.data, state.res);
     $("#benchStats").innerHTML = `
-      <div><b>${pct(b.tqqqReturn)}</b><span>TQQQ return</span></div>
-      <div><b>${pct(b.qqqReturn)}</b><span>QQQ return (3× = ${pct(b.naive3x, 0)})</span></div>
-      <div><b>${b.beta.toFixed(2)}×</b><span>Daily beta to QQQ</span></div>
-      <div><b>${b.volTqqq.toFixed(0)}% / ${b.volQqq.toFixed(0)}%</b><span>Annualised volatility</span></div>`;
+      <div><b>${pct(b.symReturn)}</b><span>${esc(tk().symbol)} return</span></div>
+      <div><b>${pct(b.benchReturn)}</b><span>${esc(tk().benchmark)} return${b.leverage > 1 ? ` (${b.leverage}× = ${pct(b.naiveLev, 0)})` : ""}</span></div>
+      <div><b>${b.beta.toFixed(2)}×</b><span>Daily beta to ${esc(tk().benchmark)}</span></div>
+      <div><b>${b.volSym.toFixed(0)}% / ${b.volBench.toFixed(0)}%</b><span>Annualised volatility</span></div>`;
   }
 
   function renderCompare() {
@@ -720,14 +727,14 @@
       ["dot ring", `border-color:${css("--support")}`, "Found in 3+ windows"],
       ["dash", `border-color:${css("--text-secondary")}`, "Last close"],
     ]);
-    legend($("#benchLegend"), [["", `border-color:${css("--accent")}`, "TQQQ"], ["", `border-color:${css("--qqq")}`, "QQQ"]]);
+    legend($("#benchLegend"), [["", `border-color:${css("--accent")}`, esc(tk().symbol)], ["", `border-color:${css("--qqq")}`, esc(tk().benchmark)]]);
   }
 
   /* ------------------------------------------------------------ downloads */
   function downloadCsv() {
     const r = state.res, d = state.data;
     const lines = [
-      `# TQQQ support levels, data as of ${d.meta.as_of}, window ${r.opts.window} sessions, levels from the last ${r.end - r.levelStart + 1} sessions, swing period ${r.opts.period}, cluster ${r.opts.clusterMult}xATR, min touches ${r.opts.minTouches}`,
+      `# ${tk().symbol} support levels, data as of ${d.meta.as_of}, window ${r.opts.window} sessions, levels from the last ${r.end - r.levelStart + 1} sessions, swing period ${r.opts.period}, cluster ${r.opts.clusterMult}xATR, min touches ${r.opts.minTouches}`,
       "level,zone_price,zone_low,zone_high,distance_pct,touches,last_test,first_seen,strength_score,strength,status,volume_vs_avg",
       ...[...r.above.slice().reverse(), ...r.supports].map((z) => [z.id, z.price.toFixed(2), z.low.toFixed(2), z.high.toFixed(2),
         z.distancePct.toFixed(2), z.touches, z.date, z.firstDate, z.score, z.strength, z.status, z.volumeRatio.toFixed(2)].join(",")),
@@ -745,7 +752,7 @@
     const blob = new Blob([lines.join("\n")], { type: "text/csv" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = `tqqq-support-${d.meta.as_of}-${r.opts.window}d.csv`;
+    a.download = `${tk().symbol.toLowerCase()}-support-${d.meta.as_of}-${r.opts.window}d.csv`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }
@@ -767,7 +774,36 @@
     renderBenchStats();
     renderCompare();
     renderCharts({ keepView });
-    document.title = `TQQQ Support Levels · ${money(state.res.price)} · ${state.data.meta.as_of}`;
+    document.title = `${tk().symbol} Support Levels · ${money(state.res.price)} · ${state.data.meta.as_of}`;
+  }
+
+  /** The current ticker's name, benchmark and leverage (from its data file, else the list). */
+  const tk = () => SR.tickerInfo(state.data || { meta: state.ticker });
+
+  /** Put the ticker's name, benchmark and leverage into the page's fixed text. */
+  function renderTickerText() {
+    const t = tk();
+    $$("[data-tk]").forEach((el) => (el.textContent = t[el.dataset.tk]));
+    const lev = t.leverage > 1;
+    $("#tickerDesc").textContent = lev ? `${t.name} (${t.leverage}× ${t.index})` : `${t.name} · tracks the ${t.index}`;
+    $("#benchHelp").innerHTML = lev
+      ? `What $100 would have grown to over the selected window. ${esc(t.symbol)} aims for ${t.leverage}× ${esc(t.benchmark)}'s <em>daily</em> move; over longer periods the result drifts away from ${t.leverage}× the period return, more so in choppy markets.`
+      : `What $100 would have grown to over the selected window in ${esc(t.symbol)}, and in ${esc(t.benchmark)} for comparison.`;
+    $("#riskNote").textContent = lev
+      ? `${t.symbol} is a ${t.leverage}× leveraged ETF that resets daily; it can lose value quickly, and over periods longer than a day its return can differ greatly from ${t.leverage}× the ${t.index}.`
+      : `${t.symbol} is an exchange-traded fund that tracks the ${t.index}; it can still fall sharply.`;
+  }
+
+  /** Fill the ticker picker; choosing another ticker reloads the page for it, keeping the other settings. */
+  function renderTickerPick() {
+    const pick = $("#tickerPick");
+    pick.innerHTML = state.listing.tickers.map((t) => `<option value="${esc(t.symbol)}">${esc(t.symbol)}</option>`).join("");
+    pick.value = state.ticker.symbol;
+    pick.onchange = () => {
+      state.ticker = state.listing.tickers.find((t) => t.symbol === pick.value);
+      writeUrl();
+      location.reload();
+    };
   }
 
   async function init() {
@@ -775,11 +811,25 @@
     bindControls();
     try {
       const bust = "?v=" + Math.floor(Date.now() / 3.6e6); // refresh at least hourly past the CDN cache
+      state.listing = (await fetch("data/tickers.json" + bust).then((r) => (r.ok ? r.json() : null)).catch(() => null)) || FALLBACK_LIST;
+      const want = state.requestedTicker || state.listing.default;
+      state.ticker = state.listing.tickers.find((t) => t.symbol === want);
+      const note = $("#tickerNote");
+      if (!state.ticker) {
+        state.ticker = state.listing.tickers.find((t) => t.symbol === state.listing.default);
+        note.textContent = `${want} is not on the list of tickers this report covers yet, so ${state.ticker.symbol} is shown.`;
+        note.hidden = false;
+      }
+      renderTickerPick();
+      const dir = state.ticker.dir, file = `${dir}/${state.ticker.symbol.toLowerCase()}.json`;
       const [payload, changes] = await Promise.all([
-        fetch("data/tqqq.json" + bust).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-        fetch("data/changes.json" + bust).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+        fetch(file + bust).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+        fetch(`${dir}/changes.json` + bust).then((r) => (r.ok ? r.json() : null)).catch(() => null),
       ]);
+      // the list fills in any field an older data file does not carry
+      payload.meta = { ...state.ticker, ...payload.meta };
       state.data = SR.fromPayload(payload);
+      renderTickerText();
       renderHeader();
       renderChanges(changes);
       state.res = analyze();

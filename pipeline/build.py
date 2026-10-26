@@ -1,8 +1,11 @@
-"""Build docs/data/tqqq.json for the dashboard.
+"""Build the dashboard's data file for one ticker on docs/data/tickers.json.
 
 Usage:
-  python pipeline/build.py                     # live download
-  python pipeline/build.py --csv-dir seed/     # offline, from TQQQ.csv / QQQ.csv
+  python pipeline/build.py                     # TQQQ (the list's default), live download
+  python pipeline/build.py --symbol QQQ        # another ticker on the list
+  python pipeline/build.py --csv-dir seed/     # offline, from <SYMBOL>.csv and <BENCHMARK>.csv
+Each ticker's file is docs/<dir>/<symbol>.json, with <dir> from the list: TQQQ keeps
+docs/data/tqqq.json; QQQ is docs/data/qqq/qqq.json.
 Exit codes: 0 = new data written, 3 = no new session (file unchanged), 1 = failure
 (the previous good file is left in place).
 """
@@ -23,7 +26,7 @@ from fetch import NY, DataError, expected_last_session, fetch, sessions_behind  
 from indicators import compute_all  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "docs" / "data" / "tqqq.json"
+TICKERS = ROOT / "docs" / "data" / "tickers.json"
 log = logging.getLogger("build")
 
 
@@ -32,20 +35,46 @@ def _clean(values, nd):
             for v in values]
 
 
-def build_payload(tq: pd.DataFrame, qq: pd.DataFrame, source: str, warnings: list[str]) -> dict:
+def load_tickers(path: Path = TICKERS) -> dict:
+    """The ticker list, checked: unique symbols and folders, and every benchmark on the list."""
+    data = json.loads(Path(path).read_text())
+    tickers = data["tickers"]
+    symbols = [t["symbol"] for t in tickers]
+    if len(set(symbols)) != len(symbols):
+        raise ValueError(f"{path}: a symbol is listed twice")
+    if len({t["dir"] for t in tickers}) != len(tickers):
+        raise ValueError(f"{path}: two tickers share a folder")
+    for t in tickers:
+        if t["benchmark"] not in symbols:
+            raise ValueError(f"{path}: {t['symbol']}'s benchmark {t['benchmark']} is not on the list")
+        if t["benchmark"] == t["symbol"]:
+            raise ValueError(f"{path}: {t['symbol']} is its own benchmark")
+    if data["default"] not in symbols:
+        raise ValueError(f"{path}: the default {data['default']} is not on the list")
+    return data
+
+
+def ticker_file(t: dict) -> Path:
+    return ROOT / "docs" / t["dir"] / f"{t['symbol'].lower()}.json"
+
+
+def build_payload(tq: pd.DataFrame, qq: pd.DataFrame, source: str, warnings: list[str],
+                  ticker: dict | None = None) -> dict:
+    t = ticker or {"symbol": "TQQQ", "name": "ProShares UltraPro QQQ", "index": "Nasdaq-100", "leverage": 3, "benchmark": "QQQ"}
     qq = qq.reindex(tq.index).ffill()
     ind = compute_all(tq)
     series = {
         "open": _clean(tq["open"], 4), "high": _clean(tq["high"], 4),
         "low": _clean(tq["low"], 4), "close": _clean(tq["close"], 4),
         "volume": [int(v) for v in tq["volume"]],
-        "qqq_close": _clean(qq["close"], 4),
+        "bench_close": _clean(qq["close"], 4),
     }
     for col in ind.columns:
         series[col] = _clean(ind[col], 4)
     return {
         "meta": {
-            "symbol": "TQQQ", "benchmark": "QQQ",
+            "symbol": t["symbol"], "benchmark": t["benchmark"], "name": t["name"],
+            "index": t["index"], "leverage": t["leverage"],
             "as_of": tq.index[-1].date().isoformat(),
             "generated_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "source": source, "rows": len(tq), "warnings": warnings,
@@ -102,25 +131,34 @@ def revised_fields(prev: dict, tq: pd.DataFrame, qq: pd.DataFrame,
     vol = series.get("volume") or []
     if vol:
         check("volume", vol[-1], tq.at[ts, "volume"], vol_tol)
-    qc = series.get("qqq_close") or []
+    # files written before the multi-ticker change call the benchmark series qqq_close
+    qc = series.get("bench_close") or series.get("qqq_close") or []
     if qc and ts in qq.index:
-        check("qqq_close", qc[-1], qq.at[ts, "close"], price_tol)
+        check("bench_close", qc[-1], qq.at[ts, "close"], price_tol)
     return moved
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv-dir", help="read TQQQ.csv and QQQ.csv from this folder instead of downloading")
+    ap.add_argument("--symbol", help="ticker on docs/data/tickers.json (default: the list's default, TQQQ)")
+    ap.add_argument("--tickers", default=str(TICKERS), help=argparse.SUPPRESS)
+    ap.add_argument("--csv-dir", help="read <SYMBOL>.csv and <BENCHMARK>.csv from this folder instead of downloading")
     ap.add_argument("--period", default="2y")
-    ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--out", help="output file (default: docs/<dir>/<symbol>.json from the list)")
     ap.add_argument("--force", action="store_true", help="write even if no new session")
     a = ap.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
-    out = Path(a.out)
+    listing = load_tickers(Path(a.tickers))
+    sym = (a.symbol or listing["default"]).upper()
+    ticker = next((t for t in listing["tickers"] if t["symbol"] == sym), None)
+    if ticker is None:
+        log.error("%s is not on %s", sym, a.tickers)
+        return 1
+    out = Path(a.out) if a.out else ticker_file(ticker)
     try:
         csv = lambda s: str(Path(a.csv_dir) / f"{s}.csv") if a.csv_dir else None  # noqa: E731
-        tq, src, warn = fetch("TQQQ", a.period, csv("TQQQ"))
-        qq, _, warn_q = fetch("QQQ", a.period, csv("QQQ"))
+        tq, src, warn = fetch(sym, a.period, csv(sym))
+        qq, _, warn_q = fetch(ticker["benchmark"], a.period, csv(ticker["benchmark"]))
     except DataError as e:
         log.error("%s", e)
         return 1
@@ -147,7 +185,7 @@ def main(argv=None) -> int:
         log.warning("%s", msg)
         warn = warn + [msg]
 
-    payload = build_payload(tq, qq, src, warn + warn_q)
+    payload = build_payload(tq, qq, src, warn + warn_q, ticker)
     out.parent.mkdir(parents=True, exist_ok=True)
     tmp = out.with_suffix(".tmp")
     tmp.write_text(json.dumps(payload, separators=(",", ":")))
