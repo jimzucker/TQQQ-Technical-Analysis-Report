@@ -68,7 +68,7 @@ test("the page address carries the switches when they differ from the defaults, 
   await openPage(page);
   expect(new URL(page.url()).searchParams.has("show")).toBe(false); // defaults: nothing added
   await page.locator("#simpleView").click();
-  expect(new URL(page.url()).searchParams.get("show")).toBe("zones,sma50,sma200");
+  await expect.poll(() => new URL(page.url()).searchParams.get("show")).toBe("zones,sma50,sma200"); // written within URL_GAP (250 ms)
   // someone else opens that link, with their own different saved switches
   await page.evaluate(() => localStorage.setItem("panes", JSON.stringify({ vol: true, rsi: true, macd: true })));
   await page.goto("index.html?window=1m&show=zones,sma50,sma200"); await ready(page);

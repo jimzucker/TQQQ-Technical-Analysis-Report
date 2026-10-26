@@ -181,6 +181,24 @@ The requests, copied word for word:
 
 > text wrapping not using whitespace on the right
 
+> send PR 11
+
+> yes update the titles to /11
+
+> yes update those too
+
+> whats next
+
+> what do you think about combining the PR's but will it be clear for mpromisel to review? or be too big
+
+> are there any gaps in testing now?
+
+> start PR 12 - lets add safari #1
+
+(Asked how to split the fixes from the Safari tests, the answer was: one pull request, the fixes with Safari added to the test runs as their tests.)
+
+> finish the safari work first so we can do the PR
+
 ## 2. Decisions made
 
 | Question | Decision |
@@ -501,7 +519,24 @@ Also fixed: the stylesheet asked for a 16-pixel gap between the top bar and the 
 
 **Tests.** Page tests, on a desktop and a phone: the sections appear in this order with a gap below the top bar; the legend, switches, description and help sit below the chart in that order (both fail on the previous layout); "What changed" is the bottom line's last row, lists the day's items and stays after a window change; a quiet day is one line; the page opens on the settings the comparison uses. Unit tests: the snapshot keeps the same levels as the page for TQQQ, QQQ and SPY; the new wording when every level is kept; and an old-style previous snapshot is rebuilt (this test fails with the rebuild switched off).
 
-## 15. Order of work
+## 15. Safari (twelfth pull request)
+
+**What was asked.** A review of the test gaps found that every browser test ran in Chrome only. Add Safari.
+
+**What changed in the tests.** The browser tests also run in WebKit, Safari's engine: every test as Safari on a Mac, and the layout and every-combination drawing tests as an iPhone 15. The GitHub runs install WebKit next to Chrome. The weekly run of all 256 switch settings now covers Safari too. Measured on an 8-core Mac, Safari and iPhone take 23 minutes against Chrome's 7, so the weekly run is split into one job per screen, run side by side, each within its own 60-minute limit.
+
+**What Safari found.** 108 of 111 tests passed at once. The other three were two real problems, both fixed here:
+
+| Problem in Safari | Cause, measured | Fix |
+|---|---|---|
+| Typing a ticker and pressing Enter did nothing; **Show** worked | With the suggestion list attached, Safari does not send Enter to the form. With the list removed, Enter worked | Enter sends the form itself if the browser has not done so by the next moment; opening a ticker twice is ignored |
+| After moving a Method slider back and forth quickly, the bottom line, table and chart stopped following it | Safari refuses more than 100 changes of the page's address in 10 seconds, and the page changed it on every slider step. The error came after 105 steps; Chrome had none after 150 | The address is changed at most once every 250 ms, keeping the last one, and a refusal no longer stops the page from redrawing |
+
+**Tests.** The Enter test already existed and failed in Safari before the fix. A new test moves a slider 160 steps quickly and checks that the levels follow it to the end, that the address changes at most once every 250 ms, and that there are no errors; it fails in Safari without the fix. Two tests that read the address straight after a click now wait up to 250 ms for it.
+
+**Not covered.** Playwright's WebKit is Safari's engine, not Safari itself, and it cannot make real trackpad gestures. Whether pinching on a Mac trackpad zooms the chart in Safari still needs a person to try it.
+
+## 16. Order of work
 
 | Order | Phase | Size |
 |---|---|---|
