@@ -86,6 +86,9 @@ test("the method settings at their limits draw correctly", async ({ page }) => {
 
 test("clicking each switch, at each time frame, redraws correctly", async ({ page }) => {
   // the combinations above load with the switches already set; this goes through the clicks
+  // WINDOWS x SWITCHES x on-and-off is 130 clicks, each with a redraw and a check after it,
+  // which is well past the 30s default on WebKit; same budget as the matrix test above
+  test.setTimeout(180000);
   const errors = await openPage(page);
   const problems = [];
   for (const w of WINDOWS) {

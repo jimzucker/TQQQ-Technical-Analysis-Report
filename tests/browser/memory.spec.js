@@ -25,6 +25,23 @@ test("every choice survives reopening the page from its plain address", async ({
   expect(errors).toEqual([]);
 });
 
+test("a reload straight after a switch keeps it, because the address is already written", async ({ page }) => {
+  // the address is normally written on a short delay, so that dragging a slider does not
+  // trip Safari's limit on address changes. A reload reads ?show= back and it wins over the
+  // saved switches, so a reload inside that delay used to restore the switch that was just
+  // turned off. Turning a switch is one action, not a drag: its address is written at once.
+  const errors = await openPage(page);
+  await page.locator('input[data-pane="macd"]').check();
+  await page.locator('input[data-pane="vol"]').uncheck();
+  const show = new URLSearchParams(await page.evaluate(() => location.search)).get("show");
+  expect(show, "the address right after the switches").not.toBeNull();
+  expect(show.split(",")).not.toContain("vol");
+  await page.reload();
+  await ready(page);
+  expect(await page.evaluate(() => window.__dashboard.charts.main.o.panes.map((x) => x.id))).toEqual(["price", "rsi", "macd"]);
+  expect(errors).toEqual([]);
+});
+
 test("a link that carries settings wins over the remembered ones", async ({ page }) => {
   await openPage(page);
   await page.locator('#windowSeg button[data-w="6m"]').click();
