@@ -27,6 +27,10 @@
     window: [21, 252], period: [2, 10], clusterMult: [0.25, 1.5], minTouches: [1, 5],
   };
   const WINDOW_PRESETS = { "1m": 21, "3m": 63, "6m": 126, "9m": 189, "12m": 252 };
+  // what the page opens on: every level from at least the last 200 sessions, 1-month window.
+  // The nightly snapshot and "What changed" use the same, so they describe the levels on screen.
+  const LEVEL_SESSIONS = 200;
+  const PAGE_SETTINGS = { window: WINDOW_PRESETS["1m"], minLookback: LEVEL_SESSIONS, topN: Infinity, topAbove: Infinity };
   const WEIGHTS = { touches: 0.4, recency: 0.3, volume: 0.2, bounce: 0.1 };
   // plain-language buckets for the 0-100 strength score
   const TIERS = [[70, "Strong"], [40, "Moderate"], [0, "Weak"]];
@@ -596,7 +600,11 @@
     });
     return {
       as_of: data.dates[res.end], close: +res.price.toFixed(2),
-      settings: { window: res.opts.window, period: res.opts.period, clusterMult: res.opts.clusterMult, minTouches: res.opts.minTouches },
+      settings: {
+        window: res.opts.window, period: res.opts.period, clusterMult: res.opts.clusterMult, minTouches: res.opts.minTouches,
+        levels_from: Math.max(res.opts.window, res.opts.minLookback || 0), // sessions searched for levels
+        top: Number.isFinite(res.opts.topN) ? res.opts.topN : "all",       // how many levels below are kept
+      },
       trend: lab.trend.label, rsi: +lab.rsi.value.toFixed(1), rsi_label: lab.rsi.label,
       macd: lab.macd.label, ma_cross: lab.maCross,
       atr_pct: +lab.atr.pct.toFixed(2), drawdown: +lab.drawdown.toFixed(2),
@@ -612,6 +620,7 @@
     const near = (a, b) => Math.abs(a.price / b.price - 1) * 100 <= tolPct;
     const find = (list, z) => (list || []).find((p) => near(p, z));
     const money = (v) => "$" + v.toFixed(2);
+    const listed = cur.settings && cur.settings.top === "all"; // every level kept, not the strongest few
 
     for (const z of cur.supports) {
       if (find(prev.supports, z)) continue;
@@ -619,13 +628,15 @@
         ? { type: "reclaimed", text: `Price climbed back above ${money(z.price)}; that zone is acting as support again.` }
         : { type: "new", text: z.last_test === cur.as_of && z.touches === 1
           ? `A new support zone formed at ${money(z.price)} after today's swing low.`
-          : `Support at ${money(z.price)} (${z.touches} touch${z.touches > 1 ? "es" : ""}) moved into the top ${Math.max(cur.supports.length, 1)}.` });
+          : listed
+            ? `Support at ${money(z.price)} (${z.touches} touch${z.touches > 1 ? "es" : ""}) is now on the list of levels.`
+            : `Support at ${money(z.price)} (${z.touches} touch${z.touches > 1 ? "es" : ""}) moved into the top ${Math.max(cur.supports.length, 1)}.` });
     }
     for (const p of prev.supports || []) {
       if (find(cur.supports, p)) continue;
       out.push(find(cur.broken, p)
         ? { type: "broken", text: `Support at ${money(p.price)} broke — price closed below the zone.` }
-        : { type: "dropped", text: `Support at ${money(p.price)} dropped out of the top list.` });
+        : { type: "dropped", text: listed ? `Support at ${money(p.price)} is no longer on the list of levels.` : `Support at ${money(p.price)} dropped out of the top list.` });
     }
     if (prev.trend !== cur.trend) out.push({ type: "trend", text: `Trend changed from ${prev.trend} to ${cur.trend}.` });
     if (prev.rsi_label !== cur.rsi_label) out.push({ type: "rsi", text: `RSI moved from ${prev.rsi_label.toLowerCase()} to ${cur.rsi_label.toLowerCase()} (${cur.rsi}).` });
@@ -774,7 +785,7 @@
   }
 
   return {
-    DEFAULTS, LIMITS, WINDOW_PRESETS, WEIGHTS, TIERS,
+    DEFAULTS, LIMITS, WINDOW_PRESETS, LEVEL_SESSIONS, PAGE_SETTINGS, WEIGHTS, TIERS,
     normalize, strengthTier, tickerInfo, findPivots, rollingLow, cluster, analyze, labels, trendCall, benchmark,
     volumeProfile, compareWindows, findings, bottomLine, snapshot, diffSnapshots, truncate, fromPayload,
     lastCompletedSession, sessionsBetween, freshness,

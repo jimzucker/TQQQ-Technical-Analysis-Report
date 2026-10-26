@@ -169,6 +169,18 @@ The requests, copied word for word:
 
 > the UX is not intuitve to set the ticker
 
+> push it
+
+> reivew the UI, what changes would you make to the order of the content
+
+> lets do 1-3
+
+> what do you think about moving "What changed since the previous session" up?
+
+> yes do both in PR 11
+
+> text wrapping not using whitespace on the right
+
 ## 2. Decisions made
 
 | Question | Decision |
@@ -452,7 +464,44 @@ Unchanged: the 1/3/6/12-month comparison panel (it compares those exact lengths)
 
 **What it found.** Run against the earlier code, it found the problems fixed in the sixth pull request: tags pushed off their lines (up to 48 px, the price tag included), the edge tag landing on the price tag, and a date label cut off on a phone. Against the sixth pull request: all 10,240 drawings pass.
 
-## 14. Order of work
+## 14. Order of the page (eleventh pull request)
+
+**What was asked.** Review the order of the page's content, then make the first three changes proposed. Then fold "What changed" into the bottom line, and check why its note said "12-month window" when the page opens at 1M.
+
+**Measured before and after** (desktop window 1400 × 900; phone 390 × 844):
+
+| Section | Desktop: pixels from the top, before → after | Phone: before → after |
+|---|---|---|
+| Key numbers | 714 → 152 | 1186 → 298 |
+| Bottom line | 136 → 287 | 282 → 639 |
+| What changed since the previous session | 3780 → 782 | 6291 → 1465 |
+| The chart itself | 1158 → 1047 | 2304 → 1838 |
+
+**The three changes.**
+
+1. **The chart sits directly under its toolbar.** The description, legend and switches moved below the chart, above the help items. On a desktop this was 310 pixels of text above the chart, on a phone 777.
+2. **"What changed since the previous session" moved up** from the bottom of the page into the bottom line, as its last row, **Since the previous session**. It is the day's news, and on most days it is one line ("No changes…"), which did not need a card of its own above the chart.
+3. **The key numbers come first**, above the bottom line: six figures read at a glance.
+
+The bottom line still comes before the chart, as the owner designed it ("the answer before the evidence"). Moving the chart above the bottom line was offered and not chosen. Everything from the levels table down is unchanged.
+
+**"What changed" now compares the levels on the page.** It compared the 5 strongest levels below the price over 12 months, while the page opens on every level from the last 200 sessions. Measured on 2026-10-23:
+
+| Ticker | Levels "What changed" tracked | Levels the page shows at 1M |
+|---|---|---|
+| TQQQ | 5 below, including $49.22 and $45.62 | 6 below, with $50.18 and $45.97 in their place |
+| QQQ | 5 below | 9 below |
+| SPY | 5 below | 15 below |
+
+So it could report a level that was not on the page and miss changes to ones that were. The nightly snapshot now uses the page's opening settings, kept in one place (`SR.PAGE_SETTINGS`) that the page uses too. Replayed over the last 70 sessions this reports fewer changes, not more (TQQQ 56 → 36, QQQ 33 → 15, SPY 32 → 21, at most 4 in one day), because a level moving in or out of the "top 5" is no longer a change. Snapshots saved before this change are rebuilt with the new settings when compared, so the first night after the merge does not report the difference in settings as a change; without that, it would have reported "$42.05 is now on the list of levels" on 2026-10-23. No data files change in this pull request; the next nightly run writes the new snapshots.
+
+**The bottom line uses the card's width.** Its rows stopped at 92 characters, leaving the right half of the card empty on a wide screen. Lines across the full width would be about 190 characters, too long to read, so on screens 1280 pixels and wider the rows sit in two columns, and "Since the previous session" spans both. Measured at 1400 pixels wide: the card is 627 → 478 pixels tall, and the chart starts 150 pixels higher. Phones keep one column.
+
+Also fixed: the stylesheet asked for a 16-pixel gap between the top bar and the first section, but the page-width rule cancelled it, so the first section touched the bar.
+
+**Tests.** Page tests, on a desktop and a phone: the sections appear in this order with a gap below the top bar; the legend, switches, description and help sit below the chart in that order (both fail on the previous layout); "What changed" is the bottom line's last row, lists the day's items and stays after a window change; a quiet day is one line; the page opens on the settings the comparison uses. Unit tests: the snapshot keeps the same levels as the page for TQQQ, QQQ and SPY; the new wording when every level is kept; and an old-style previous snapshot is rebuilt (this test fails with the rebuild switched off).
+
+## 15. Order of work
 
 | Order | Phase | Size |
 |---|---|---|

@@ -62,6 +62,8 @@
   <div id="tickerNote" class="banner info" hidden><span id="tickerNoteText"></span> <button type="button" class="btn small" id="addTicker" hidden></button></div>
   <div id="stale" class="banner" hidden></div>
 
+  <section aria-label="Key numbers" class="kpis" id="kpis"></section>
+
   <section class="card findings" aria-labelledby="h-find">
     <h2 id="h-find">Bottom line <span class="muted" id="winLabel"></span></h2>
     <p id="blHeadline" class="bl-headline skeleton">Loading data…</p>
@@ -73,36 +75,9 @@
     </details>
   </section>
 
-  <section aria-label="Key numbers" class="kpis" id="kpis"></section>
-
   <section class="card" aria-labelledby="h-chart">
     <div class="card-head">
       <h2 id="h-chart">Price &amp; support zones</h2>
-    </div>
-    <p class="help lede">Each green band is a price area where <span data-tk="symbol">TQQQ</span> has stopped falling and turned back up. The darker the band, the more reliable the level has been. <b>S1</b> is the closest support below today's price, <b>S2</b> the next one down, and so on. Grey bands with a dashed line, <b>A1</b>, <b>A2</b> and so on, are <b>levels above the price</b>: old floors the price has since closed below. Rises often stall there.</p>
-    <ul class="legend" id="legend"></ul>
-    <div class="chips" role="group" aria-label="On the price chart">
-      <span class="chips-label">On the price chart:</span>
-      <label class="chip" title="The nearest level below or at the price is always shown"><input type="checkbox" data-pane="zones" checked> More support below</label>
-      <label class="chip" title="The nearest level above the price is always shown"><input type="checkbox" data-pane="above" checked> More levels above</label>
-      <label class="chip"><input type="checkbox" data-pane="sma20" checked> 20-day avg</label>
-      <label class="chip"><input type="checkbox" data-pane="sma50" checked> 50-day avg</label>
-      <label class="chip"><input type="checkbox" data-pane="sma200" checked> 200-day avg</label>
-      <label class="chip"><input type="checkbox" data-pane="bb" checked> Bollinger Bands</label>
-      <label class="chip"><input type="checkbox" data-pane="swings" checked> Swing lows</label>
-      <label class="chip"><input type="checkbox" data-pane="rolling" checked> <span><span class="pv-label">3</span>-day low</span></label>
-      <label class="chip"><input type="checkbox" data-pane="profile"> Volume by price</label>
-    </div>
-    <div class="chips" role="group" aria-label="Panels below the chart">
-      <span class="chips-label">Panels below:</span>
-      <label class="chip"><input type="checkbox" data-pane="vol" checked> Volume</label>
-      <label class="chip"><input type="checkbox" data-pane="rsi" checked> RSI</label>
-      <label class="chip"><input type="checkbox" data-pane="macd"> MACD</label>
-      <label class="chip"><input type="checkbox" data-pane="dd"> % below 12-month high</label>
-      <span class="chips-actions">
-        <button type="button" class="btn small" id="simpleView">Simple view</button>
-        <button type="button" class="btn small" id="showAll">Show all</button>
-      </span>
     </div>
     <div class="chart-toolbar" role="toolbar" aria-label="Chart view">
       <div class="time-pick">
@@ -130,6 +105,31 @@
       </div>
     </div>
     <div id="mainChart" class="main-chart" aria-describedby="chartHelp"></div>
+    <ul class="legend" id="legend"></ul>
+    <div class="chips" role="group" aria-label="On the price chart">
+      <span class="chips-label">On the price chart:</span>
+      <label class="chip" title="The nearest level below or at the price is always shown"><input type="checkbox" data-pane="zones" checked> More support below</label>
+      <label class="chip" title="The nearest level above the price is always shown"><input type="checkbox" data-pane="above" checked> More levels above</label>
+      <label class="chip"><input type="checkbox" data-pane="sma20" checked> 20-day avg</label>
+      <label class="chip"><input type="checkbox" data-pane="sma50" checked> 50-day avg</label>
+      <label class="chip"><input type="checkbox" data-pane="sma200" checked> 200-day avg</label>
+      <label class="chip"><input type="checkbox" data-pane="bb" checked> Bollinger Bands</label>
+      <label class="chip"><input type="checkbox" data-pane="swings" checked> Swing lows</label>
+      <label class="chip"><input type="checkbox" data-pane="rolling" checked> <span><span class="pv-label">3</span>-day low</span></label>
+      <label class="chip"><input type="checkbox" data-pane="profile"> Volume by price</label>
+    </div>
+    <div class="chips" role="group" aria-label="Panels below the chart">
+      <span class="chips-label">Panels below:</span>
+      <label class="chip"><input type="checkbox" data-pane="vol" checked> Volume</label>
+      <label class="chip"><input type="checkbox" data-pane="rsi" checked> RSI</label>
+      <label class="chip"><input type="checkbox" data-pane="macd"> MACD</label>
+      <label class="chip"><input type="checkbox" data-pane="dd"> % below 12-month high</label>
+      <span class="chips-actions">
+        <button type="button" class="btn small" id="simpleView">Simple view</button>
+        <button type="button" class="btn small" id="showAll">Show all</button>
+      </span>
+    </div>
+    <p class="help lede">Each green band is a price area where <span data-tk="symbol">TQQQ</span> has stopped falling and turned back up. The darker the band, the more reliable the level has been. <b>S1</b> is the closest support below today's price, <b>S2</b> the next one down, and so on. Grey bands with a dashed line, <b>A1</b>, <b>A2</b> and so on, are <b>levels above the price</b>: old floors the price has since closed below. Rises often stall there.</p>
     <dl id="chartHelp" class="chart-help">
       <div><dt>Zoom</dt><dd>Pinch on a trackpad or touchscreen, hold Ctrl (⌘ on a Mac) and scroll, or use the <b>+</b> and <b>−</b> buttons. Scrolling up or down scrolls the page as normal.</dd></div>
       <div><dt>Move through time</dt><dd>Swipe sideways with two fingers, hold Shift and scroll, or drag. Double-click or <b>Reset view</b> to go back to the window you picked.</dd></div>
@@ -184,12 +184,6 @@
       <thead><tr><th scope="col">Indicator</th><th scope="col">Settings</th><th scope="col" class="num">Value</th><th scope="col">Reading</th><th scope="col">What it tells you</th></tr></thead>
       <tbody></tbody>
     </table></div>
-  </section>
-
-  <section class="card" aria-labelledby="h-chg">
-    <h2 id="h-chg">What changed since the previous session</h2>
-    <ul id="changes" class="changes"></ul>
-    <p class="help" id="changesNote"></p>
   </section>
 
   <section class="card" aria-labelledby="h-method">

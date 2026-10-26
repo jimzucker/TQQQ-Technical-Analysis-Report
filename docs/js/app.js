@@ -18,12 +18,11 @@
   const SIMPLE_VIEW = { ...Object.fromEntries(Object.keys(PANE_DEFAULTS).map((k) => [k, false])), zones: true, sma50: true, sma200: true };
   // The page finds levels over at least this many sessions, whatever the window, and
   // lists every level it finds rather than the strongest five on each side.
-  const LEVEL_SESSIONS = 200;
-  const analyze = () => SR.analyze(state.data, { ...state.opts, minLookback: LEVEL_SESSIONS, topN: Infinity, topAbove: Infinity });
+  const analyze = () => SR.analyze(state.data, { ...state.opts, minLookback: SR.LEVEL_SESSIONS, topN: Infinity, topAbove: Infinity });
   const OVERLAYS = new Set(["rolling", "profile", "above", "bb", "zones", "sma20", "sma50", "sma200", "swings"]); // drawn inside the price pane, no rebuild needed
 
-  // the window the page opens on. The nightly snapshot and "What changed" keep the
-  // method's own 12-month default (SR.DEFAULTS), so their history stays comparable.
+  // the window the page opens on: SR.PAGE_SETTINGS, which the nightly snapshot and
+  // "What changed" also use, so they describe the levels shown when the page opens
   const PAGE_WINDOW = "1m";
   const state = { data: null, opts: SR.normalize({ window: SR.WINDOW_PRESETS[PAGE_WINDOW] }), res: null, lab: null, charts: {}, windowKey: PAGE_WINDOW,
     panes: { ...PANE_DEFAULTS }, cadence: "daily", view: null };
@@ -225,7 +224,9 @@
     head.innerHTML = bl.headline;
     head.classList.remove("skeleton");
     $("#blRows").innerHTML = bl.rows
-      .map((r) => `<div><dt>${esc(r.label)}</dt><dd>${r.html}</dd></div>`).join("");
+      .map((r) => `<div><dt>${esc(r.label)}</dt><dd>${r.html}</dd></div>`).join("") +
+      `<div id="blChanges"><dt>Since the previous session</dt><dd><ul id="changes" class="changes"></ul><p class="help" id="changesNote"></p></dd></div>`;
+    renderChanges();
   }
 
   function renderFindings() {
@@ -321,15 +322,17 @@
     $("#indTable tbody").innerHTML = rows.map((r) => `<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join("");
   }
 
-  function renderChanges(ch) {
-    const ul = $("#changes");
+  // "What changed": the last row of the bottom line, from the nightly comparison (state.changes)
+  function renderChanges() {
+    const ul = $("#changes"), ch = state.changes;
+    if (!ul) return;
     if (!ch || !ch.items) { ul.innerHTML = `<li class="muted">No comparison available yet.</li>`; return; }
     const tags = { new: "New", broken: "Broken", reclaimed: "Reclaimed", dropped: "Dropped", trend: "Trend", rsi: "RSI", macd: "MACD", cross: "Cross" };
     ul.innerHTML = ch.items.length
       ? ch.items.map((x) => `<li><span class="tag ${esc(x.type)}">${esc(tags[x.type] || x.type)}</span><span>${esc(x.text)}</span></li>`).join("")
       : `<li class="muted">No changes to the support levels, trend or momentum labels.</li>`;
     $("#changesNote").textContent = ch.previous
-      ? `${fmtDate(ch.as_of)} compared with ${fmtDate(ch.previous)}, using the default settings (12-month window, 3-day swings). Levels within 1.5% of each other count as the same level.`
+      ? `${fmtDate(ch.as_of)} compared with ${fmtDate(ch.previous)}, for the levels shown when the page opens (the last ${SR.LEVEL_SESSIONS} sessions, 3-day swings). Levels within 1.5% of each other count as the same level.`
       : "";
   }
 
@@ -913,7 +916,7 @@
       state.data = SR.fromPayload(payload);
       renderTickerText();
       renderHeader();
-      renderChanges(changes);
+      state.changes = changes;
       state.res = analyze();
       state.view = SR.chartModel(state.data, state.res, state.cadence);
       state.charts.main = buildMainChart();
