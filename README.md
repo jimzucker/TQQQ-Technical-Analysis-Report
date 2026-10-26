@@ -1,6 +1,8 @@
 # TQQQ Support Level Report
 
-A daily-updated web dashboard that finds and visualises **support levels** in TQQQ — the price areas where the fund has repeatedly stopped falling and turned back up. It runs on GitHub Pages, refreshes itself every weekday evening after the US market close, and needs no server, database or paid data feed.
+[![The report for TQQQ on the 6-month window, data as of the Oct 23, 2026 close: the key numbers, the bottom line, and the chart with its support zones](assets/readme/screenshot.png)](https://mpromisel002.github.io/TQQQ-Technical-Analysis-Report/)
+
+A daily-updated web dashboard that finds and visualises **support levels** in TQQQ — the price areas where the fund has repeatedly stopped falling and turned back up. It also covers QQQ and SPY, and can show any other stock or fund on request. It runs on GitHub Pages, refreshes itself every weekday evening after the US market close, and needs no server, database or paid data feed.
 
 **Live site:** https://mpromisel002.github.io/TQQQ-Technical-Analysis-Report/
 
@@ -41,7 +43,7 @@ This report answers that question in four steps:
 3. It **scores** each zone from 0 to 100 on how dependable it has been.
 4. It lists every zone found over at least the last 200 sessions, labels those below the price **S1** (closest to today's price), **S2** and so on, and writes out what it found in plain sentences. Zones the price has since fallen below are drawn too, in grey, as **levels above the price** (**A1**, **A2**, …).
 
-Everything else on the page — the trend call, RSI, MACD, the TQQQ-vs-QQQ comparison — is context to help you judge whether those levels are likely to matter right now.
+Everything else on the page — the trend call, RSI, MACD, the comparison with a benchmark (QQQ for TQQQ) — is context to help you judge whether those levels are likely to matter right now.
 
 ---
 
@@ -77,15 +79,14 @@ No prior charting knowledge needed. These are the only terms the report uses.
 
 | Section | What it shows | Why it's there |
 |---|---|---|
-| **Bottom line** | A one-sentence headline, then five labelled lines: nearest floor, what happens if it breaks, trend, buyers vs sellers, risk | The answer before the evidence, written so it needs no glossary — it says what the indicators *mean* rather than naming them. A reader who stops here still leaves with the number that matters |
+| **Key numbers** | Last close, trend, nearest support, strongest support, RSI, distance below the 12-month high | The six numbers most decisions start from |
+| **Bottom line** | A one-sentence headline, then labelled lines: nearest floor, if that breaks, the level above the price, trend, buyers vs sellers, risk, and **since the previous session** (what changed) | The answer before the evidence, written so it needs no glossary — it says what the indicators *mean* rather than naming them. A reader who stops here still leaves with the number that matters |
 | **All findings** (collapsed) | 10+ plain-language findings in four groups — support levels, trend, momentum & volatility, risk & leverage | The full picture for anyone who wants it, one click away; see [What the key findings cover](#what-the-key-findings-cover) |
-| **KPI strip** | Last close, trend, nearest support, strongest support, RSI, distance below the 12-month high | The six numbers most decisions start from |
 | **Price & support zones** | Candlestick chart with shaded green support bands, swing-low markers, moving averages, and optional volume / RSI / MACD / drawdown panels | The main visualisation — see [How to read the main chart](#how-to-read-the-main-chart) |
 | **Support levels in detail** | A table of every level found — above the price (A1…) and below it (S1…), in price order: zone price, zone range, distance from price, times held, last tested, strength and status | The numbers behind the chart, with a definition list underneath every column |
 | **Does the level hold up at other window lengths?** | The same method run over 1, 3, 6 and 12 months, one column each | Guards against cherry-picking. A level that appears in only one window may be an artefact of that window; a level that appears in three or more is far more dependable |
-| **TQQQ vs QQQ** | Growth of $100 over the window, plus return, beta and volatility | Shows the cost of daily 3× resetting — TQQQ's return over a period is usually *not* 3× QQQ's return over that period |
+| **TQQQ vs QQQ** (each ticker against its benchmark) | Growth of $100 over the window, plus return, beta and volatility | Shows the cost of daily 3× resetting — TQQQ's return over a period is usually *not* 3× QQQ's return over that period |
 | **Technical indicators** | Moving averages, RSI, MACD, Bollinger Bands, ATR and volume, each with a reading and a plain-language explanation | Context: is the broader trend helping or fighting these levels? |
-| **What changed since the previous session** | New, broken, reclaimed and dropped levels, plus trend and momentum changes | A daily diff, so returning readers only have to read what moved |
 | **Method, definitions & data** | Glossary, the full method, and the data provenance | Everything needed to audit or reproduce the numbers |
 
 Two download buttons sit in the toolbar: **Download CSV** (the levels table plus every daily row in the window, with indicators) and **Download PNG** (the chart as an image, captioned with the window and data date).
@@ -94,9 +95,9 @@ Two download buttons sit in the toolbar: **Download CSV** (the levels table plus
 
 ## What the key findings cover
 
-The card leads with a **bottom line** — one headline sentence and five labelled lines (nearest floor, if that breaks, trend, buyers vs sellers, risk), deliberately written without naming a single indicator, so it needs no glossary — and keeps the full findings list collapsed behind a toggle, so the summary is never buried under the evidence. The toggle state is remembered per browser.
+The card leads with a **bottom line** — one headline sentence and labelled lines (nearest floor, if that breaks, the level above the price, trend, buyers vs sellers, risk, since the previous session), deliberately written without naming a single indicator, so it needs no glossary — and keeps the full findings list collapsed behind a toggle, so the summary is never buried under the evidence. The toggle state is remembered per browser.
 
-The findings are generated from the data on every load — nothing is written by hand — and they re-run whenever you change the window or the method settings. A normal window produces **14 findings** in four groups; a window too short to contain much structure still produces at least ten, with the support findings saying so plainly rather than going quiet.
+The findings are generated from the data on every load — nothing is written by hand — and they re-run whenever you change the window or the method settings. A normal window produces **14 findings** in four groups, and 15 when there is a level above the price (a finding naming the nearest one); a window too short to contain much structure still produces at least ten, with the support findings saying so plainly rather than going quiet.
 
 | Group | Findings |
 |---|---|
@@ -119,8 +120,8 @@ Two design choices worth naming. Findings are **grouped rather than ranked**, be
 | | **Light blue band with dashed edges** | Bollinger Bands, when switched on: the normal range around the 20-day average, two standard deviations either side. A close outside it is unusual. On by default; turn off with the **Bollinger Bands** switch, and that choice is remembered. |
 | | **Grey band, dashed line, A-tag** | A level above the price: an old support zone the price has since closed below. The nearest one (A1) is always shown; the **More levels above** switch shows or hides the rest. |
 | <img src="assets/readme/tag-close.svg" alt="" width="52"> | **Dark tag, right edge** | The last closing price. |
-| <img src="assets/readme/swing-used.svg" alt="" width="22"> | **Solid green triangle** | A swing low that helped build one of the five levels shown. |
-| <img src="assets/readme/swing-other.svg" alt="" width="22"> | **Faded green triangle** | A swing low that did not make the top five. |
+| <img src="assets/readme/swing-used.svg" alt="" width="22"> | **Solid green triangle** | A swing low that helped build one of the support levels below the price. |
+| <img src="assets/readme/swing-other.svg" alt="" width="22"> | **Faded green triangle** | A swing low that is not part of a support level below the price (for example, one in a level the price has since fallen through). |
 | <img src="assets/readme/swing-pending.svg" alt="" width="22"> | **Hollow green triangle** | A pending swing low — too recent to confirm, because the three sessions that have to follow it haven't happened. |
 | <img src="assets/readme/candles.svg" alt="" width="34"> | **Hollow / filled candle** | An up day / a down day. Shape as well as colour, so direction still reads for colour-blind viewers. |
 | <img src="assets/readme/rolling-low.svg" alt="" width="52"> | **Pink staircase** | The rolling 3-day low — the lowest low of the last three sessions, and the nearest very-short-term floor. |
@@ -142,7 +143,7 @@ Only Volume and RSI are on by default — the chart is deliberately quiet until 
 
 ### The window (the headline setting)
 
-In the toolbar directly above the chart: buttons for **1M, 3M, 6M, 9M, 12M**, plus a free-text box for any value from **21 to 252 trading sessions**. A shorter window reacts faster and finds fewer, more recent levels; a longer window finds levels that have survived more market conditions. The page opens on **1M** the first time; after that it reopens with the window and settings you last used in that browser (a link that includes settings wins). The daily snapshot and "What changed" always use 12 months, so each day is compared on the same basis.
+In the toolbar directly above the chart: buttons for **1M, 3M, 6M, 9M, 12M**, plus a free-text box for any value from **21 to 252 trading sessions**. A shorter window reacts faster and finds fewer, more recent levels; a longer window finds levels that have survived more market conditions. The page opens on **1M** the first time; after that it reopens with the window and settings you last used in that browser (a link that includes settings wins). "What changed" always compares the levels the page opens on (the last 200 sessions, 3-day swings), whatever window you pick, so each day is compared on the same basis.
 
 ### Method settings (under the "Method settings" dropdown)
 
@@ -198,8 +199,8 @@ Swing lows within `clusterDistance × ATR(14)` of each other are merged. At the 
 
 Scores are normalised **within the selected window**, so they rank levels against each other — a score of 80 in a 1-month window is not directly comparable to an 80 in a 12-month window.
 
-**5. Report the top five.**
-On the page, every zone found is listed, nearest the price first: below it S1, S2, …, above it A1, A2, …. Levels are found over **at least the last 200 sessions**, or the window if it is longer (12 months uses 252). The window you pick still sets how much of the chart opens and the period for returns and volatility. The daily snapshot and "What changed" keep their own fixed setting — 12 months, strongest five on each side — so each day is compared on the same basis.
+**5. List every level.**
+On the page, every zone found is listed, nearest the price first: below it S1, S2, …, above it A1, A2, …. Levels are found over **at least the last 200 sessions**, or the window if it is longer (12 months uses 252). The window you pick still sets how much of the chart opens and the period for returns and volatility. The daily snapshot and "What changed" keep a fixed setting — the levels the page opens on (the last 200 sessions, 3-day swings, every level) — so each day is compared on the same basis.
 
 **6. Drop broken zones.**
 Once price closes more than half the cluster distance below a zone, that zone is no longer support. It moves to the levels above the price (A1, A2, …), drawn in grey and listed above the last close in the table, and the break is reported in "What changed since the previous session". A zone that was broken earlier in the window but has since been reclaimed is flagged *broke once before* in the table — it has a track record of failing.
@@ -432,7 +433,7 @@ All tests run on every pull request (`.github/workflows/tests.yml`), and the cov
 | `tests/golden.test.js` | Runs the method over every session in the frozen data, at 1, 3, 6 and 12 months, and compares every support level and "what changed" item with `tests/golden/levels.txt`. Any change that moves a level fails here and names the line. A second test checks, over the last 200 sessions at every window, that every level found is either listed (S below the price, A above it) or counted in the table's "not listed" line — none dropped, none listed twice, and none left out while a weaker one is shown |
 | `tests/snapshot.test.js` | Runs the nightly snapshot job on a temporary folder: the files it writes, backfilling, and keeping at most 400 snapshots |
 | `.github/workflows/security.yml` | Looks up every Python and npm package in the public vulnerability databases, on every pull request and every Monday, and checks the audit still catches a known vulnerable version |
-| `tests/browser/rendering.spec.js` | Draws the main chart at every time frame (1–12 months and custom lengths), Daily and Mondays, light and dark, with the 13 chart switches in 28 settings (all off, all on, each alone, each off alone), the method settings at their limits, and clicking each switch — on desktop and phone. Each drawing is checked: no tag over another tag or a candle, the last-price tag exactly on its price, any moved tag joined to its level, every level tagged or counted in an edge tag, no date labels colliding or cut off, no candle cut off, panels and legend matching the switches. A self-check proves the checker catches a hidden candle |
+| `tests/browser/rendering.spec.js` | Draws the main chart at every time frame (1–12 months and custom lengths), Daily and Mondays, light and dark, with the 13 chart switches in 28 settings (all off, all on, each alone, each off alone), the method settings at their limits, and clicking each switch — on desktop and phone, in Chrome and in Safari's engine. Each drawing is checked: no tag over another tag or a candle, the last-price tag exactly on its price, any moved tag joined to its level, every level tagged or counted in an edge tag, no date labels colliding or cut off, no candle cut off, panels and legend matching the switches. A self-check proves the checker catches a hidden candle |
 | `.github/workflows/rendering-matrix.yml` | Every Monday and on demand: the same checks for every combination of the 7 switches that change where things are drawn (the four panels, Bollinger Bands and the two kinds of level), each with the other 6 all on and all off — 256 settings, 10,240 drawings |
 | `tests/indicators.test.js`, `pipeline/tests/test_indicator_reference.py` | The JavaScript indicators match Python's on every day and every series, for TQQQ, QQQ and SPY, on the same prices |
 | `tests/worker.test.js` | The lookup service with a fake Yahoo and GitHub: every reason a symbol is turned away, the 16:15 rule, starting the add job, and the 50-ticker and 5-a-day limits |
@@ -442,7 +443,8 @@ All tests run on every pull request (`.github/workflows/tests.yml`), and the cov
 | `pipeline/tests/test_tickers.py` | The ticker list is valid and every ticker has its data file; a broken list is stopped with the reason; building another ticker; older data files still work |
 | `tests/browser/show-hide.spec.js` | Each switch hides its layer and legend entry; Simple view and Show all; the page address carries the layers and a shared link wins |
 | `tests/browser/security.spec.js` | Puts HTML and script into every text field of the data files and checks none of it reaches the page as HTML |
-| `tests/browser/` | Opens the real page in Chrome, on a desktop and a phone screen size: every section appears, every control works, the chart responds to keyboard, mouse and trackpad (page scroll, sideways swipe, zoom), levels above price appear and can be hidden, the downloads work, and nothing makes the page scroll sideways |
+| `tests/browser/data-branch.spec.js` | On GitHub Pages the page reads the list and every ticker's data from the `market-data` branch, and nothing from the site's own folder |
+| `tests/browser/` | Opens the real page in Chrome and in Safari's engine, on a desktop and a phone screen size: every section appears, every control works, the chart responds to keyboard, mouse and trackpad (page scroll, sideways swipe, zoom), levels above price appear and can be hidden, the downloads work, and nothing makes the page scroll sideways |
 
 The tests use a frozen copy of the data (`tests/fixtures/`, as of 2026-10-23) rather than the live file, which changes every weekday.
 
@@ -468,6 +470,7 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-10-25 | **README.** A screenshot of the page at the top, and nine places brought up to date with the page: the section order, the bottom line's rows, the findings count, the swing-low markers, what "What changed" compares, "List every level", other tickers, and the Safari and data-branch tests. No change to the app. |
 | 2026-10-25 | **The daily data has its own branch.** The nightly refresh and the add-ticker job commit to a `market-data` branch instead of `main`, so `main`'s history is code only (46 of its last 64 commits were data). The page reads the data from that branch through GitHub's raw-file address; the folder layout is unchanged. The branch is created from `main`'s last copy of the data on the first run, which starts when this change is merged. For a local preview, run `npm run data` first. |
 | 2026-10-25 | **Safari.** The browser tests also run in Safari's engine, on a Mac and an iPhone. They found two problems, now fixed: pressing Enter in the Ticker field did nothing in Safari, and moving a Method slider quickly made Safari stop the page updating (it allows at most 100 changes of the page's address in 10 seconds; the page now changes it at most once every 250 ms). |
 | 2026-10-25 | **Order of the page.** The chart now sits directly under its toolbar; its description, legend and switches moved below it. The key numbers come first, then the bottom line, whose last row is now **Since the previous session** (what changed), moved up from a card at the bottom of the page. The chart starts 111 pixels higher on a desktop and 466 higher on a phone. "What changed" now compares the levels the page opens on (every level from the last 200 sessions) instead of the 5 strongest over 12 months, so it no longer names levels that are not on the page. On wide screens the bottom line's rows sit in two columns instead of leaving the right half of the card empty. Also restored the gap between the top bar and the first section. |
