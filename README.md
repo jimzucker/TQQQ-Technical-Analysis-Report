@@ -116,6 +116,7 @@ Two design choices worth naming. Findings are **grouped rather than ranked**, be
 | <img src="assets/readme/zone-band.svg" alt="" width="52"> | **Shaded green band** | A support zone. It spans the whole chart because a support level is a price, not a moment in time. |
 | <img src="assets/readme/zone-strength.svg" alt="" width="52"> | **Darker green = stronger** | Opacity is stepped by the strength tier, so Strong zones are visibly darker than Weak ones. |
 | <img src="assets/readme/tag-level.svg" alt="" width="74"> | **Green tag, right edge** | The zone's ID and its centre price. **S1** is nearest today's price, **S5** is furthest below. |
+| | **Light blue band with dashed edges** | Bollinger Bands, when switched on: the normal range around the 20-day average, two standard deviations either side. A close outside it is unusual. On by default; turn off with the **Bollinger Bands** switch, and that choice is remembered. |
 | | **Grey band, dashed line, A-tag** | A level above the price: an old support zone the price has since closed below. Turn it off with the **Levels above price** switch. |
 | <img src="assets/readme/tag-close.svg" alt="" width="52"> | **Dark tag, right edge** | The last closing price. |
 | <img src="assets/readme/swing-used.svg" alt="" width="22"> | **Solid green triangle** | A swing low that helped build one of the five levels shown. |
@@ -410,6 +411,7 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-10-25 | **Bollinger Bands on the chart.** A switch draws the upper and lower bands with a light fill between them, and adds that day's band values to the hover box. On by default; switching them off is remembered. The middle band is the 20-day average, already drawn, so it is not repeated. |
 | 2026-10-25 | **Remembers your choices, and readable dates.** The window and method settings are now remembered in your browser along with the theme, panels and Daily/Mondays, so the page reopens as you left it; a link that carries settings still wins. The chart's dates moved out from on top of the volume bars into their own strip, and read "Sep 25", "Oct", "Jan 2026"; the hover date reads "Fri, Oct 16, 2026". |
 | 2026-10-25 | **The page opens on the 1-month window** instead of 12 months. The daily snapshot and "What changed" still use 12 months. |
 | 2026-10-25 | **Levels above price.** Support zones the price has closed below are no longer dropped. The table now also says how many weaker levels below the price it does not list (the owner's code dropped them silently), and a window with nothing below the price says why. They are shown as A1, A2, … in grey on the chart (with a switch to hide them), above the last close in the table, in the CSV, in the findings and in the bottom line. S1–S5 are unchanged: the recorded output matches for all 241 sessions tested. |
