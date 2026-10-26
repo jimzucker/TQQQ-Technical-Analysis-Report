@@ -281,7 +281,7 @@
     if (!ch || !ch.items) { ul.innerHTML = `<li class="muted">No comparison available yet.</li>`; return; }
     const tags = { new: "New", broken: "Broken", reclaimed: "Reclaimed", dropped: "Dropped", trend: "Trend", rsi: "RSI", macd: "MACD", cross: "Cross" };
     ul.innerHTML = ch.items.length
-      ? ch.items.map((x) => `<li><span class="tag ${x.type}">${tags[x.type] || x.type}</span><span>${esc(x.text)}</span></li>`).join("")
+      ? ch.items.map((x) => `<li><span class="tag ${esc(x.type)}">${esc(tags[x.type] || x.type)}</span><span>${esc(x.text)}</span></li>`).join("")
       : `<li class="muted">No changes to the support levels, trend or momentum labels.</li>`;
     $("#changesNote").textContent = ch.previous
       ? `${fmtDate(ch.as_of)} compared with ${fmtDate(ch.previous)}, using the default settings (12-month window, 3-day swings). Levels within 1.5% of each other count as the same level.`

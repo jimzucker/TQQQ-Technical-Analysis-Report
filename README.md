@@ -319,6 +319,8 @@ GitHub Actions — every 30 min from 16:15 New York, first to find new data wins
 | `tests/fixtures/` | Frozen data the JavaScript and browser tests run against |
 | `.github/workflows/refresh.yml` | The daily schedule, manual trigger, tests, build, commit and failure issue |
 | `.github/workflows/tests.yml` | Tests on every code push and pull request |
+| `.github/workflows/security.yml` | Vulnerability checks on every pull request and every Monday |
+| `.github/dependabot.yml` | Weekly pull requests for newer package and action versions |
 
 ---
 
@@ -379,6 +381,8 @@ All tests run on every pull request (`.github/workflows/tests.yml`), and the cov
 | `tests/support.test.js` | The support method: swing lows, zones, scores, statuses, findings, the bottom line, the Mondays view, freshness |
 | `tests/golden.test.js` | Runs the method over every session in the frozen data, at 1, 3, 6 and 12 months, and compares every support level and "what changed" item with `tests/golden/levels.txt`. Any change that moves a level fails here and names the line |
 | `tests/snapshot.test.js` | Runs the nightly snapshot job on a temporary folder: the files it writes, backfilling, and keeping at most 400 snapshots |
+| `.github/workflows/security.yml` | Looks up every Python and npm package in the public vulnerability databases, on every pull request and every Monday, and checks the audit still catches a known vulnerable version |
+| `tests/browser/security.spec.js` | Puts HTML and script into every text field of the data files and checks none of it reaches the page as HTML |
 | `tests/browser/` | Opens the real page in Chrome, on a desktop and a phone screen size: every section appears, every control works, the chart responds to keyboard, mouse and trackpad, the downloads work, and nothing makes the page scroll sideways |
 
 The tests use a frozen copy of the data (`tests/fixtures/`, as of 2026-10-23) rather than the live file, which changes every weekday.
@@ -405,6 +409,7 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-10-25 | **Security checks.** Weekly and per-pull-request vulnerability checks for the Python and npm packages, Dependabot update pull requests, CI moved from Node 20 (no longer receiving security fixes) to Node 24, and one fix: an item type in "What changed" is now shown as text, not HTML. No known vulnerabilities were found in any package. |
 | 2026-10-25 | **Test automation.** Browser tests of the page, a recorded copy of the support output checked on every run, tests for the snapshot job and the data sources, and coverage per file on each CI run. No change to what the app does. |
 | 2026-10-25 | Plan written for five changes: show support levels above the current price; view any ticker and add it to the daily list once it passes the checks (starting list TQQQ, QQQ, SPY); make plain scrolling move the page instead of zooming the chart; draw Bollinger Bands; show or hide every indicator. No code changed yet. |
 

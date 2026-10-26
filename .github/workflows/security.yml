@@ -1,0 +1,51 @@
+name: Security
+
+# Looks up every package the project uses in the public vulnerability databases
+# (the PyPA advisory database and OSV for Python; GitHub's advisory database for
+# npm). Runs on every pull request, after each merge, and weekly, because a new
+# advisory can appear for a package that has not changed.
+
+on:
+  push:
+    branches: [main]
+    paths: ["pipeline/requirements.txt", "package.json", "package-lock.json", ".github/workflows/**"]
+  pull_request:
+  schedule:
+    - cron: "0 12 * * 1"   # Mondays, 08:00 New York (EDT)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pip-audit
+      # requirements.txt sets minimum versions only, so this checks the versions
+      # the daily refresh would install today
+      - run: pip-audit -r pipeline/requirements.txt --desc
+      - name: Check the audit still catches a known vulnerable version
+        run: |
+          if pip-audit -r tests/fixtures/known-vulnerable.pins --no-deps; then
+            echo "pip-audit reported nothing for requests 2.19.0, which has known vulnerabilities. The audit step is not working."
+            exit 1
+          fi
+
+  npm:
+    name: npm packages (test tooling)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: npm ci
+      - run: npm audit
+      - name: Check the packages were signed by the registry
+        run: npm audit signatures

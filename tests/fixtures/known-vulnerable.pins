@@ -1,0 +1,5 @@
+# A version with published vulnerabilities (CVE-2018-18074 and others).
+# security.yml checks that the audit still reports it, so a broken audit step
+# cannot pass silently.
+# Not named requirements*.txt, so GitHub does not raise a repository alert for it.
+requests==2.19.0
