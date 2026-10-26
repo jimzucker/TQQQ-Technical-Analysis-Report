@@ -13,6 +13,10 @@
   const winName = (w) => WIN_NAMES[w] || `${w} sessions`;
   // which optional chart panels are visible; remembered per browser
   const PANE_DEFAULTS = { vol: true, rsi: true, macd: false, dd: false, rolling: true, profile: false, above: true, bb: true };
+  // The page finds levels over at least this many sessions, whatever the window, and
+  // lists every level it finds rather than the strongest five on each side.
+  const LEVEL_SESSIONS = 200;
+  const analyze = () => SR.analyze(state.data, { ...state.opts, minLookback: LEVEL_SESSIONS, topN: Infinity, topAbove: Infinity });
   const OVERLAYS = new Set(["rolling", "profile", "above", "bb"]); // drawn inside the price pane, no rebuild needed
 
   // the window the page opens on. The nightly snapshot and "What changed" keep the
@@ -256,11 +260,11 @@
     const sup = r.supports; // already nearest-first
     // levels above price go above the last-close row, highest first, so the table reads in price order
     let html = r.above.slice().reverse().map(row).join("");
-    html += `<tr class="price-row"><td>Last close</td><td class="num">${money(r.price)}</td><td class="num muted">ATR ${money(r.atr)}</td><td colspan="5" class="muted">${d.dates[r.end]} · zones are ${money(r.tol)} wide (${r.opts.clusterMult} × ATR)</td></tr>`;
+    html += `<tr class="price-row"><td>Last close</td><td class="num">${money(r.price)}</td><td class="num muted">ATR ${money(r.atr)}</td><td colspan="5" class="muted">${d.dates[r.end]} · levels from the last ${r.end - r.levelStart + 1} sessions · zones are ${money(r.tol)} wide (${r.opts.clusterMult} × ATR)</td></tr>`;
     html += sup.length ? sup.map(row).join("")
       : r.above.length
-        ? `<tr><td colspan="8" class="muted">No support below the price in a ${winName(r.opts.window)} window: the levels it found are all above the price (${r.above.map((z) => z.id).join(", ")}), because the price has fallen through them. A longer window shows floors further down.</td></tr>`
-        : `<tr><td colspan="8" class="muted">No confirmed support zone in a ${winName(r.opts.window)} window — price has not put in enough swing lows. Try a longer window.</td></tr>`;
+        ? `<tr><td colspan="8" class="muted">No support below the price in the last ${r.end - r.levelStart + 1} sessions: the levels found are all above the price (${r.above.map((z) => z.id).join(", ")}), because the price has fallen through them.</td></tr>`
+        : `<tr><td colspan="8" class="muted">No confirmed support zone in the last ${r.end - r.levelStart + 1} sessions — price has not put in enough swing lows. Try a longer window.</td></tr>`;
     if (r.fallbacks.length) {
       html += r.fallbacks.map((f) => `<tr><td><span class="lvl fallback">Fallback</span></td><td class="num">${money(f.price)}</td><td colspan="6" class="muted">${f.label} — shown because this window has fewer than two confirmed support zones.</td></tr>`).join("");
     }
@@ -386,15 +390,17 @@
     const panes = [
       {
         id: "price", height: 460, mobileHeight: 320, padY: 0.09, format: (v) => "$" + (v >= 100 ? v.toFixed(0) : v.toFixed(v >= 10 ? 1 : 2)),
-        range: (a, b) => extent(state.panes.bb ? ["low", "high", "bb_upper", "bb_lower"] : ["low", "high"])(a, b),
+        range: (a, b) => withNextFloor(extent(state.panes.bb ? ["low", "high", "bb_upper", "bb_lower"] : ["low", "high"])(a, b)),
         draw: drawPricePane,
       },
       ...Object.keys(optional).filter((k) => state.panes[k]).map((k) => optional[k]),
     ];
     panes[panes.length - 1].gap = 0;
     const c = new StackChart($("#mainChart"), {
-      panes, dates: v.dates, tooltip: mainTooltip, rightPad: 4,
-      dimBefore: () => state.view.start,
+      // space right of the newest bar: half a bar, plus exactly the width of the widest price
+      // tag, so the tags never cover a candle at 12 months nor leave a gap at 1 month
+      panes, dates: v.dates, tooltip: mainTooltip, rightPad: 0.5, rightPadPx: tagRoom,
+      dimBefore: () => state.view.levelStart, // history older than the level search
     });
     c.canvas.setAttribute("aria-label", `Candlestick chart of TQQQ, ${v.weekly ? "one bar per Monday" : "one bar per trading day"}, with shaded support zones and optional volume, RSI, MACD and drawdown panels. The levels table below lists the same zones.`);
     return c;
@@ -410,6 +416,29 @@
     state.charts.main.home = homeView();
     if (view) state.charts.main.setView(view.from, view.to, [0, state.view.dates.length - 1]);
     else renderCharts();
+  }
+
+  // The price scale reaches down to the next floor below the current one (S2 when the price
+  // is at or above S1), so "if that breaks" is visible on the chart. It stretches by at most
+  // half, so a far-off floor cannot squash the candles; then the edge tag names it instead.
+  const NEXT_FLOOR_STRETCH = 0.5;
+  function withNextFloor([lo, hi]) {
+    const next = state.res.supports[1];
+    if (!next) return [lo, hi];
+    const want = next.low - state.res.tol / 2;
+    if (want >= lo || hi - want > (hi - lo) * (1 + NEXT_FLOOR_STRETCH)) return [lo, hi];
+    return [want, hi];
+  }
+
+  const TAG_FONT = '600 10px system-ui, -apple-system, "Segoe UI", sans-serif'; // as draw.tag
+  let measureCtx = null;
+  function tagRoom() {
+    const r = state.res;
+    if (!r) return 0;
+    measureCtx = measureCtx || document.createElement("canvas").getContext("2d");
+    measureCtx.font = TAG_FONT;
+    const texts = [money(r.price), ...r.supports.map((z) => `${z.id} ${money(z.price)}`), ...r.above.map((z) => `${z.id} ${money(z.price)}`)];
+    return Math.max(...texts.map((t) => measureCtx.measureText(t).width)) + 8 /* tag padding */ + 6 /* gap */;
   }
 
   function drawPricePane(ctx, S) {
@@ -430,7 +459,7 @@
     }
     // 2. support zones: full-width bands, opacity stepped by strength so the
     //    strong ones read at a glance instead of blending into each other
-    const labels = [];
+    let labels = [];
     const alphaFor = { Strong: 0.22, Moderate: 0.13, Weak: 0.07 };
     for (const z of r.supports) {
       const y1 = S.y(z.high + half), y2 = S.y(z.low - half);
@@ -442,7 +471,7 @@
       ctx.lineWidth = z.strength === "Strong" ? 2 : 1.25;
       const ym = Math.round(S.y(z.price)) + 0.5;
       ctx.beginPath(); ctx.moveTo(S.left, ym); ctx.lineTo(S.right, ym); ctx.stroke();
-      labels.push({ y: S.y(z.price), text: `${z.id} ${money(z.price)}`, col: sup });
+      labels.push({ y: S.y(z.price), text: `${z.id} ${money(z.price)}`, col: sup, z });
     }
     // levels above price: a muted band with a dashed centre line, so they never read as support
     if (state.panes.above) {
@@ -452,7 +481,7 @@
         ctx.fillStyle = withAlpha(ab, 0.10);
         ctx.fillRect(S.left, y1, S.right - S.left, Math.max(4, y2 - y1));
         draw.hline(ctx, S, z.price, withAlpha(ab, 0.9), [5, 4], 1.25);
-        labels.push({ y: S.y(z.price), text: `${z.id} ${money(z.price)}`, col: ab });
+        labels.push({ y: S.y(z.price), text: `${z.id} ${money(z.price)}`, col: ab, z });
       }
     }
     // fallback levels for thin windows
@@ -492,13 +521,64 @@
       ctx.fillStyle = css("--text-muted"); ctx.textAlign = "left"; ctx.textBaseline = "top";
       ctx.fillText("window starts", x + 4, S.top + 3);
     }
-    // 7. labels on the right edge, de-overlapped, plus the last price tag
-    labels.push({ y: S.y(r.price), text: money(r.price), col: css("--text-primary"), last: true });
-    labels.sort((a, b) => a.y - b.y);
-    for (let k = 1; k < labels.length; k++) if (labels[k].y - labels[k - 1].y < 17) labels[k].y = labels[k - 1].y + 17;
-    const over = labels.length ? labels[labels.length - 1].y - (S.bottom - 9) : 0;
-    if (over > 0) labels.forEach((l) => (l.y -= over));
-    for (const l of labels) draw.tag(ctx, S.right - 2, l.y, l.text, l.col, l.last ? css("--surface-1") : "#fff");
+    // 7. labels on the right edge, de-overlapped, plus the last price tag. A level outside
+    // the visible price range gets no tag of its own (pushed into view, it would sit next to
+    // the wrong price); a single tag at that edge says how many are out of view instead.
+    // Tags sit 17px apart. The last-price tag stays exactly on its price; the others are placed
+    // outward from it, nearest first. Levels out of view, and tags that would run off the panel,
+    // are folded into one tag at that edge, which names the nearest of them.
+    const anchor = { y: S.y(r.price), text: money(r.price), col: css("--text-primary"), last: true };
+    const outAbove = labels.filter((l) => l.z && l.y < S.top + 4), outBelow = labels.filter((l) => l.z && l.y > S.bottom - 4);
+    labels = labels.filter((l) => l.y >= S.top + 4 && l.y <= S.bottom - 4);
+    for (const l of labels) l.target = l.z ? l.y : null;
+    const place = (list, dir, reserve) => {
+      const limit = dir < 0 ? S.top + 9 + reserve : S.bottom - 9 - reserve;
+      const kept = [], dropped = [];
+      let prev = anchor.y;
+      for (const l of list) {
+        const y = dir < 0 ? Math.min(l.target ?? l.y, prev - 17) : Math.max(l.target ?? l.y, prev + 17);
+        if (dir < 0 ? y < limit : y > limit) { if (l.z) dropped.push(l); continue; }
+        l.y = prev = y;
+        kept.push(l);
+      }
+      return { kept, dropped };
+    };
+    const side = (list, dir, outside) => {
+      let res = place(list, dir, outside.length ? 17 : 0);
+      if (!outside.length && res.dropped.length) res = place(list, dir, 17); // make room for the edge tag
+      return { kept: res.kept, folded: [...outside, ...res.dropped] };
+    };
+    const up = side(labels.filter((l) => l.y <= anchor.y).sort((a, b) => b.y - a.y), -1, outAbove);
+    const down = side(labels.filter((l) => l.y > anchor.y).sort((a, b) => a.y - b.y), 1, outBelow);
+    const nearest = (list, dir) => list.slice().sort((a, b) => dir * (b.z.price - a.z.price))[0];
+    const edgeText = (list, dir, arrow, word) => {
+      const z = nearest(list, dir).z;
+      return `${arrow} ${z.id} ${money(z.price)}` + (list.length > 1 ? ` · ${list.length - 1} more ${word}` : ` ${word}`);
+    };
+    labels = [...up.kept.reverse(), anchor, ...down.kept];
+    const muted = css("--text-muted");
+    // an edge tag goes in its right-hand corner, or the left-hand one if the price tag is in the way
+    const corner = (y) => (Math.abs(y - anchor.y) < 17 ? "left" : "right");
+    if (up.folded.length) labels.unshift({ y: S.top + 9, text: edgeText(up.folded, -1, "▲", "above"), col: muted, edge: true, align: corner(S.top + 9) });
+    if (down.folded.length) labels.push({ y: S.bottom - 9, text: edgeText(down.folded, 1, "▼", "below"), col: muted, edge: true, align: corner(S.bottom - 9) });
+    state.offChart = { // levels without a tag of their own; read by the browser tests
+      above: up.folded.length, below: down.folded.length,
+      nearestAbove: up.folded.length ? nearest(up.folded, -1).z.id : null, nearestBelow: down.folded.length ? nearest(down.folded, 1).z.id : null,
+    };
+    // where each tag ended up, for the browser tests that check nothing collides
+    state.tagBoxes = labels.map((l) => {
+      const left = l.align === "left";
+      const w = draw.tag(ctx, left ? S.left + 4 : S.right - 2, l.y, l.text, l.col, l.last ? css("--surface-1") : "#fff", left ? "left" : "right");
+      const target = l.last ? S.y(r.price) : l.target;
+      // a tag moved off its line gets a short connecting line back to the level it names
+      const leader = target != null && Math.abs(l.y - target) > 2;
+      if (leader) {
+        ctx.strokeStyle = l.col; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(S.right - 2 - w, l.y); ctx.lineTo(S.right - 2 - w - 8, target); ctx.stroke();
+      }
+      const x0 = left ? S.left + 4 : S.right - 2 - w;
+      return { text: l.text, left: x0, right: x0 + w, top: l.y - 8, bottom: l.y + 8, y: l.y, target, leader, edge: !!l.edge };
+    });
   }
 
   function buildBenchChart() {
@@ -616,7 +696,7 @@
   function downloadCsv() {
     const r = state.res, d = state.data;
     const lines = [
-      `# TQQQ support levels, data as of ${d.meta.as_of}, window ${r.opts.window} sessions, swing period ${r.opts.period}, cluster ${r.opts.clusterMult}xATR, min touches ${r.opts.minTouches}`,
+      `# TQQQ support levels, data as of ${d.meta.as_of}, window ${r.opts.window} sessions, levels from the last ${r.end - r.levelStart + 1} sessions, swing period ${r.opts.period}, cluster ${r.opts.clusterMult}xATR, min touches ${r.opts.minTouches}`,
       "level,zone_price,zone_low,zone_high,distance_pct,touches,last_test,first_seen,strength_score,strength,status,volume_vs_avg",
       ...[...r.above.slice().reverse(), ...r.supports].map((z) => [z.id, z.price.toFixed(2), z.low.toFixed(2), z.high.toFixed(2),
         z.distancePct.toFixed(2), z.touches, z.date, z.firstDate, z.score, z.strength, z.status, z.volumeRatio.toFixed(2)].join(",")),
@@ -641,7 +721,7 @@
 
   /* ------------------------------------------------------------ main loop */
   function update({ keepView = false } = {}) {
-    state.res = SR.analyze(state.data, state.opts);
+    state.res = analyze();
     state.lab = SR.labels(state.data, state.res);
     state.runs = SR.compareWindows(state.data, state.opts); // shared by the findings and the window chart
     state.view = SR.chartModel(state.data, state.res, state.cadence);
@@ -671,7 +751,7 @@
       state.data = SR.fromPayload(payload);
       renderHeader();
       renderChanges(changes);
-      state.res = SR.analyze(state.data, state.opts);
+      state.res = analyze();
       state.view = SR.chartModel(state.data, state.res, state.cadence);
       state.charts.main = buildMainChart();
       state.charts.bench = buildBenchChart();

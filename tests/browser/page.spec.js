@@ -8,9 +8,9 @@ test("page renders every section with no errors", async ({ page }) => {
   await expect(page.locator("#asOf")).toContainText(/Oct 23, 2026|2026-10-23/);
   await expect(page.locator("#kpis .kpi")).toHaveCount(6);
   await expect(page.locator("#blRows dt").first()).toHaveText("Nearest floor");
-  // the levels table lists S1-S5 for the default 12-month window, nearest first
+  // the 12-month window looks back 252 sessions and lists every level below the price, nearest first
   const ids = await page.locator("#levels tbody .lvl.support").allTextContents();
-  expect(ids).toEqual(["S1", "S2", "S3", "S4", "S5"]);
+  expect(ids).toEqual(["S1", "S2", "S3", "S4", "S5", "S6", "S7"]);
   await expect(page.locator("#levels tbody tr", { hasText: "S1" })).toContainText("$66.72");
   await page.locator("#findingsSummary").click();
   expect(await page.locator("#findings li, #findings p").count()).toBeGreaterThanOrEqual(10);
@@ -24,8 +24,10 @@ test("the page opens on the 1-month window", async ({ page }) => {
   await expect(page.locator('#windowSeg button[data-w="1m"]')).toHaveAttribute("aria-checked", "true");
   expect(await page.evaluate(() => window.__dashboard.res.opts.window)).toBe(21);
   expect(new URL(page.url()).searchParams.get("window")).toBe("1m");
-  // the 1-month window has no floor below the close in the frozen data, only levels above it
-  await expect(page.locator("#blHeadline")).toContainText("the nearest level is above the price");
+  // the window sets the chart view; levels still come from the last 200 sessions
+  await expect(page.locator("#levels tbody tr.price-row")).toContainText("levels from the last 200 sessions");
+  await expect(page.locator("#levels tbody .lvl.support")).toHaveCount(6);
+  await expect(page.locator("#blHeadline")).toContainText("sitting on its nearest floor");
   expect(errors).toEqual([]);
 });
 
@@ -98,7 +100,7 @@ test("CSV download holds the levels and the daily rows", async ({ page }) => {
   const text = require("fs").readFileSync(await download.path(), "utf8");
   const lines = text.split("\n");
   expect(lines[1]).toMatch(/^level,zone_price,/);
-  expect(lines.filter((l) => /^S\d,/.test(l))).toHaveLength(5);
+  expect(lines.filter((l) => /^S\d,/.test(l))).toHaveLength(7);
   expect(lines.filter((l) => /^\d{4}-\d{2}-\d{2},/.test(l))).toHaveLength(252);
 });
 

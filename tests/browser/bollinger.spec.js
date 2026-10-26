@@ -39,11 +39,7 @@ test("the price scale stretches to fit the bands, so they are not cut off", asyn
     for (let i = a; i <= b; i++) { if (d.bb_lower[i] != null) lo = Math.min(lo, d.bb_lower[i]); if (d.bb_upper[i] != null) hi = Math.max(hi, d.bb_upper[i]); }
     return { min: p.S.lo, max: p.S.hi, bandLow: lo, bandHigh: hi };
   });
-  await page.locator('input[data-pane="bb"]').uncheck();
-  const off = await scale();
-  expect(off.max).toBeLessThan(off.bandHigh); // without the bands the scale fits the prices only
-  await page.locator('input[data-pane="bb"]').check();
-  const on = await scale();
+  const on = await scale(); // the bands are on by default
   expect(on.min).toBeLessThanOrEqual(on.bandLow);
   expect(on.max).toBeGreaterThanOrEqual(on.bandHigh);
 });

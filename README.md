@@ -39,7 +39,7 @@ This report answers that question in four steps:
 1. It finds every **swing low** in the chosen period — days where the price dipped and then turned back up.
 2. It **groups** nearby swing lows into price *zones*, because real support is an area, not an exact number.
 3. It **scores** each zone from 0 to 100 on how dependable it has been.
-4. It draws the strongest five zones below the price on the chart, labels them **S1** (closest to today's price) through **S5**, and writes out what it found in plain sentences. Zones the price has since fallen below are drawn too, in grey, as **levels above the price** (**A1**, **A2**, …).
+4. It lists every zone found over at least the last 200 sessions, labels those below the price **S1** (closest to today's price), **S2** and so on, and writes out what it found in plain sentences. Zones the price has since fallen below are drawn too, in grey, as **levels above the price** (**A1**, **A2**, …).
 
 Everything else on the page — the trend call, RSI, MACD, the TQQQ-vs-QQQ comparison — is context to help you judge whether those levels are likely to matter right now.
 
@@ -81,7 +81,7 @@ No prior charting knowledge needed. These are the only terms the report uses.
 | **All findings** (collapsed) | 10+ plain-language findings in four groups — support levels, trend, momentum & volatility, risk & leverage | The full picture for anyone who wants it, one click away; see [What the key findings cover](#what-the-key-findings-cover) |
 | **KPI strip** | Last close, trend, nearest support, strongest support, RSI, distance below the 12-month high | The six numbers most decisions start from |
 | **Price & support zones** | Candlestick chart with shaded green support bands, swing-low markers, moving averages, and optional volume / RSI / MACD / drawdown panels | The main visualisation — see [How to read the main chart](#how-to-read-the-main-chart) |
-| **Support levels in detail** | A table of the levels above the price (A1…) and S1–S5, in price order: zone price, zone range, distance from price, times held, last tested, strength and status | The numbers behind the chart, with a definition list underneath every column |
+| **Support levels in detail** | A table of every level found — above the price (A1…) and below it (S1…), in price order: zone price, zone range, distance from price, times held, last tested, strength and status | The numbers behind the chart, with a definition list underneath every column |
 | **Does the level hold up at other window lengths?** | The same method run over 1, 3, 6 and 12 months, one column each | Guards against cherry-picking. A level that appears in only one window may be an artefact of that window; a level that appears in three or more is far more dependable |
 | **TQQQ vs QQQ** | Growth of $100 over the window, plus return, beta and volatility | Shows the cost of daily 3× resetting — TQQQ's return over a period is usually *not* 3× QQQ's return over that period |
 | **Technical indicators** | Moving averages, RSI, MACD, Bollinger Bands, ATR and volume, each with a reading and a plain-language explanation | Context: is the broader trend helping or fighting these levels? |
@@ -125,7 +125,8 @@ Two design choices worth naming. Findings are **grouped rather than ranked**, be
 | <img src="assets/readme/candles.svg" alt="" width="34"> | **Hollow / filled candle** | An up day / a down day. Shape as well as colour, so direction still reads for colour-blind viewers. |
 | <img src="assets/readme/rolling-low.svg" alt="" width="52"> | **Pink staircase** | The rolling 3-day low — the lowest low of the last three sessions, and the nearest very-short-term floor. |
 | <img src="assets/readme/moving-averages.svg" alt="" width="52"> | **Blue / orange / purple lines** | The 20-, 50- and 200-day moving averages. |
-| <img src="assets/readme/out-of-window.svg" alt="" width="52"> | **Greyed-out area on the left** | History *outside* the window you chose. Shown for context; not used to find levels. |
+| <img src="assets/readme/out-of-window.svg" alt="" width="52"> | **Greyed-out area on the left** | History older than the level search (at least 200 sessions). Shown for context; not used to find levels. |
+| | **"▼ S3 $50.18 · 3 more below" tag** | Levels outside the part of the chart in view; the nearest one is named. The chart always reaches down to the next floor below the current one (S2), unless that would stretch the price scale by more than half — then that floor is the one named here. |
 | <img src="assets/readme/panels.svg" alt="" width="52"> | **Panels below the price** | Volume, RSI, MACD and drawdown, all sharing the same date axis. |
 | <img src="assets/readme/candles.svg" alt="" width="34"> | **One bar = one day, or one Monday** | The Daily / Mondays toggle in the chart header. Mondays draws each Monday's session only and skips the other four days. |
 
@@ -191,7 +192,7 @@ Swing lows within `clusterDistance × ATR(14)` of each other are merged. At the 
 Scores are normalised **within the selected window**, so they rank levels against each other — a score of 80 in a 1-month window is not directly comparable to an 80 in a 12-month window.
 
 **5. Report the top five.**
-The five highest-scoring live zones are kept, then re-ordered nearest-to-price first and labelled S1…S5. Zones the price has closed below are handled the same way: the five highest-scoring are kept, nearest the price first, and labelled A1…A5.
+On the page, every zone found is listed, nearest the price first: below it S1, S2, …, above it A1, A2, …. Levels are found over **at least the last 200 sessions**, or the window if it is longer (12 months uses 252). The window you pick still sets how much of the chart opens and the period for returns and volatility. The daily snapshot and "What changed" keep their own fixed setting — 12 months, strongest five on each side — so each day is compared on the same basis.
 
 **6. Drop broken zones.**
 Once price closes more than half the cluster distance below a zone, that zone is no longer support. It moves to the levels above the price (A1, A2, …), drawn in grey and listed above the last close in the table, and the break is reported in "What changed since the previous session". A zone that was broken earlier in the window but has since been reclaimed is flagged *broke once before* in the table — it has a track record of failing.
@@ -411,6 +412,8 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-10-25 | **Chart fits every window.** The space kept right of the newest candle is now exactly the width of the price tags, so tags no longer hide the latest candles at 12 months or leave a wide gap at 1 month. When levels sit close together the last-price tag stays on its price, the other tags move aside with a short line back to their level, and tags that do not fit are folded into the edge tag (which moves to the left corner if the price tag is in its way). A date label that would be cut off at the chart's edge is left out. The page now uses up to 1600 pixels of a wide screen (it stopped at 1180), with a 48-pixel margin each side on a desktop (16 on a phone); text keeps its own line length. The help under the chart is six short labelled items in columns instead of one long paragraph. |
+| 2026-10-25 | **Every level from at least the last 200 sessions.** Levels are found over at least 200 sessions, or the window if longer, and every one is listed instead of the strongest five on each side; on 2026-10-23 that is 6 below the price and 2 above, for any window up to 9 months. The chart reaches down to the next floor below the current one (stretching the price scale by at most half), and levels still out of view get one edge tag naming the nearest ("▼ S3 $50.18 · 3 more below") instead of tags pushed beside the wrong price. |
 | 2026-10-25 | **Bollinger Bands on the chart.** A switch draws the upper and lower bands with a light fill between them, and adds that day's band values to the hover box. On by default; switching them off is remembered. The middle band is the 20-day average, already drawn, so it is not repeated. |
 | 2026-10-25 | **Remembers your choices, and readable dates.** The window and method settings are now remembered in your browser along with the theme, panels and Daily/Mondays, so the page reopens as you left it; a link that carries settings still wins. The chart's dates moved out from on top of the volume bars into their own strip, and read "Sep 25", "Oct", "Jan 2026"; the hover date reads "Fri, Oct 16, 2026". |
 | 2026-10-25 | **The page opens on the 1-month window** instead of 12 months. The daily snapshot and "What changed" still use 12 months. |

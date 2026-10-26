@@ -105,7 +105,14 @@
       <label class="chip"><input type="checkbox" data-pane="bb" checked> Bollinger Bands</label>
     </div>
     <div id="mainChart" class="main-chart" aria-describedby="chartHelp"></div>
-    <p id="chartHelp" class="help"><b>To zoom</b>, pinch on a trackpad or touchscreen, hold Ctrl (⌘ on a Mac) and scroll, or use the <b>+</b> and <b>−</b> buttons. Scrolling up or down over the chart scrolls the page as normal. <b>To move through time</b>, swipe sideways with two fingers, hold Shift and scroll, or drag. Double-click or <b>Reset view</b> to go back to the window you picked. Hover or tap a bar for its numbers. <b>Mondays</b> draws one bar per week — each Monday's session only — which is far easier to read across a long stretch. Because it is a sample, moves on the other four days are not drawn: a level tested on a Wednesday will not show up here, though it still counts in the table below, which always uses every day. The greyed-out area on the left is history <em>outside</em> the window you picked; it is shown for context but is not used to find levels.</p>
+    <dl id="chartHelp" class="chart-help">
+      <div><dt>Zoom</dt><dd>Pinch on a trackpad or touchscreen, hold Ctrl (⌘ on a Mac) and scroll, or use the <b>+</b> and <b>−</b> buttons. Scrolling up or down scrolls the page as normal.</dd></div>
+      <div><dt>Move through time</dt><dd>Swipe sideways with two fingers, hold Shift and scroll, or drag. Double-click or <b>Reset view</b> to go back to the window you picked.</dd></div>
+      <div><dt>A day's numbers</dt><dd>Hover over or tap a bar.</dd></div>
+      <div><dt>Mondays</dt><dd>One bar per week: that Monday's session only, so moves on the other days are not drawn. They still count in the table below, which uses every day.</dd></div>
+      <div><dt>History used to find levels</dt><dd>At least the last 200 sessions, or the window if it is longer. The window you pick sets how much of the chart opens and the period for returns. The greyed-out area on the left is older history, shown for context only.</dd></div>
+      <div><dt>Levels out of view</dt><dd>The chart reaches down to the next floor below the current one, unless that would stretch the price scale by more than half. Any level still out of view is named in the tag at that edge.</dd></div>
+    </dl>
   </section>
 
   <section class="card" aria-labelledby="h-table">
@@ -182,7 +189,7 @@
           <li><b>Swing lows.</b> A day is a swing low when its low is the lowest from <span class="pv">3</span> sessions before it to <span class="pv">3</span> sessions after it. The most recent <span class="pv">3</span> sessions can't be confirmed yet and are drawn as hollow “pending” markers.</li>
           <li><b>Rolling low.</b> The lowest low of the last <span class="pv">3</span> sessions is drawn as a step line — the nearest short-term floor.</li>
           <li><b>Zones.</b> Swing lows within a set distance of each other (default 0.5 × the 14-day ATR, about 2–3% for TQQQ) are merged into one zone. The zone price is the volume-weighted average of its lows; the range runs from its lowest to highest low.</li>
-          <li><b>Strength.</b> Touches 40%, recency 30%, volume at the touches 20%, bounce afterwards 10%. The five strongest zones below the price are reported as S1–S5, and the five strongest above it as A1–A5.</li>
+          <li><b>Strength.</b> Touches 40%, recency 30%, volume at the touches 20%, bounce afterwards 10%. Every zone found is listed: below the price as S1, S2, … (nearest first) and above it as A1, A2, ….</li>
           <li><b>Levels above price.</b> Once price closes more than half the cluster distance below a zone, that zone moves from the support list to the levels above the price (A1 is the nearest). The break is also reported under “What changed”.</li>
         </ol>
         <h3>Trend call</h3>

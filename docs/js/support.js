@@ -20,7 +20,9 @@
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
 
-  const DEFAULTS = { window: 252, period: 3, clusterMult: 0.5, minTouches: 1, topN: 5, topAbove: 5, bounceLookahead: 10 };
+  // minLookback: levels are found over at least this many sessions, even when the window
+  // is shorter (the page passes 200). 0 keeps levels and window the same length.
+  const DEFAULTS = { window: 252, period: 3, clusterMult: 0.5, minTouches: 1, topN: 5, topAbove: 5, bounceLookahead: 10, minLookback: 0 };
   const LIMITS = {
     window: [21, 252], period: [2, 10], clusterMult: [0.25, 1.5], minTouches: [1, 5],
   };
@@ -104,15 +106,18 @@
   function analyze(data, opts) {
     const o = normalize(opts);
     const n = data.close.length;
+    // `start` is the chosen window (chart view, returns, volatility); `ls` is where the
+    // search for levels begins, which reaches back at least minLookback sessions
     const start = Math.max(0, n - o.window);
+    const ls = Math.max(0, n - Math.max(o.window, o.minLookback || 0));
     const endIdx = n - 1;
     const price = data.close[endIdx];
-    const atr = data.atr14[endIdx] ?? mean(data.high.slice(start).map((h, j) => h - data.low[start + j]));
+    const atr = data.atr14[endIdx] ?? mean(data.high.slice(ls).map((h, j) => h - data.low[ls + j]));
     const tol = o.clusterMult * atr;
     const half = tol / 2;
-    const avgVol = mean(data.volume.slice(start));
+    const avgVol = mean(data.volume.slice(ls));
 
-    const lowP = findPivots(data.low, o.period, start, "low");
+    const lowP = findPivots(data.low, o.period, ls, "low");
 
     let zones = cluster(lowP.confirmed, data.low, data.volume, tol).map((z) => {
       const members = z.members.sort((a, b) => a.i - b.i);
@@ -152,7 +157,7 @@
     const maxT = Math.max(1, ...zones.map((z) => z.touches));
     const maxV = Math.max(1, ...zones.map((z) => z.avgVolume / avgVol));
     const maxB = Math.max(1e-9, ...zones.map((z) => z.bounce));
-    const span = Math.max(1, endIdx - start);
+    const span = Math.max(1, endIdx - ls); // recency is scored over the whole look-back
     for (const z of zones) {
       const c = {
         touches: z.touches / maxT,
@@ -200,7 +205,7 @@
     }
 
     return {
-      opts: o, start, end: endIdx, price, atr, tol, avgVolume: avgVol,
+      opts: o, start, levelStart: ls, end: endIdx, price, atr, tol, avgVolume: avgVol,
       zones, supports, above, broken, fallbacks,
       // zones found but not listed, because only the strongest topN / topAbove are shown;
       // the page says how many, so no level found is dropped without a word
@@ -340,6 +345,8 @@
     const i = res.end;
     const out = [];
     const add = (group, html) => out.push({ group, html });
+    // levels may be found over a longer stretch than the window (the page looks back at least 200 sessions)
+    const lb = res.levelStart != null && res.levelStart < res.start ? `in the last ${res.end - res.levelStart + 1} sessions` : "in this window";
 
     const s = res.supports[0];
     const nxt = res.supports[1];
@@ -354,7 +361,7 @@
         `Buyers have turned it higher ${plural(s.touches, "time")} here, most recently on ${fd(s.date)}, ` +
         `which scores it a <b>${s.strength.toLowerCase()}</b> level (${s.score}/100).`);
     } else if (res.fallbacks.length) {
-      add(GROUPS[0], `<b>No confirmed support was found below the price</b> in this window` +
+      add(GROUPS[0], `<b>No confirmed support was found below the price</b> ${lb}` +
         (res.above.length
           ? ` — every level found here is above the close, because the price has fallen through ${res.above.length === 1 ? "it" : "them"}. `
           : ` — there simply have not been enough swing lows yet. `) +
@@ -375,7 +382,7 @@
       add(GROUPS[0], `If ${s.id} gives way, the next floor is <b>${nxt.id} at ${f(nxt.price)}</b> — a further ${pct(gapPct)} down, ` +
         `or roughly ${gapDays.toFixed(1)} typical days of movement. That gap is open air: no level in between has been defended.`);
     } else if (s) {
-      add(GROUPS[0], `${s.id} is the <b>only</b> confirmed level below price in this window, so there is nothing mapped underneath it. ` +
+      add(GROUPS[0], `${s.id} is the <b>only</b> confirmed level below price ${lb}, so there is nothing mapped underneath it. ` +
         `A longer window would show what has held further down.`);
     }
 
@@ -405,8 +412,8 @@
       add(GROUPS[0], `The immediate floor is the <b>${res.opts.period}-day rolling low at ${f(rl)}</b>, ${pct(rlPct)} under the close — ` +
         `the line in the sand for this week rather than this quarter.` +
         (res.broken.length
-          ? ` ${plural(res.broken.length, "zone")} in this window ${res.broken.length === 1 ? "has" : "have"} been broken — the price closed below ${res.broken.length === 1 ? "it" : "them"} — and ${res.broken.length === 1 ? "is" : "are"} listed as ${res.broken.length === 1 ? "a level" : "levels"} above the price.`
-          : ` No zone in this window has broken.`));
+          ? ` ${plural(res.broken.length, "zone")} ${lb} ${res.broken.length === 1 ? "has" : "have"} been broken — the price closed below ${res.broken.length === 1 ? "it" : "them"} — and ${res.broken.length === 1 ? "is" : "are"} listed as ${res.broken.length === 1 ? "a level" : "levels"} above the price.`
+          : ` No zone ${lb} has broken.`));
     }
 
     /* ------------------------------------------------------------------ trend */
@@ -429,7 +436,7 @@
     const posPct = ((c - low12) / (lab.high12m - low12)) * 100;
     const swings = t.checks.swings;
     add(GROUPS[1], `The close is <b>${pct(lab.drawdown)} below the 12-month high</b> of ${f(lab.high12m)} and sits ${posPct.toFixed(0)}% of the way up the 12-month range ` +
-      `(${f(low12)}–${f(lab.high12m)}). The window holds ${plural(res.pivots.lows.length, "confirmed swing low")}` +
+      `(${f(low12)}–${f(lab.high12m)}). The search for levels (${lb.replace("in ", "")}) found ${plural(res.pivots.lows.length, "confirmed swing low")}` +
       `${res.pivots.lows.length < 2 ? " — too few to say whether lows are stepping up or down" : `, and the last two are <b>${swings > 0 ? "rising" : swings < 0 ? "falling" : "level"}</b>`}.`);
 
     /* -------------------------------------------------- momentum & volatility */
@@ -477,7 +484,7 @@
     add(GROUPS[3], `These levels are descriptions of past trading, not forecasts, and leverage lets them break hard. ` +
       (pending
         ? `<b>${plural(pending, "recent dip")} cannot be confirmed yet</b> — a swing low needs ${res.opts.period} sessions after it — so the picture can still shift.`
-        : `Every swing low in this window is confirmed, but the most recent ${res.opts.period} sessions can still produce a new one.`));
+        : `Every swing low ${lb} is confirmed, but the most recent ${res.opts.period} sessions can still produce a new one.`));
 
     return out;
   }
@@ -656,6 +663,7 @@
       data: out,
       dates: out.dates,
       start: weekOf[Math.min(res.start, n - 1)],
+      levelStart: weekOf[Math.min(res.levelStart ?? res.start, n - 1)],
       end: groups.length - 1,
       lows: uniq(res.pivots.lows.map((i) => weekOf[i])),
       pendingLows: uniq(res.pivots.pendingLows.map((i) => weekOf[i])),
@@ -670,7 +678,7 @@
   function chartModel(data, res, cadence) {
     if (cadence !== "weekly") {
       return {
-        data, dates: data.dates, start: res.start, end: res.end,
+        data, dates: data.dates, start: res.start, levelStart: res.levelStart ?? res.start, end: res.end,
         lows: res.pivots.lows, pendingLows: res.pivots.pendingLows,
         used: res.supports.flatMap((z) => z.pivots),
         rollingLow: res.rollingLow, srcIdx: data.dates.map((_, i) => i), weekly: false,

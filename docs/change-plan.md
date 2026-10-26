@@ -2,7 +2,7 @@
 
 Written 2026-10-25. This file records what was asked for, what the review found, and the plan agreed. It is meant to be shared with the original owner of the app. The [README change log](../README.md#change-log) records each phase as it lands.
 
-**Status:** test automation, the security checks, phase 3 (chart scrolling), phase 1 (levels above price), remembered settings with readable dates, and phase 4 (Bollinger Bands) are done. Phases 5 and 2 are not started.
+**Status:** test automation, the security checks, phase 3 (chart scrolling), phase 1 (levels above price), remembered settings with readable dates, phase 4 (Bollinger Bands), and levels from at least 200 sessions are done. Phases 5 and 2 are not started.
 
 **Pull requests, each built on the one before:**
 
@@ -13,6 +13,7 @@ Written 2026-10-25. This file records what was asked for, what the review found,
 | 3 | `chart-scroll-and-levels-above-price` | Phases 3 and 1 |
 | 4 | `usability-memory-and-dates` | Remembered settings and readable chart dates (section 11) |
 | 5 | `bollinger-bands` | Phase 4, Bollinger Bands (section 7) |
+| 6 | `levels-min-200-sessions` | Every level from at least the last 200 sessions (section 12) |
 
 ---
 
@@ -87,6 +88,44 @@ The requests, copied word for word:
 > for last 200 days
 
 > make bollinger on by default unless a user changes
+
+> whats in PR5
+
+> pr5 we should be seeing all support levels valid the last 200days but we are not
+
+> we should see min 200, more if bigger time window
+
+> chart looks odd / we shoudl show one level below current floore band
+
+> do you think thats right to do?
+
+> yes do it
+
+> test shoudl check rendering for all timer periods thinks look bad on 12m for instance
+
+> 1m has alot of white space
+
+> make sure tests cover all UI opionts and combinations
+
+> of time frames
+
+> lets make adding this automation of all compbinations a seperate PR
+
+> in current functional PR we have alot of whitespace margins can we sue more of the screen, is there a reason for the big margins that we would want to keep them
+
+> lets not combine functioanl changes with the test PRS
+
+> ok
+
+> send PRs 5, 6 and 7
+
+> margins are very tight now can we double the width on PR7?
+
+> let me review irst
+
+> formatting is off on this text
+
+> make margins 50% wider
 
 ## 2. Decisions made
 
@@ -292,7 +331,40 @@ The window and method settings lived only in the page address. They are now also
 | Faint grey, 11px | Darker, 12px |
 | Hover tag "2026-10-16" | "Fri, Oct 16, 2026", kept on the chart near the edges |
 
-## 12. Order of work
+## 12. Every level from at least the last 200 sessions (sixth pull request)
+
+**What was asked.** Show every support level found in at least the last 200 sessions, and more when the chosen window is longer.
+
+**What the page did.** It found levels only within the chosen window — 21 sessions for 1 month, which on 2026-10-23 had nothing below the price — and listed at most five on each side.
+
+**What it does now.**
+
+| | Before | After |
+|---|---|---|
+| How far back levels are found | The window (1M = 21 sessions) | At least 200 sessions, or the window if longer (12M = 252) |
+| How many are listed | Strongest 5 on each side | Every level found |
+| 1M on 2026-10-23 | Nothing below the price; A1, A2 above | S1–S6 below ($66.72 to $37.16); A1, A2 above |
+| What the window still sets | — | How much of the chart opens; the period for returns and volatility |
+| Levels outside the chart's view | Tags pushed into view beside the wrong price | One edge tag naming the nearest: "▼ S3 $50.18 · 3 more below" |
+| The next floor below the current one | Off the chart on 1M | Always on the chart, unless reaching it would stretch the price scale by more than half; then the edge tag names it |
+
+Unchanged: the 1/3/6/12-month comparison panel (it compares those exact lengths), and the daily snapshot and "What changed" (12 months, strongest five each side), so the recorded-output test is identical.
+
+**The next floor below.** Asked for after seeing the chart. Measured on 2026-10-23: bringing S2 ($57.48) into the 1-month view grows the price scale by 35%; for 3 months by 3%; for 6–12 months not at all. A limit of 50% keeps a far-off floor from squashing the candles; past it, the edge tag names the floor instead.
+
+**Chart fixes found by checking every time frame** (all in this pull request; the tests that check every combination are the next one):
+
+| Problem | Cause | Fix |
+|---|---|---|
+| At 12 months the price tags hid the newest candles | Space after the newest bar was 4 bars: about 15 px at 12 months, less than one tag | Space is the width of the widest tag, in pixels |
+| At 1 month a wide empty gap after the newest candle | The same 4 bars: about 320 px at 1 month (132 px measured beyond what the tags need) | As above |
+| With close-together levels, tags (including the last price) pushed up to 48 px from their line | Tags were nudged apart in one direction only, and a stack that ran off the panel slid back, price tag included | The last-price tag never moves; others move away from it with a short line back to their level; tags that do not fit are folded into the edge tag, which moves to the left corner when the price tag is in its way |
+| On a phone, Mondays view, the first date label cut off at the left edge | No check for the chart's edge | Labels that would be cut off are left out |
+| Large empty margins on wide screens | The page stopped at 1180 px wide | 1600 px; text blocks keep their own line-length limits (72–92 characters), so reading is unchanged. The margin each side is 48 px on a desktop (it was 16, which felt tight at the new width) and stays 16 px on a phone. The help under the chart was one long paragraph on seven topics; it is now six short labelled items, 3 columns on a desktop, 2 mid-size, 1 on a phone |
+
+**Found while doing this.** When a level was above or below the visible part of the chart, its tag was pushed into view and sat beside the wrong price (for example "S2 $57.48" next to $85). This was also true of the owner's code when zoomed in. Fixed: such levels get one tag at that edge.
+
+## 13. Order of work
 
 | Order | Phase | Size |
 |---|---|---|
