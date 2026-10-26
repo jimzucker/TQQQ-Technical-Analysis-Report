@@ -166,3 +166,17 @@ test("hovering a bar shows its numbers", async ({ page }) => {
   await expect(page.locator("#mainChart .chart-tip")).toBeVisible();
   await expect(page.locator("#mainChart .chart-tip")).toContainText("Open / Close");
 });
+
+test("dates sit in their own strip under the last panel, written as month names", async ({ page }) => {
+  for (const q of ["?window=1m", "?window=12m"]) {
+    await openPage(page, q);
+    const { axisY, bottom, ticks } = await page.evaluate(() => {
+      const c = window.__dashboard.charts.main, last = c.L.panes[c.L.panes.length - 1];
+      return { axisY: c.L.xAxisY, bottom: last.y + last.h, ticks: c.ticks.map((t) => t.label) };
+    });
+    expect(axisY).toBeGreaterThanOrEqual(bottom); // not drawn over the volume bars
+    expect(ticks.length).toBeGreaterThanOrEqual(3);
+    // "Oct", "Sep 25" or "Jan 2026" — never "09-25"
+    for (const t of ticks) expect(t).toMatch(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)( \d{1,2}| \d{4})?$/);
+  }
+});
