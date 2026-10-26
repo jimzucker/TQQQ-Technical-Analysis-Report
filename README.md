@@ -314,6 +314,10 @@ GitHub Actions — every 30 min from 16:15 New York, first to find new data wins
 | `docs/js/support.js` | **The method.** Swing lows, clustering, scoring, trend call, snapshots and diffs |
 | `docs/js/charts.js` | Dependency-free canvas charts: stacked panes with pan/zoom, and the window-comparison dot chart |
 | `docs/js/app.js` | Page controller: loads data, runs the method, renders every section |
+| `docs/js/indicators.js` | The indicators in JavaScript, for a ticker shown live (the nightly job uses `pipeline/indicators.py`) |
+| `docs/data/tickers.json` | The tickers the report covers, and the lookup service's address (`proxy`) |
+| `pipeline/add_ticker.py` | Adds a ticker to the list if it passes the nightly checks (run by `.github/workflows/add-ticker.yml`) |
+| `proxy/` | The lookup service for any ticker (a Cloudflare Worker), and how to set it up |
 | `docs/data/tqqq.json` | Latest prices and indicators, rewritten by each run |
 | `docs/data/history/` | One dated snapshot of the levels per session (about 18 months kept) |
 | `docs/data/changes.json` | The diff between the last two snapshots |
@@ -347,7 +351,7 @@ GitHub Pages is free for public repositories; private repositories need a paid p
 
 ### Tickers
 
-The report covers every ticker on [`docs/data/tickers.json`](docs/data/tickers.json) — today TQQQ, QQQ and SPY. Pick one from the menu next to the title, or link to it with `?ticker=QQQ`; the choice is remembered. Each entry gives the name, the index it follows, its leverage, the benchmark it is compared with, and its folder:
+The report covers every ticker on [`docs/data/tickers.json`](docs/data/tickers.json) — today TQQQ, QQQ and SPY. Pick one in the **Ticker** field at the top, or link to it with `?ticker=QQQ`; the choice is remembered. Each entry gives the name, the index it follows, its leverage, the benchmark it is compared with, and its folder:
 
 ```json
 { "symbol": "QQQ", "name": "Invesco QQQ Trust", "index": "Nasdaq-100", "leverage": 1, "benchmark": "SPY", "dir": "data/qqq" }
@@ -363,6 +367,14 @@ node pipeline/snapshot.js --symbol DIA --backfill 70
 ```
 
 All wording — the headline, findings, benchmark panel and disclaimer — comes from the entry. Leverage wording ("three times as much…", "daily resetting cost") appears only for leveraged funds.
+
+### Any ticker
+
+The **Ticker** field at the top suggests the tickers on the daily list; type any other stock or fund and press Enter. If it is not on the list, the page fetches two years of its prices through a small lookup service ([`proxy/`](proxy/README.md), a Cloudflare Worker), works out the indicators itself ([`docs/js/indicators.js`](docs/js/indicators.js), tested to match the Python on every day) and shows the full report live. History and "What changed" start once it is added.
+
+**Add to the daily list** asks the lookup service to start the **Add a ticker** workflow. It adds the ticker only if it passes the same checks as the nightly refresh, builds its data and 70 sessions of history, and commits. Anyone can ask; the list stops at 50 tickers, and each visitor can ask for 5 a day. A ticker added this way gets plain (unleveraged) wording; its entry can be edited afterwards.
+
+The lookup service is not switched on until it is deployed and its address is put in `docs/data/tickers.json` as `"proxy"` — see [`proxy/README.md`](proxy/README.md). Until then the page says so, and everything else works as before.
 
 ---
 
@@ -409,6 +421,10 @@ All tests run on every pull request (`.github/workflows/tests.yml`), and the cov
 | `.github/workflows/security.yml` | Looks up every Python and npm package in the public vulnerability databases, on every pull request and every Monday, and checks the audit still catches a known vulnerable version |
 | `tests/browser/rendering.spec.js` | Draws the main chart at every time frame (1–12 months and custom lengths), Daily and Mondays, light and dark, with the 13 chart switches in 28 settings (all off, all on, each alone, each off alone), the method settings at their limits, and clicking each switch — on desktop and phone. Each drawing is checked: no tag over another tag or a candle, the last-price tag exactly on its price, any moved tag joined to its level, every level tagged or counted in an edge tag, no date labels colliding or cut off, no candle cut off, panels and legend matching the switches. A self-check proves the checker catches a hidden candle |
 | `.github/workflows/rendering-matrix.yml` | Every Monday and on demand: the same checks for every combination of the 7 switches that change where things are drawn (the four panels, Bollinger Bands and the two kinds of level), each with the other 6 all on and all off — 256 settings, 10,240 drawings |
+| `tests/indicators.test.js`, `pipeline/tests/test_indicator_reference.py` | The JavaScript indicators match Python's on every day and every series, for TQQQ, QQQ and SPY, on the same prices |
+| `tests/worker.test.js` | The lookup service with a fake Yahoo and GitHub: every reason a symbol is turned away, the 16:15 rule, starting the add job, and the 50-ticker and 5-a-day limits |
+| `pipeline/tests/test_add_ticker.py` | Adding a ticker: checks first, data second, the list last — and the list unchanged if anything fails |
+| `tests/browser/any-ticker.spec.js` | A ticker not on the list shown live, the add button's answers, a ticker turned away, and the lookup box |
 | `tests/browser/tickers.spec.js` | The ticker menu, `?ticker=` links and remembering the choice, ticker-specific wording (no "TQQQ" or "3×" on QQQ's page), and a ticker not on the list |
 | `pipeline/tests/test_tickers.py` | The ticker list is valid and every ticker has its data file; a broken list is stopped with the reason; building another ticker; older data files still work |
 | `tests/browser/show-hide.spec.js` | Each switch hides its layer and legend entry; Simple view and Show all; the page address carries the layers and a shared link wins |
@@ -439,6 +455,7 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-10-25 | **Any ticker.** One **Ticker** field at the top replaces the menu in the title: it suggests the tickers on the daily list, and takes any other symbol. Type any stock or fund: if it is not on the daily list, the page shows it live, working out its indicators in the browser (tested to match the Python on every day), and offers to add it. Adding runs the nightly checks first. Anyone can ask; at most 50 tickers and 5 requests per visitor per day. Needs the lookup service (`proxy/`) deployed; until then the page says so. |
 | 2026-10-25 | **More than one ticker.** The report covers every ticker on `docs/data/tickers.json` — TQQQ, QQQ and SPY to start — with a menu next to the title and `?ticker=` links; the choice is remembered. All wording comes from each ticker's entry, and leverage wording appears only for leveraged funds. The nightly refresh builds every ticker, and one failed download no longer stops the rest. TQQQ's files stay where they were. Also fixed: a link carrying only `?show=` now sets the chart layers, and a zone made of one swing low is written as one price ("$707.23", not "$707.23–$707.23"). The time buttons (1M–12M) moved from the bar at the top of the page into a toolbar directly above the chart, with Daily/Mondays and the zoom buttons. |
 | 2026-10-25 | **Show or hide every chart layer.** The nearest level below (S1) and above (A1) always stay on the chart; "More support below" and "More levels above" add the rest. New switches for the support below the price, the 20, 50 and 200-day averages and the swing lows, in two labelled rows; Simple view and Show all buttons; the legend lists only what is shown; the page address carries the layers when they differ from the defaults. The every-combination tests cover all 13 switches. |
 | 2026-10-25 | **Tests for every chart combination.** Every pull request draws the chart at every time frame, Daily and Mondays, light and dark, with the switches in 18 settings, and checks each drawing for collisions, misplaced tags and cut-off candles or dates. A weekly run checks all 256 switch settings: 10,240 drawings. No change to the app. |

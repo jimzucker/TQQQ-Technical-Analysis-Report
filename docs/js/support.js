@@ -283,7 +283,8 @@
   function tickerInfo(data) {
     const m = data.meta || {};
     return { symbol: m.symbol || "TQQQ", benchmark: m.benchmark || "QQQ", leverage: m.leverage ?? 3,
-      index: m.index || "Nasdaq-100", name: m.name || "ProShares UltraPro QQQ" };
+      // null for a ticker added from the page, whose index is not known
+      index: m.index !== undefined ? m.index : "Nasdaq-100", name: m.name || "ProShares UltraPro QQQ" };
   }
   // the benchmark's closes; older files call them qqq_close
   const benchCloses = (data) => data.bench_close || data.qqq_close;

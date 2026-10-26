@@ -785,25 +785,101 @@
     const t = tk();
     $$("[data-tk]").forEach((el) => (el.textContent = t[el.dataset.tk]));
     const lev = t.leverage > 1;
-    $("#tickerDesc").textContent = lev ? `${t.name} (${t.leverage}× ${t.index})` : `${t.name} · tracks the ${t.index}`;
+    $("#tickerDesc").textContent = lev ? `${t.name} (${t.leverage}× ${t.index})` : t.index ? `${t.name} · tracks the ${t.index}` : t.name;
     $("#benchHelp").innerHTML = lev
       ? `What $100 would have grown to over the selected window. ${esc(t.symbol)} aims for ${t.leverage}× ${esc(t.benchmark)}'s <em>daily</em> move; over longer periods the result drifts away from ${t.leverage}× the period return, more so in choppy markets.`
       : `What $100 would have grown to over the selected window in ${esc(t.symbol)}, and in ${esc(t.benchmark)} for comparison.`;
     $("#riskNote").textContent = lev
       ? `${t.symbol} is a ${t.leverage}× leveraged ETF that resets daily; it can lose value quickly, and over periods longer than a day its return can differ greatly from ${t.leverage}× the ${t.index}.`
-      : `${t.symbol} is an exchange-traded fund that tracks the ${t.index}; it can still fall sharply.`;
+      : t.index ? `${t.symbol} is an exchange-traded fund that tracks the ${t.index}; it can still fall sharply.`
+        : `${t.symbol} can fall sharply, like any single security.`;
   }
 
-  /** Fill the ticker picker; choosing another ticker reloads the page for it, keeping the other settings. */
-  function renderTickerPick() {
-    const pick = $("#tickerPick");
-    pick.innerHTML = state.listing.tickers.map((t) => `<option value="${esc(t.symbol)}">${esc(t.symbol)}</option>`).join("");
-    pick.value = state.ticker.symbol;
-    pick.onchange = () => {
-      state.ticker = state.listing.tickers.find((t) => t.symbol === pick.value);
-      writeUrl();
-      location.reload();
+  /** Open the page for another ticker, keeping the other settings. */
+  function goToTicker(symbol) {
+    state.ticker = state.listing.tickers.find((t) => t.symbol === symbol) || { symbol };
+    writeUrl();
+    location.reload();
+  }
+
+  /**
+   * The one ticker field: its suggestions are the tickers on the daily list (with their
+   * names); typing any other symbol opens it live. On focus it empties, showing the current
+   * ticker as a hint, so the whole list of suggestions appears; leaving it puts the ticker back.
+   */
+  function renderTickerField() {
+    const input = $("#tickerInput"), current = state.ticker.symbol;
+    $("#tickerList").innerHTML = state.listing.tickers.map((t) => `<option value="${esc(t.symbol)}">${esc(t.name)}</option>`).join("");
+    input.value = current;
+    input.onfocus = () => { input.placeholder = current; input.value = ""; };
+    input.onblur = () => { if (!input.value.trim()) input.value = current; };
+    // picking a suggestion opens it straight away; typed letters wait for Enter or Show,
+    // so typing "QQQM" does not stop at "QQQ" (browsers mark a picked suggestion this way)
+    input.oninput = (e) => {
+      const v = input.value.trim().toUpperCase();
+      if (e.inputType === "insertReplacementText" && v !== current && state.listing.tickers.some((t) => t.symbol === v)) goToTicker(v);
     };
+    $("#tickerForm").onsubmit = (e) => {
+      e.preventDefault();
+      const sym = (input.value.trim() || current).toUpperCase();
+      if (sym === current) return;
+      if (/^[A-Z][A-Z0-9.-]{0,9}$/.test(sym)) goToTicker(sym);
+      else showNote(`"${sym}" is not a ticker symbol: use 1 to 10 letters, digits, dots or dashes, starting with a letter.`);
+    };
+  }
+
+  function showNote(text, addSymbol) {
+    $("#tickerNoteText").textContent = text;
+    const add = $("#addTicker");
+    add.hidden = !addSymbol;
+    if (addSymbol) {
+      add.textContent = `Add ${addSymbol} to the daily list`;
+      add.disabled = false;
+      add.onclick = () => requestAdd(addSymbol);
+    }
+    $("#tickerNote").hidden = false;
+  }
+
+  /** Ask the Worker to add a ticker to the daily list, and say what it answered. */
+  async function requestAdd(symbol) {
+    const add = $("#addTicker");
+    add.disabled = true;
+    add.textContent = "Asking…";
+    let answer;
+    try {
+      const r = await fetch(`${state.listing.proxy}/add?symbol=${encodeURIComponent(symbol)}`, { method: "POST" });
+      answer = await r.json();
+    } catch (e) {
+      answer = { status: "error", message: "Could not reach the lookup service. Please try again later." };
+    }
+    $("#tickerNoteText").textContent = answer.message;
+    add.hidden = true;
+  }
+
+  /**
+   * A ticker not on the list: fetch its prices from the lookup service (proxy/worker.mjs) and
+   * work out its indicators here. Returns the payload, or null with a note saying why not.
+   */
+  async function liveTicker(want) {
+    const fallback = state.listing.default;
+    if (!state.listing.proxy) {
+      showNote(`${want} is not on the list of tickers this report covers yet, and looking up other tickers is not switched on, so ${fallback} is shown.`);
+      return null;
+    }
+    let r, body;
+    try {
+      r = await fetch(`${state.listing.proxy}/prices?symbol=${encodeURIComponent(want)}`);
+      body = await r.json();
+    } catch (e) {
+      showNote(`Could not reach the lookup service for ${want}, so ${fallback} is shown. Please try again later.`);
+      return null;
+    }
+    if (!r.ok) {
+      showNote(`${body.message} ${fallback} is shown instead.`);
+      return null;
+    }
+    Object.assign(body.series, SI.computeAll(body.series)); // the indicators the nightly job would have stored
+    return body;
   }
 
   async function init() {
@@ -814,18 +890,24 @@
       state.listing = (await fetch("data/tickers.json" + bust).then((r) => (r.ok ? r.json() : null)).catch(() => null)) || FALLBACK_LIST;
       const want = state.requestedTicker || state.listing.default;
       state.ticker = state.listing.tickers.find((t) => t.symbol === want);
-      const note = $("#tickerNote");
+      let payload = null, changes = null;
       if (!state.ticker) {
-        state.ticker = state.listing.tickers.find((t) => t.symbol === state.listing.default);
-        note.textContent = `${want} is not on the list of tickers this report covers yet, so ${state.ticker.symbol} is shown.`;
-        note.hidden = false;
+        payload = await liveTicker(want);
+        if (payload) {
+          state.ticker = { ...payload.meta, live: true };
+          showNote(`${want} is not on the daily list yet. It is shown live from today's prices; its history and "What changed" start once it is added.`, want);
+        } else {
+          state.ticker = state.listing.tickers.find((t) => t.symbol === state.listing.default);
+        }
       }
-      renderTickerPick();
-      const dir = state.ticker.dir, file = `${dir}/${state.ticker.symbol.toLowerCase()}.json`;
-      const [payload, changes] = await Promise.all([
-        fetch(file + bust).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-        fetch(`${dir}/changes.json` + bust).then((r) => (r.ok ? r.json() : null)).catch(() => null),
-      ]);
+      renderTickerField();
+      if (!payload) {
+        const dir = state.ticker.dir, file = `${dir}/${state.ticker.symbol.toLowerCase()}.json`;
+        [payload, changes] = await Promise.all([
+          fetch(file + bust).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+          fetch(`${dir}/changes.json` + bust).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+        ]);
+      }
       // the list fills in any field an older data file does not carry
       payload.meta = { ...state.ticker, ...payload.meta };
       state.data = SR.fromPayload(payload);
