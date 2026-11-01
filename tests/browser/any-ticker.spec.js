@@ -91,3 +91,26 @@ test("the ticker field opens any ticker, and turns away text that is not a symbo
   expect(new URL(page.url()).searchParams.get("ticker")).toBe("DIA");
   await expect(page.locator("#tickerInput")).toHaveValue("DIA");
 });
+
+test("with the lookup service set up, a symbol not on the list offers Show it live and Add it to the daily list", async ({ page }) => {
+  const asked = await withProxy(page);
+  await openPage(page);
+  const input = page.locator("#tickerInput");
+  await input.click();
+  await input.pressSequentially("dia");
+  expect(await page.locator("#tickerList li").evaluateAll((li) => li.map((x) => x.innerText.replace(/\s+/g, " ").trim())))
+    .toEqual(["Show DIA live", "Add DIA to the daily list"]);
+  await expect(page.locator("#tickerList li.active")).toHaveText("Show DIA live"); // what Enter does
+  // Add straight from the list: asks the service, and says what it answered
+  await page.getByRole("option", { name: "Add DIA to the daily list" }).click();
+  await expect(page.locator("#tickerNoteText")).toHaveText("DIA passed the first checks. The daily job is checking it now and will add it to the list within a few minutes if it passes.");
+  expect(asked).toEqual(["POST /add?symbol=DIA"]);
+  await expect(input).toHaveValue("TQQQ");
+  // Show it live: the page reloads with DIA, and offers the Add button there too
+  await input.click();
+  await input.pressSequentially("dia");
+  await Promise.all([page.waitForNavigation(), page.getByRole("option", { name: "Show DIA live" }).click()]);
+  await page.waitForFunction(() => window.__dashboard && window.__dashboard.res);
+  await expect(page.locator("h1")).toHaveText("DIA support levels");
+  await expect(page.locator("#addTicker")).toHaveText("Add DIA to the daily list");
+});

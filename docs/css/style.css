@@ -80,9 +80,26 @@ h3 { font-size: 14px; margin: 16px 0 6px; }
 .head-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .ticker-form { display: inline-flex; align-items: center; gap: 6px; }
 .ticker-form label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
-.ticker-form input { width: 110px; font: inherit; font-size: 15px; font-weight: 700; padding: 5px 8px; border-radius: 8px; border: 1px solid var(--axis); background: var(--surface-1); color: var(--text-primary); text-transform: uppercase; }
+.ticker-box { position: relative; display: inline-flex; align-items: center; }
+.ticker-icon { position: absolute; left: 9px; color: var(--text-muted); pointer-events: none; }
+.ticker-form input { width: 130px; font: inherit; font-size: 15px; font-weight: 700; padding: 5px 8px 5px 28px; border-radius: 8px; border: 1px solid var(--axis); background: var(--surface-1); color: var(--text-primary); text-transform: uppercase; }
+.ticker-form input::placeholder { font-weight: 500; text-transform: none; color: var(--text-muted); }
 .ticker-form input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-@media (max-width: 640px) { .ticker-form .hint { display: none; } } /* no room beside the field on a phone */
+/* the list of tickers under the field: one line each, symbol then name; the last line looks up what was typed */
+.ticker-list { position: absolute; top: calc(100% + 4px); left: 0; z-index: 20; width: max-content; min-width: 100%; max-width: min(360px, calc(100vw - 32px)); max-height: 60vh; overflow-y: auto; margin: 0; padding: 4px; list-style: none; background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 6px 24px rgba(0, 0, 0, .16); }
+.ticker-list[hidden] { display: none; }
+.ticker-list li { display: flex; align-items: baseline; gap: 10px; padding: 7px 10px; border-radius: 6px; cursor: pointer; font-size: 14px; color: var(--text-secondary); }
+.ticker-list li b { min-width: 48px; color: var(--text-primary); }
+.ticker-list li .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ticker-list li.current::after { content: "✓"; margin-left: auto; padding-left: 8px; color: var(--accent); font-weight: 700; }
+.ticker-list li.active { background: var(--surface-2); }
+.ticker-list li.lookup { gap: 5px; border-top: 1px solid var(--border); margin-top: 4px; padding-top: 9px; color: var(--text-primary); }
+.ticker-list li.lookup:first-child { border-top: 0; margin-top: 0; padding-top: 7px; }
+.ticker-list li.none { cursor: default; color: var(--text-muted); }
+.ticker-list li.wrap { display: block; white-space: normal; max-width: 320px; line-height: 1.4; }
+.ticker-list li.lookup, .ticker-list li.add { display: block; } /* a sentence, not symbol + name columns */
+.ticker-list li.add { color: var(--accent); font-weight: 600; }
+.ticker-list li.add::before { content: "+ "; font-weight: 700; }
 .asof { font-size: 12.5px; color: var(--text-secondary); background: var(--surface-1); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; }
 .asof.stale { color: #fff; background: var(--danger); border-color: transparent; }
 .asof.pending { background: color-mix(in srgb, var(--warn) 22%, var(--surface-1)); border-color: color-mix(in srgb, var(--warn) 55%, transparent); color: var(--text-primary); }
@@ -99,8 +116,12 @@ h3 { font-size: 14px; margin: 16px 0 6px; }
 .settings summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-secondary); list-style: none; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-1); }
 .settings summary::-webkit-details-marker { display: none; }
 .settings summary::after { content: " ▾"; }
-.settings-panel { position: absolute; top: calc(100% + 6px); left: 0; width: 280px; background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 12px; box-shadow: 0 8px 30px rgba(0,0,0,.15); display: grid; gap: 12px; font-size: 13px; z-index: 6; }
-.settings-panel label { display: grid; gap: 4px; }
+.settings-panel { position: absolute; top: calc(100% + 6px); left: 0; width: 340px; background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 12px; box-shadow: 0 8px 30px rgba(0,0,0,.15); display: grid; gap: 12px; font-size: 13px; z-index: 6; }
+.settings-panel .set-intro { margin: 0; color: var(--text-secondary); }
+.settings-panel .setting { display: grid; gap: 4px; }
+.settings-panel label { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-weight: 600; color: var(--text-primary); }
+.settings-panel output { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.settings-panel .set-help { margin: 0; font-size: 12px; line-height: 1.4; color: var(--text-secondary); }
 .settings-panel input[type=range] { width: 100%; accent-color: var(--accent); }
 .dl { margin-left: auto; display: flex; gap: 8px; }
 .btn, .link-btn, .icon-btn { font: inherit; font-size: 13px; cursor: pointer; color: var(--text-primary); }
@@ -288,7 +309,10 @@ tr.foot-row td { white-space: normal; border-bottom: 0; font-size: 12.5px; }
   .seg button { padding: 5px 7px; min-width: 34px; }
   .seg .custom input { width: 58px; }
   .mini-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .settings-panel { width: min(280px, calc(100vw - 32px)); }
+  /* on a phone the panel spans the screen under the top bar, whatever the button's position */
+  .settings { position: static; }
+  .controls-row { position: relative; }
+  .settings-panel { left: 16px; right: 16px; width: auto; }
   .controls { position: static; }
   .defs > div, .defs.wide > div { grid-template-columns: 1fr; gap: 0; }
 }

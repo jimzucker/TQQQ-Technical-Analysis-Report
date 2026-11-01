@@ -150,9 +150,11 @@ In the toolbar directly above the chart: buttons for **1M, 3M, 6M, 9M, 12M**, pl
 
 | Setting | Range | Default | What it does |
 |---|---|---|---|
-| **Swing period** | 2–10 sessions | 3 | How many days either side of a dip must be higher for it to count as a swing low. Higher = fewer, more significant lows. |
-| **Cluster distance** | 0.25–1.5 × ATR | 0.5 | How close two swing lows must be to be merged into one zone. Higher = fewer, wider zones. |
+| **Days either side of a low** (swing period) | 2–10 trading days | 3 | How many days either side of a dip must be higher for it to count as a swing low. Higher = fewer, more significant lows. |
+| **Zone width** (cluster distance) | 0.25–1.5 × a typical day's move (ATR) | 0.5 | How close two swing lows must be to be merged into one zone. Higher = fewer, wider zones. The panel shows the width in dollars for the ticker shown. |
 | **Minimum touches** | 1–5 | 1 | Drop zones that have been tested fewer than this many times. Set to 2 to see only levels that have held more than once. |
+
+Each setting in the panel has a line under it saying what it does.
 
 ### Shareable links
 
@@ -385,7 +387,7 @@ All wording — the headline, findings, benchmark panel and disclaimer — comes
 
 ### Any ticker
 
-The **Ticker** field at the top suggests the tickers on the daily list; type any other stock or fund and press Enter. If it is not on the list, the page fetches two years of its prices through a small lookup service ([`proxy/`](proxy/README.md), a Cloudflare Worker), works out the indicators itself ([`docs/js/indicators.js`](docs/js/indicators.js), tested to match the Python on every day) and shows the full report live. History and "What changed" start once it is added.
+The **Ticker** field at the top is a search box: click it to see the tickers on the daily list with their names, type to narrow them (by symbol or a word of the name), and click one or press Enter. Any other stock or fund gets two lines at the bottom of the list: **Show it live**, and **Add it to the daily list**. Until the lookup service is set up, the list says so instead. If it is not on the list, the page fetches two years of its prices through a small lookup service ([`proxy/`](proxy/README.md), a Cloudflare Worker), works out the indicators itself ([`docs/js/indicators.js`](docs/js/indicators.js), tested to match the Python on every day) and shows the full report live. History and "What changed" start once it is added.
 
 **Add to the daily list** asks the lookup service to start the **Add a ticker** workflow. It adds the ticker only if it passes the same checks as the nightly refresh, builds its data and 70 sessions of history, and commits. Anyone can ask; the list stops at 50 tickers, and each visitor can ask for 5 a day. A ticker added this way gets plain (unleveraged) wording; its entry can be edited afterwards.
 
@@ -483,6 +485,7 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-11-01 | **Ticker search box and plainer settings.** The **Ticker** field works like a search box on a finance site: clicking it lists the daily tickers with their names, typing narrows the list, the arrow keys and Enter or a click open one. Any other symbol gets **Show it live** and **Add it to the daily list** lines, or, until the lookup service is set up, a line saying plainly that it is not set up on this site. The **Show** button is gone, and the field looks the same in every browser (it used to rely on each browser's own suggestion list). **Method settings** now has a plain name, value and one-line explanation for each setting, with the zone width in dollars for the ticker shown; the panel fits a phone screen. |
 | 2026-10-31 | **Selling covered calls: the card** (step 3 of the plan, built before step 2). A new card after the support levels table suggests calls to sell at the levels above the price, and at a 30% and 20% chance of being called, with the premium, the rise given up, the chance of being called, the breakeven and the return if called, and a row read in words on a tap. It uses the option prices recorded at the same close, and says so instead of mixing days. Calls hard to sell near the bid are marked "thin" by temporary limits set from the first night recorded; step 2 replaces them after 2–3 weeks. |
 | 2026-10-31 | **Plan for selling covered calls, and step 1: recording option chains.** The plan ([`docs/covered-calls-plan.md`](docs/covered-calls-plan.md)) suggests calls to sell at the levels above the price, with the premium, the rise given up, the chance of being called, and the breakeven against the floors below. Step 1 records each night's calls for the next 4 weeks and the nearest monthly, for TQQQ, QQQ and SPY, on the `market-data` branch. Nothing on the page changes; after 2–3 weeks of records, the "thin" liquidity thresholds are set from them, then the card is built. |
 | 2026-10-27 | **Pre-market and after-hours price.** Before the open and after the close, a line under **Last close** gives the latest pre-market or after-hours price, its change from the last regular close and its time, updated every minute. It comes from a new request to the lookup service (`GET /quote`), so it appears once the service is deployed. The change is measured from Yahoo's last regular close; Yahoo's own "previous close" was still Friday's close on Tuesday morning, which would have shown +3.5% instead of +0.3%. The **Last close** label now shows its date. Also: the page says its data is out of date as soon as any session before today is missing (it used to wait for three), and it knows US market holidays, so the day after a holiday is not counted as missing. |
