@@ -83,6 +83,7 @@ No prior charting knowledge needed. These are the only terms the report uses.
 | **Bottom line** | A one-sentence headline, then labelled lines: nearest floor, if that breaks, the level above the price, trend, buyers vs sellers, risk, and **since the previous session** (what changed) | The answer before the evidence, written so it needs no glossary — it says what the indicators *mean* rather than naming them. A reader who stops here still leaves with the number that matters |
 | **All findings** (collapsed) | 10+ plain-language findings in four groups — support levels, trend, momentum & volatility, risk & leverage | The full picture for anyone who wants it, one click away; see [What the key findings cover](#what-the-key-findings-cover) |
 | **Price & support zones** | Candlestick chart with shaded green support bands, swing-low markers, moving averages, and optional volume / RSI / MACD / drawdown panels | The main visualisation — see [How to read the main chart](#how-to-read-the-main-chart) |
+| **Selling covered calls** | For someone who owns the shares: calls to sell at the levels above the price, and at a 30% and 20% chance of being called, for the next 4 weekly expiries and the monthly. For each: the premium (the bid), per year, the rise to the strike, the chance it ends above the strike, the breakeven and the return if called. Tap a row to read it in words. Calls hard to sell near the bid shown are marked **thin** | Puts the option prices next to the levels the page already finds, with a warning that a covered call caps the gain and keeps almost all of the loss. Uses the option prices recorded at the same close; if they are from another day, it says so and suggests nothing. Works for any ticker on the daily list, including ones added later; a ticker with no listed options says so |
 | **Support levels in detail** | A table of every level found — above the price (A1…) and below it (S1…), in price order: zone price, zone range, distance from price, times held, last tested, strength and status | The numbers behind the chart, with a definition list underneath every column |
 | **Does the level hold up at other window lengths?** | The same method run over 1, 3, 6 and 12 months, one column each | Guards against cherry-picking. A level that appears in only one window may be an artefact of that window; a level that appears in three or more is far more dependable |
 | **TQQQ vs QQQ** (each ticker against its benchmark) | Growth of $100 over the window, plus return, beta and volatility | Shows the cost of daily 3× resetting — TQQQ's return over a period is usually *not* 3× QQQ's return over that period |
@@ -283,6 +284,9 @@ GitHub Actions — every 30 min from 16:15 New York, first to find new data wins
   ├─ pipeline/snapshot.js  save today's levels to data/history/YYYY-MM-DD.json
   │                        and write data/changes.json (the daily diff)
   │
+  ├─ pipeline/options.py   record the calls at the close to data/options.json
+  │                        (read by the page's "Selling covered calls" card)
+  │
   └─ pipeline/data_branch.sh put   commit to the market-data branch (not main)
 
 GitHub Pages serves the page from main's /docs; the page reads its data from the
@@ -334,6 +338,7 @@ The daily data is not on `main`: it is on the **`market-data` branch**, which ho
 | `pipeline/indicators.py` | Moving averages, RSI, MACD, Bollinger Bands, ATR, drawdown |
 | `pipeline/build.py` | Builds a ticker's data file, such as `data/tqqq.json` |
 | `pipeline/snapshot.js` | Daily level snapshots and the "what changed" feed |
+| `pipeline/options.py`, `<dir>/options.json` (market-data branch) | Each night's call options for the next 4 weeks and the nearest monthly, from the close to +40% (step 1 of [`docs/covered-calls-plan.md`](docs/covered-calls-plan.md)) |
 | `pipeline/tests/` | pytest checks on the saved price data |
 | `tests/support.test.js` | Node unit tests for the support method |
 | `tests/golden.test.js`, `tests/golden/` | The recorded support output, checked on every run |
@@ -446,6 +451,8 @@ All tests run on every pull request (`.github/workflows/tests.yml`), and the cov
 | `pipeline/tests/test_add_ticker.py` | Adding a ticker: checks first, data second, the list last — and the list unchanged if anything fails |
 | `tests/browser/any-ticker.spec.js` | A ticker not on the list shown live, the add button's answers, a ticker turned away, and the lookup box |
 | `tests/browser/tickers.spec.js` | The ticker menu, `?ticker=` links and remembering the choice, ticker-specific wording (no "TQQQ" or "3×" on QQQ's page), and a ticker not on the list |
+| `tests/browser/covered-calls.spec.js` | The covered-call card on the Oct 30, 2026 prices and option prices: the suggested calls and their figures, a row read in words by tap and keyboard, the card following the settings, option prices from another close, no option prices, nothing from the file shown as HTML, and phone width. The figures themselves, against the plan's worked example, are in `tests/support.test.js` |
+| `pipeline/tests/test_options.py` | Recording option chains, on a real TQQQ chain saved from the Oct 30, 2026 close: which expiries, the strikes kept, each check that stops a bad chain, and the previous file kept when it stops |
 | `pipeline/tests/test_tickers.py` | The ticker list is valid and every ticker has its data file; a broken list is stopped with the reason; building another ticker; older data files still work |
 | `tests/browser/show-hide.spec.js` | Each switch hides its layer and legend entry; Simple view and Show all; the page address carries the layers and a shared link wins |
 | `tests/browser/security.spec.js` | Puts HTML and script into every text field of the data files and checks none of it reaches the page as HTML |
@@ -476,6 +483,8 @@ Newest first. The full plan behind these changes, including the original request
 
 | Date | Change |
 |---|---|
+| 2026-10-31 | **Selling covered calls: the card** (step 3 of the plan, built before step 2). A new card after the support levels table suggests calls to sell at the levels above the price, and at a 30% and 20% chance of being called, with the premium, the rise given up, the chance of being called, the breakeven and the return if called, and a row read in words on a tap. It uses the option prices recorded at the same close, and says so instead of mixing days. Calls hard to sell near the bid are marked "thin" by temporary limits set from the first night recorded; step 2 replaces them after 2–3 weeks. |
+| 2026-10-31 | **Plan for selling covered calls, and step 1: recording option chains.** The plan ([`docs/covered-calls-plan.md`](docs/covered-calls-plan.md)) suggests calls to sell at the levels above the price, with the premium, the rise given up, the chance of being called, and the breakeven against the floors below. Step 1 records each night's calls for the next 4 weeks and the nearest monthly, for TQQQ, QQQ and SPY, on the `market-data` branch. Nothing on the page changes; after 2–3 weeks of records, the "thin" liquidity thresholds are set from them, then the card is built. |
 | 2026-10-27 | **Pre-market and after-hours price.** Before the open and after the close, a line under **Last close** gives the latest pre-market or after-hours price, its change from the last regular close and its time, updated every minute. It comes from a new request to the lookup service (`GET /quote`), so it appears once the service is deployed. The change is measured from Yahoo's last regular close; Yahoo's own "previous close" was still Friday's close on Tuesday morning, which would have shown +3.5% instead of +0.3%. The **Last close** label now shows its date. Also: the page says its data is out of date as soon as any session before today is missing (it used to wait for three), and it knows US market holidays, so the day after a holiday is not counted as missing. |
 | 2026-10-25 | **README.** A screenshot of the page at the top, and nine places brought up to date with the page: the section order, the bottom line's rows, the findings count, the swing-low markers, what "What changed" compares, "List every level", other tickers, and the Safari and data-branch tests. No change to the app. |
 | 2026-10-25 | **The daily data has its own branch.** The nightly refresh and the add-ticker job commit to a `market-data` branch instead of `main`, so `main`'s history is code only (46 of its last 64 commits were data). The page reads the data from that branch through GitHub's raw-file address; the folder layout is unchanged. The branch is created from `main`'s last copy of the data on the first run, which starts when this change is merged. For a local preview, run `npm run data` first. |
