@@ -62,7 +62,8 @@ test("method settings sliders recalculate, and Reset puts the defaults back", as
   const errors = await openPage(page);
   await page.locator("#settings summary").click();
   await page.locator("#period").fill("5");
-  await expect(page.locator("#periodOut")).toHaveText("5");
+  await expect(page.locator("#periodOut")).toHaveText("5 days");
+  await expect(page.locator("#periodHelp")).toContainText("lowest of the 5 trading days before it and the 5 after");
   await expect(page.locator("#periodText")).toHaveText("5");
   expect(await page.evaluate(() => window.__dashboard.res.opts.period)).toBe(5);
   await page.locator("#resetSettings").click();
@@ -123,10 +124,24 @@ test("moving a method slider quickly keeps the page up to date (Safari limits ad
   for (let pass = 0; pass < 3; pass++) for (const key of ["ArrowRight", "ArrowLeft"]) for (let i = 0; i < 25; i++) await page.keyboard.press(key);
   for (let i = 0; i < 10; i++) await page.keyboard.press("ArrowRight"); // the last pass stops at 0.25, the lowest; 10 steps up is 0.75
   const seconds = (Date.now() - started) / 1000;
-  await expect(page.locator("#clusterOut")).toHaveText("0.75");
+  await expect(page.locator("#clusterOut")).toHaveText("0.75 × a typical day");
   const g = await page.evaluate(() => ({ used: window.__dashboard.res.opts.clusterMult, writes: window.__writes }));
   expect(g.used).toBe(0.75);                                   // the levels follow the slider to the end
   expect(g.writes).toBeLessThanOrEqual(Math.ceil(seconds * 4) + 1); // at most one address change every 250 ms
   await expect.poll(() => new URL(page.url()).searchParams.get("cluster")).toBe("0.75");
   expect(errors).toEqual([]);                                  // Safari threw after 100 changes in 10 seconds
+});
+
+test("each method setting says in words what it does, with today's dollar figures", async ({ page }) => {
+  await openPage(page);
+  await page.locator("#settings summary").click();
+  for (const [id, name] of [["period", "Days either side of a low"], ["cluster", "Zone width"], ["touches", "Minimum touches"]]) {
+    await expect(page.locator(`label[for="${id}"]`)).toContainText(name);
+    await expect(page.locator(`#${id}`)).toHaveAccessibleDescription(/\w+ \w+ \w+/);
+  }
+  // 0.5 x TQQQ's ATR on the frozen Oct 23 data, the same width the levels table states
+  const r = await page.evaluate(() => window.__dashboard.res);
+  await expect(page.locator("#clusterMoney")).toHaveText(`$${r.tol.toFixed(2)}`);
+  await expect(page.locator("#clusterAtr")).toHaveText(`$${r.atr.toFixed(2)} for TQQQ now`);
+  await expect(page.locator(".price-row")).toContainText(`zones are $${r.tol.toFixed(2)} wide`);
 });

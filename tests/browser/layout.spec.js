@@ -93,3 +93,26 @@ test("on a phone the bottom line's rows are one column", async ({ page }, info) 
   const lefts = await page.evaluate(() => new Set([...document.querySelectorAll("#blRows > div")].map((r) => Math.round(r.getBoundingClientRect().left))).size);
   expect(lefts).toBe(1);
 });
+
+test("the ticker list opens on a tap, fits the screen, and a tap on a line opens it", async ({ page }) => {
+  await openPage(page);
+  const input = page.locator("#tickerInput");
+  if (test.info().project.use.hasTouch) await input.tap(); else await input.click();
+  const list = page.locator("#tickerList");
+  await expect(list).toBeVisible();
+  const box = await list.boundingBox(), inner = await page.evaluate(() => window.innerWidth);
+  expect(box.x).toBeGreaterThanOrEqual(0);
+  expect(box.x + box.width).toBeLessThanOrEqual(inner);
+  const spy = page.getByRole("option", { name: /SPY/ });
+  await Promise.all([page.waitForNavigation(), test.info().project.use.hasTouch ? spy.tap() : spy.click()]);
+  await page.waitForFunction(() => window.__dashboard && window.__dashboard.res);
+  expect(new URL(page.url()).searchParams.get("ticker")).toBe("SPY");
+});
+
+test("the method settings panel fits the screen", async ({ page }) => {
+  await openPage(page);
+  await page.locator("#settings summary").click();
+  const box = await page.locator(".settings-panel").boundingBox(), inner = await page.evaluate(() => window.innerWidth);
+  expect(box.x).toBeGreaterThanOrEqual(0);
+  expect(box.x + box.width).toBeLessThanOrEqual(inner);
+});

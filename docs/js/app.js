@@ -105,8 +105,12 @@
     const ci = $("#customWin");
     ci.classList.toggle("active", !state.windowKey);
     if (!state.windowKey) ci.value = o.window; else if (document.activeElement !== ci) ci.value = "";
-    $("#period").value = o.period; $("#periodOut").textContent = o.period;
-    $("#cluster").value = o.clusterMult; $("#clusterOut").textContent = o.clusterMult.toFixed(2);
+    $("#period").value = o.period; $("#periodOut").textContent = `${o.period} days`;
+    $("#cluster").value = o.clusterMult; $("#clusterOut").textContent = `${o.clusterMult.toFixed(2)} × a typical day`;
+    if (state.res) {
+      $("#clusterMoney").textContent = money(state.res.tol);
+      $("#clusterAtr").textContent = `${money(state.res.atr)} for ${tk().symbol} now`;
+    }
     $("#touches").value = o.minTouches; $("#touchesOut").textContent = o.minTouches;
     $("#periodText").textContent = o.period;
     $$(".pv, .pv-label").forEach((el) => (el.textContent = o.period));
@@ -947,45 +951,135 @@
 
   /** Open the page for another ticker, keeping the other settings. */
   function goToTicker(symbol) {
-    if (state.leaving) return; // already opening one (Enter can arrive twice, see renderTickerField)
+    if (state.leaving) return; // already opening one
     state.leaving = true;
     state.ticker = state.listing.tickers.find((t) => t.symbol === symbol) || { symbol };
     writeUrl({ now: true });
     location.reload();
   }
 
+  const SYMBOL = /^[A-Z][A-Z0-9.-]{0,9}$/; // a ticker symbol: 1 to 10 letters, digits, dots or dashes
+
   /**
-   * The one ticker field: its suggestions are the tickers on the daily list (with their
-   * names); typing any other symbol opens it live. On focus it empties, showing the current
-   * ticker as a hint, so the whole list of suggestions appears; leaving it puts the ticker back.
+   * The one ticker field, a search box: clicking it lists the tickers on the daily list with
+   * their names; typing narrows the list (by symbol, or a word of the name). A symbol not on the
+   * list gets two lines, "Show it live" and "Add it to the daily list", or, when the lookup
+   * service is not set up, one line saying so. Arrow keys move through the list, Enter opens
+   * the highlighted line, Escape closes it. The highlighted line is always what Enter will do:
+   * the listed ticker typed exactly, else "Show it live".
    */
   function renderTickerField() {
-    const input = $("#tickerInput"), current = state.ticker.symbol;
-    $("#tickerList").innerHTML = state.listing.tickers.map((t) => `<option value="${esc(t.symbol)}">${esc(t.name)}</option>`).join("");
+    const input = $("#tickerInput"), list = $("#tickerList"), current = state.ticker.symbol;
+    const tickers = state.listing.tickers;
+    let lines = [], active = -1, typed = false;
     input.value = current;
-    input.onfocus = () => { input.placeholder = current; input.value = ""; };
-    input.onblur = () => { if (!input.value.trim()) input.value = current; };
-    // picking a suggestion opens it straight away; typed letters wait for Enter or Show,
-    // so typing "QQQM" does not stop at "QQQ" (browsers mark a picked suggestion this way)
-    input.oninput = (e) => {
-      const v = input.value.trim().toUpperCase();
-      if (e.inputType === "insertReplacementText" && v !== current && state.listing.tickers.some((t) => t.symbol === v)) goToTicker(v);
+
+    const open = () => {
+      const q = typed ? input.value.trim().toUpperCase() : "";
+      const words = (name) => name.toUpperCase().split(/[^A-Z0-9&]+/);
+      const hits = tickers.filter((t) => !q || t.symbol.startsWith(q) || words(t.name).some((w) => w.startsWith(q)));
+      lines = hits.map((t) => ({ symbol: t.symbol, html: `<b>${esc(t.symbol)}</b><span class="name">${esc(t.name)}</span>`, cls: t.symbol === current ? "current" : "" }));
+      const exact = tickers.some((t) => t.symbol === q);
+      if (q && !exact) {
+        if (!SYMBOL.test(q)) lines.push({ symbol: null, html: `"${esc(q)}" is not a ticker symbol`, cls: "lookup none" });
+        else if (!state.listing.proxy) lines.push({ symbol: null, html: notSetUp(q, true), cls: "lookup none wrap" });
+        else lines.push({ symbol: q, html: `Show <b>${esc(q)}</b> live`, cls: "lookup" },
+          { symbol: q, add: true, html: `Add <b>${esc(q)}</b> to the daily list`, cls: "add" });
+      }
+      active = lines.findIndex((l) => l.symbol === (q || current));
+      if (active < 0 && q) active = lines.findIndex((l) => l.cls === "lookup");
+      list.innerHTML = lines.map((l, i) =>
+        `<li id="tickerOpt${i}" role="option" class="${l.cls}" data-i="${i}" aria-selected="${l.symbol === current}"${l.symbol ? "" : ' aria-disabled="true"'}>${l.html}</li>`).join("");
+      list.hidden = !lines.length;
+      input.setAttribute("aria-expanded", String(!list.hidden));
+      highlight(active);
     };
-    // Safari does not send Enter to the form when the field has a suggestion list, so Enter
-    // sends it here if the browser has not done so by the next tick
-    let submitted = false;
+    const close = () => {
+      list.hidden = true;
+      input.setAttribute("aria-expanded", "false");
+      input.removeAttribute("aria-activedescendant");
+    };
+    const highlight = (i) => {
+      active = i;
+      list.querySelectorAll("li").forEach((li, j) => li.classList.toggle("active", j === i));
+      const li = i >= 0 && $(`#tickerOpt${i}`);
+      if (li) { input.setAttribute("aria-activedescendant", li.id); li.scrollIntoView({ block: "nearest" }); }
+      else input.removeAttribute("aria-activedescendant");
+    };
+    const choose = (symbol, add) => {
+      close();
+      if (add) { input.value = current; typed = false; input.blur(); return askToAdd(symbol); }
+      if (!symbol || symbol === current) { input.value = current; typed = false; input.blur(); return; }
+      input.value = symbol;
+      goToTicker(symbol);
+    };
+    // Enter: the highlighted line, or what was typed when nothing is highlighted
+    const enter = () => {
+      const typedText = input.value.trim().toUpperCase();
+      if (!list.hidden && active >= 0) {
+        const l = lines[active];
+        if (l.symbol) return choose(l.symbol, l.add);
+      }
+      if (!typed || !typedText) return choose(current);
+      if (SYMBOL.test(typedText) && !state.listing.proxy && !tickers.some((t) => t.symbol === typedText)) {
+        close();
+        return showNote(notSetUp(typedText));
+      }
+      if (SYMBOL.test(typedText)) return choose(typedText);
+      close();
+      showNote(`"${typedText}" is not a ticker symbol: use 1 to 10 letters, digits, dots or dashes, starting with a letter.`);
+    };
+
+    // Safari moves the cursor on the mouseup of the click that focused the field, undoing the
+    // selection, so that one mouseup is cancelled
+    let focusClick = false;
+    input.onmousedown = () => { focusClick = document.activeElement !== input; };
+    input.onmouseup = (e) => { if (focusClick) e.preventDefault(); focusClick = false; };
+    input.onfocus = () => { typed = false; input.select(); open(); };
+    input.onclick = () => { if (list.hidden) open(); };
+    input.oninput = () => { typed = true; open(); };
+    input.onblur = () => { close(); if (!state.leaving) { input.value = current; typed = false; } };
     input.onkeydown = (e) => {
-      if (e.key === "Enter") setTimeout(() => { if (!submitted) $("#tickerForm").requestSubmit(); }, 0);
+      const n = lines.length;
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        if (list.hidden) return open();
+        if (!n) return;
+        const step = e.key === "ArrowDown" ? 1 : -1;
+        highlight(active < 0 ? (step > 0 ? 0 : n - 1) : (active + step + n) % n);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        enter();
+      } else if (e.key === "Escape") {
+        if (!list.hidden) { e.preventDefault(); close(); }
+        input.value = current; typed = false; input.select();
+      }
     };
-    $("#tickerForm").onsubmit = (e) => {
-      e.preventDefault();
-      submitted = true;
-      setTimeout(() => { submitted = false; }, 0);
-      const sym = (input.value.trim() || current).toUpperCase();
-      if (sym === current) return;
-      if (/^[A-Z][A-Z0-9.-]{0,9}$/.test(sym)) goToTicker(sym);
-      else showNote(`"${sym}" is not a ticker symbol: use 1 to 10 letters, digits, dots or dashes, starting with a letter.`);
+    // keep the focus in the field while a line is clicked, so the list is not closed first
+    list.onmousedown = (e) => e.preventDefault();
+    list.onclick = (e) => {
+      const li = e.target.closest("li[data-i]");
+      const l = li && lines[+li.dataset.i];
+      if (l && l.symbol) choose(l.symbol, l.add);
     };
+    list.onmousemove = (e) => {
+      const li = e.target.closest("li[data-i]");
+      if (li && +li.dataset.i !== active) highlight(+li.dataset.i);
+    };
+    // a phone's "Go" key, or anything else that sends the form
+    $("#tickerForm").onsubmit = (e) => { e.preventDefault(); enter(); };
+  }
+
+  /** What the page says about a symbol not on the list when the lookup service is not set up. */
+  function notSetUp(symbol, html) {
+    const s = html ? `<b>${esc(symbol)}</b>` : symbol;
+    return `${s} is not on the daily list. Showing or adding other tickers needs the lookup service, which is not set up on this site yet.`;
+  }
+
+  /** Ask for a ticker to be added straight from the search box, without showing it first. */
+  function askToAdd(symbol) {
+    showNote(`Asking to add ${symbol} to the daily list…`, symbol);
+    requestAdd(symbol);
   }
 
   function showNote(text, addSymbol) {
@@ -1023,7 +1117,7 @@
   async function liveTicker(want) {
     const fallback = state.listing.default;
     if (!state.listing.proxy) {
-      showNote(`${want} is not on the list of tickers this report covers yet, and looking up other tickers is not switched on, so ${fallback} is shown.`);
+      showNote(`${notSetUp(want)} ${fallback} is shown instead.`);
       return null;
     }
     let r, body;

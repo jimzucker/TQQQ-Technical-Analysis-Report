@@ -33,21 +33,32 @@
   <div class="wrap controls-row">
     <form id="tickerForm" class="ticker-form" role="search" autocomplete="off">
       <label for="tickerInput">Ticker</label>
-      <input id="tickerInput" type="text" list="tickerList" maxlength="10" spellcheck="false" autocapitalize="characters"
-        aria-describedby="tickerHelp" value="TQQQ">
-      <datalist id="tickerList"></datalist>
-      <button type="submit" class="btn small">Show</button>
-      <span id="tickerHelp" class="hint">Pick one, or type any symbol</span>
+      <div class="ticker-box">
+        <svg class="ticker-icon" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.4 10.4 14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <input id="tickerInput" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="tickerList"
+          maxlength="10" spellcheck="false" autocapitalize="characters" autocorrect="off" enterkeyhint="go" placeholder="Symbol" value="TQQQ">
+        <ul id="tickerList" class="ticker-list" role="listbox" aria-label="Tickers" hidden></ul>
+      </div>
     </form>
     <details class="settings" id="settings">
       <summary>Method settings</summary>
       <div class="settings-panel">
-        <label>Swing period <output id="periodOut">3</output> sessions
-          <input id="period" type="range" min="2" max="10" step="1" value="3"></label>
-        <label>Cluster distance <output id="clusterOut">0.5</output> × ATR
-          <input id="cluster" type="range" min="0.25" max="1.5" step="0.05" value="0.5"></label>
-        <label>Minimum touches <output id="touchesOut">1</output>
-          <input id="touches" type="range" min="1" max="5" step="1" value="1"></label>
+        <p class="set-intro">These change how the price floors are found. The defaults suit most uses.</p>
+        <div class="setting">
+          <label for="period"><span>Days either side of a low</span> <output id="periodOut">3</output></label>
+          <input id="period" type="range" min="2" max="10" step="1" value="3" aria-describedby="periodHelp">
+          <p id="periodHelp" class="set-help">A day's low counts as a swing low when it is the lowest of the <span class="pv">3</span> trading days before it and the <span class="pv">3</span> after. More days: fewer, bigger lows.</p>
+        </div>
+        <div class="setting">
+          <label for="cluster"><span>Zone width</span> <output id="clusterOut">0.50</output></label>
+          <input id="cluster" type="range" min="0.25" max="1.5" step="0.05" value="0.5" aria-describedby="clusterHelp">
+          <p id="clusterHelp" class="set-help">Lows closer together than <span id="clusterMoney">this</span> are merged into one floor. The width is set as a share of a typical day's move (<span id="clusterAtr">ATR</span>). Wider: fewer floors, each with more touches.</p>
+        </div>
+        <div class="setting">
+          <label for="touches"><span>Minimum touches</span> <output id="touchesOut">1</output></label>
+          <input id="touches" type="range" min="1" max="5" step="1" value="1" aria-describedby="touchesHelp">
+          <p id="touchesHelp" class="set-help">How many swing lows a floor needs before it is listed. 1 lists every floor; 3 lists only floors the price has bounced from at least 3 times.</p>
+        </div>
         <button type="button" id="resetSettings" class="link-btn">Reset to defaults</button>
       </div>
     </details>
