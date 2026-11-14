@@ -1,14 +1,22 @@
 {
- "as_of": "2026-10-30",
- "previous": "2026-10-23",
+ "as_of": "2026-11-13",
+ "previous": "2026-10-30",
  "items": [
   {
-   "type": "broken",
-   "text": "Support at $707.23 broke — price closed below the zone."
+   "type": "new",
+   "text": "Support at $647.05 (1 touch) is now on the list of levels."
   },
   {
    "type": "broken",
-   "text": "Support at $699.99 broke — price closed below the zone."
+   "text": "Support at $685.33 broke — price closed below the zone."
+  },
+  {
+   "type": "dropped",
+   "text": "Support at $604.99 is no longer on the list of levels."
+  },
+  {
+   "type": "trend",
+   "text": "Trend changed from Mixed to Downtrend."
   }
  ]
 }
